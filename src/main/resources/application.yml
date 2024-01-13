@@ -8,11 +8,6 @@ spring:
     ansi:
       enabled: always
 
-  # Thymeleaf 설정
-  thymeleaf:
-    cache: false
-    prefix: classpath:templates/views/
-
   # datasource 설정
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
