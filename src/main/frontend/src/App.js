@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import Ingame from './game/ingame/Ingame';
+import Ingame from './pages/Ingame';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button'; // 꼭 import를 해와야한다
 
