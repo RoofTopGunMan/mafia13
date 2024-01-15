@@ -24,7 +24,6 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -32,6 +31,18 @@ dependencies {
 	runtimeOnly 'com.h2database:h2'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	
+	////////////로그인
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+
+	////////////웹소켓
+	implementation'org.springframework.boot:spring-boot-starter-websocket'
+	implementation'org.webjars:sockjs-client:1.1.2'
+	implementation'org.webjars:stomp-websocket:2.3.3-1'
+	implementation'org.webjars:webjars-locator:0.30'
+
 }
 
 tasks.named('bootBuildImage') {
