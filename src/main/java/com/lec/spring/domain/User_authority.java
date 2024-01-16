@@ -1,4 +1,4 @@
 package com.lec.spring.domain;
 
-public class User_authoiry {
+public class User_authority {
 }
