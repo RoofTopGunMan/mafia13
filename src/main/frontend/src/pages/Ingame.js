@@ -2,8 +2,10 @@
 
 import React,  {useEffect, useState} from 'react';
 import * as StompJs from '@stomp/stompjs';
+import * as myConnect from '../utill/myConnect';
 
 const Ingame = ({ myName}) => {       
+
     const connect = () => {
         const client = new StompJs.Client({
             brokerURL: 'ws://localhost:8093/ws'
@@ -22,7 +24,9 @@ const Ingame = ({ myName}) => {
         client.activate();
     };
     useEffect(() => {
+        console.log("call check");
         connect();
+        myConnect.activitation();
     }, []);
     return (
         <>
