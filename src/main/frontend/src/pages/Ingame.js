@@ -2,7 +2,7 @@
 
 import React,  {useEffect, useState} from 'react';
 import * as StompJs from '@stomp/stompjs';
-import * as myConnect from '../utill/myConnect';
+import * as axiosUtill from '../utill/axiosUtill';
 
 const Ingame = ({ myName}) => {       
 
@@ -26,7 +26,7 @@ const Ingame = ({ myName}) => {
     useEffect(() => {
         console.log("call check");
         connect();
-        myConnect.activitation();
+        axiosUtill.activitation();
     }, []);
     return (
         <>

@@ -3,6 +3,7 @@ import axios from 'axios';
 import Ingame from './pages/Ingame';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button'; // 꼭 import를 해와야한다
+import * as AxiosUtill from './utill/axiosUtill';
 
 function App() {
    const [hello, setHello] = useState('')
@@ -20,19 +21,10 @@ function App() {
     .catch(err=> console.log(err));
   }
   function connectRoom(name) {
-    axios.get('api/room/connect',
-    {
-      params:{
-        userName : name
-      }
-    })
-    .then(response => setIngame(response.data))
-    .catch(err=>console.log(err));
+    AxiosUtill.UtilGetAxios('api/room/connect',{userName : name}, response => setIngame(response.data));
   }
     useEffect(() => {
-        axios.get('/api/hello')
-        .then(response => setHello(response.data))
-        .catch(error => console.log(error))
+      AxiosUtill.UtilGetAxios('/api/hello', null, response => setHello(response.data));
     }, []);
 
 
