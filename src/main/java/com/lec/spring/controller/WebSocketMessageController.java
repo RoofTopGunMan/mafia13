@@ -12,9 +12,12 @@ import java.io.Console;
 @Controller
 @RequiredArgsConstructor
 public class WebSocketMessageController {
+    private senderClass sender;
+
     @MessageMapping("/subTest")
     public void chatTest(senderClass sender)
     {
+        this.sender = sender;
         System.out.println(sender);
     }
 }
