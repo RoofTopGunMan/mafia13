@@ -17,6 +17,7 @@ public class WebSocketMessageController {
     @MessageMapping("/subTest")
     public void chatTest(senderClass sender)
     {
+        System.out.println("test");
         this.sender = sender;
         System.out.println(sender);
     }
