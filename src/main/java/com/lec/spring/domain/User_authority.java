@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Authority {
+public class User_authority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;  // PK
