@@ -21,9 +21,6 @@ public class User extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-
-
     @Column(unique = true, nullable = false)
     private String username; //회원 아이디
 
@@ -31,18 +28,17 @@ public class User extends BaseEntity{
     @JsonIgnore
     private String password; // 회원 비밀번호
 
-
-
     @Column(nullable = false)
     private String name; // 회원 이름
+
+    @Column(nullable = false, unique = true)
     @JsonIgnore
-    private String emai; // 이메일
+    private String email; // 이메일
 
 
     @Column(nullable = false)
     private Long gamemoney;
 
-    @Column()
     private Long ingame_status;
 
     // User : Authority / N:M 관계
