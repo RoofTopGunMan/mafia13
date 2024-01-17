@@ -14,10 +14,10 @@ public class Selling {
     private  Long id; // PK
 
     @Column(nullable = false)
-    private Long name;
+    private String name;
 
     @Column(nullable = false)
-    private  Long price;
+    private  int price;
 
     @Column
     private int status;
