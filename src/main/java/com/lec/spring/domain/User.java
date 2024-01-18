@@ -39,6 +39,14 @@ public class User extends BaseEntity{
     @Column(nullable = false)
     private Long gamemoney;
 
+    @PrePersist
+    @PreUpdate
+    private void prePersistPreUpdate() {
+        if (gamemoney == null) {
+            gamemoney = 0L;
+        }
+    }
+
     private Long ingame_status;
 
     // User : Authority / N:M 관계
