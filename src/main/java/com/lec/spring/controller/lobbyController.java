@@ -19,15 +19,15 @@ public class lobbyController {
         //방 입장
 
         //todo
-       // Game_room newRoom = roomRepository.findByGame_title(roomName).orElse(
-       //                 Game_room.builder().
-       //                         game_title(roomName).
-       //                         game_time(30).
-       //                         max_player(8).
-       //                         isLocked(false).
-       //                         state(1).
-       //                         build());
-       // roomRepository.save(newRoom);
+        Game_room newRoom = roomRepository.findBySubject(roomName).orElse(
+                        Game_room.builder().
+                                subject(roomName).
+                                time(30).
+                                max_player(8).
+                                isLocked(false).
+                                state(1).
+                                build());
+        roomRepository.save(newRoom);
 
         return true;
     }

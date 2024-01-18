@@ -19,7 +19,7 @@ public class testController {
     @GetMapping("api/button")
     public boolean buttonCtrl(boolean debug){
         Game_room newRoom = new Game_room();
-        newRoom.setGame_title("roomName001");
+        newRoom.setSubject("roomName001");
 
         roomRepository.save(newRoom);
 

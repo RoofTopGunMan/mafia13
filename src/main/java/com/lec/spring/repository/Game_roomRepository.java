@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface Game_roomRepository extends JpaRepository<Game_room,Long> {
-    //Optional<Game_room> findByGame_title(String title);
+    Optional<Game_room> findBySubject(String title);
 }

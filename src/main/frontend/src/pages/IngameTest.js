@@ -10,16 +10,17 @@ const IngameTest = () => {
     const [clientIngame,setIngame] = useState(false)
     const [UserName, setName] = useState("이름")
     const [buttonflag, setBtnFlag] = useState(false)
-    const [roomNumber, setRoomNumber] = useState(2)
+    const [roomName, setRoomName] = useState("")
     function buttonEvent(value) {
       AxiosUtill.UtilGetAxios('/api/button',{ debug : value }, response => setIngame(response.data));
     }
 
-    function connectRoom(name) {
+    function connectRoom(name,roomSubject) {
       if(!buttonflag)
       {
         setBtnFlag(true);
-        AxiosUtill.UtilGetAxios('api/room/connect',{userName : name, roomId : roomNumber}, response => {setIngame(response.data); setBtnFlag(false)});
+        console.log("버튼 입력 체크");
+        AxiosUtill.UtilGetAxios('api/room/connect',{userName : name, roomName : roomSubject}, response => {setIngame(response.data); setBtnFlag(false)});
       }
     }
     useEffect(() => {
@@ -29,13 +30,12 @@ const IngameTest = () => {
     return (
         <>
             {clientIngame ? (
+              
           <>
             <div>
               인게임 페이지입니다.
             </div>
-            <Ingame 
-             myName = {UserName}
-            />
+            <Ingame myName = {UserName} />
           <div className="App">
             <Button as="input" type="button" value="Input" onClick={()=>buttonEvent(false)}/>{' '}
           </div>
@@ -48,11 +48,11 @@ const IngameTest = () => {
           </div>
           <div>
             입장 방 번호 :  
-            <input value={roomNumber} onChange = {(e)=>{ setRoomNumber(e.target.value);}}/>
+            <input value={roomName} onChange = {(e)=>{ setRoomName(e.target.value);}}/>
           </div>
           <div className="App">
             <input value={UserName} onChange = {(e)=>{ setName(e.target.value);}}/>            
-            <Button as="input" type="button" value="connect" onClick={()=>connectRoom(UserName)}/>{' '}
+            <Button as="input" type="button" value="connect" onClick={()=>connectRoom(UserName,roomName)}/>{' '}
             
           </div>
           <div className="App">
