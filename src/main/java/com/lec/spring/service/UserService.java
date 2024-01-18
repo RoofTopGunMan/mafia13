@@ -14,4 +14,12 @@ public interface UserService {
     int register(User user);
 
     List<Authority> selectAuthById(Long id);
+
+
+    // 마이페이지 - 프로필 보기, 프로필 수정, 판매물품
+    User getUserByUsername(String username);
+    User getUserById(Long id);
+
+
+
 }

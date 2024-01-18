@@ -57,6 +57,9 @@ public class User extends BaseEntity{
     private List<Authority> authorities = new ArrayList<>();
 
 
+
+
+
     public void addAuthority(Authority...authorities) {
         Collections.addAll(this.authorities,authorities);
     }
