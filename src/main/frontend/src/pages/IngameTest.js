@@ -11,14 +11,7 @@ const IngameTest = () => {
     const [Number, setNumber] =useState(2)
     const [UserName, setName] = useState("")
     function buttonEvent(value) {
-    axios.get('/api/button',
-    {
-      params:{
-      debug : value
-     }
-    })
-    .then(response => setIngame(response.data))
-    .catch(err=> console.log(err));
+      AxiosUtill.UtilGetAxios('/api/button',{ debug : value }, response => setIngame(response.data));
     }
 
     function connectRoom(name) {

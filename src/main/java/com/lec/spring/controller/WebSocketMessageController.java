@@ -18,6 +18,7 @@ public class WebSocketMessageController {
     public void chatTest(senderClass sender)
     {
         System.out.println("test");
+        System.out.println("test2");
         this.sender = sender;
         System.out.println(sender);
     }
