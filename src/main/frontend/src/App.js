@@ -3,6 +3,8 @@ import { Route, Routes } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import IngameTest from './pages/IngameTest';
+import MypageHome from './pages/mypage/MypageHome';
+
 import AdminPage from './pages/admin/AdminPage';
 import AdminNotice from './pages/admin/AdminNotice';
 import UserMng from './pages/admin/UserMng';
@@ -13,7 +15,8 @@ function App() {
       <>
         <Routes>
             <Route path='/' Component={IngameTest}>인게임테스트</Route>
-
+            <Route path='/mypage' Component={MypageHome}>마이페이지홈</Route>
+            
             {/* 어드민 페이지  */}
             <Route path='/admin' Component={AdminPage}></Route>
             <Route path='/admin/notice' Component={AdminNotice}></Route>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/mypage.css">
+</head>
+<body>
+<div th:fragment="content">
+<div th:if="${userProfile != null}" data-username="${userProfile.username}">
+
+        <span class="label">
+            <label class="input" for="username">아이디:</label>
+            <input class="answer" type="text" id="username" name="username"
+                   readonly th:value="${userProfile.username}"/>
+        </span>
+        <span class="label">
+            <label class="input" for="name">이름:</label>
+            <input class="answer" type="text" id="name" name="name"
+                   readonly th:value="${userProfile.name}"/>
+        </span>
+
+        <span class="label">
+            <label class="input" for="email">이메일:</label>
+            <input class="answer" type="email" id="email" name="email"
+                   readonly th:value="${userProfile.email}"/>
+        </span>
+<!--        <span class="label">-->
+<!--            <label class="input" for="registDate">가입일:</label>-->
+<!--            <input class="answer" type="text" id="registDate" name="registDate"-->
+<!--                   readonly th:value="${#temporals.format(userProfile.registDate, 'yyyy년 MM월 dd일')}"/>-->
+<!--        </span>-->
+
+</div>
+
+<button class="btn-outline-danger" onclick="confirmDeleteAccount()">회원 탈퇴</button>
+
+<div th:if="${userProfile == null}">
+    <p>사용자 프로필을 찾을 수 없습니다.</p>
+</div>
+</div>
+</body>
+</html>

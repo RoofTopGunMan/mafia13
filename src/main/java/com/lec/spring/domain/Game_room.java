@@ -2,10 +2,7 @@ package com.lec.spring.domain;
 
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +12,10 @@ import java.util.List;
  */
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @ToString(callSuper = true)
+@Builder
 @EqualsAndHashCode(callSuper = true)
 public class Game_room extends BaseEntity {
     @Id
@@ -24,10 +23,10 @@ public class Game_room extends BaseEntity {
     private Long id;
 
     //각 진행도 별 시간입니다.
-    private int game_time;
+    private int time;
 
     //로비에 노출 될 게임 방의 제목입니다.
-    private String game_title;
+    private String subject;
 
     // 최대 플레이어의 수 입니다.
     private int max_player;

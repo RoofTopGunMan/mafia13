@@ -8,29 +8,34 @@ const IngameTest = () => {
 
     const [hello, setHello] = useState('')
     const [clientIngame,setIngame] = useState(false)
-    const [Number, setNumber] =useState(2)
-    const [UserName, setName] = useState("")
+    const [UserName, setName] = useState("이름")
+    const [buttonflag, setBtnFlag] = useState(false)
+    const [roomName, setRoomName] = useState("")
     function buttonEvent(value) {
       AxiosUtill.UtilGetAxios('/api/button',{ debug : value }, response => setIngame(response.data));
     }
 
-    function connectRoom(name) {
-        AxiosUtill.UtilGetAxios('api/room/connect',{userName : name}, response => setIngame(response.data));
+    function connectRoom(name,roomSubject) {
+      if(!buttonflag)
+      {
+        setBtnFlag(true);
+        console.log("버튼 입력 체크");
+        AxiosUtill.UtilGetAxios('api/room/connect',{userName : name, roomName : roomSubject}, response => {setIngame(response.data); setBtnFlag(false)});
+      }
     }
-        useEffect(() => {
-        AxiosUtill.UtilGetAxios('/api/hello', null, response => setHello(response.data));
-        }, []);
+    useEffect(() => {
+    AxiosUtill.UtilGetAxios('/api/hello', null, response => setHello(response.data));
+    }, []);
 
     return (
         <>
             {clientIngame ? (
+              
           <>
             <div>
               인게임 페이지입니다.
             </div>
-            <Ingame 
-             myName = {UserName}
-            />
+            <Ingame myName = {UserName} />
           <div className="App">
             <Button as="input" type="button" value="Input" onClick={()=>buttonEvent(false)}/>{' '}
           </div>
@@ -41,13 +46,14 @@ const IngameTest = () => {
           <div>
               백엔드에서 가져온 데이터입니다 : {hello}
           </div>
-          
+          <div>
+            입장 방 번호 :  
+            <input value={roomName} onChange = {(e)=>{ setRoomName(e.target.value);}}/>
+          </div>
           <div className="App">
-            <input value={UserName}
-            onChange = {(e)=>{
-              setName(e.target.value);
-            }}/>
-            <Button as="input" type="button" value="connect" onClick={()=>connectRoom(UserName)}/>{' '}
+            <input value={UserName} onChange = {(e)=>{ setName(e.target.value);}}/>            
+            <Button as="input" type="button" value="connect" onClick={()=>connectRoom(UserName,roomName)}/>{' '}
+            
           </div>
           <div className="App">
             <Button as="input" type="button" value="Input" onClick={()=>buttonEvent(true)}/>{' '}
