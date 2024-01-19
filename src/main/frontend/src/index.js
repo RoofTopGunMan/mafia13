@@ -7,7 +7,6 @@ import { BrowserRouter } from "react-router-dom";
 import App from './App';
 
 import reportWebVitals from './reportWebVitals';
-import AdminPage from './pages/admin/AdminPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

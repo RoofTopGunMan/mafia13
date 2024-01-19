@@ -15,7 +15,6 @@ const Header = () => {
                         <Link className='nav-link' to="/admin/notice">공지사항</Link>
                         <Link className='nav-link' to="/admin/userMng">유저관리</Link>
                         <Link className='nav-link' to="/admin/sellMng">상품관리</Link>
-                        <Link className='nav-link' to="/admin/userRecord">유저전적</Link>
                     </Nav>
                 </Container>
             </Navbar>

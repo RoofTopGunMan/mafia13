@@ -1,14 +1,14 @@
 import React from 'react';
 import Header from '../../components/Header';
-import SellInfo from '../../components/admin/sell/sellInfo';
+import Notice from '../../components/admin/notice/notice';
 
-const SellMng = () => {
+const AdminNotice = () => {
     return (
         <>
             <Header/>
-            <SellInfo/>
+            <Notice/>
         </>
     );
 };
 
-export default SellMng;
+export default AdminNotice;
