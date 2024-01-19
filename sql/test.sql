@@ -1,3 +1,4 @@
+
 SELECT * FROM game_room;
 SELECT * FROM user;
 SHOW table;
@@ -19,4 +20,8 @@ DELETE FROM game_room;
 ALTER TABLE user AUTO_INCREMENT = 1;
 DROP TABLE game_room_job_state;
 DROP TABLE game_room_state;
+DROP TABLE selling;
+DROP TABLE USER;
+DROP TABLE user_authorities;
+DROP TABLE gameavatar ;
 DROP table game_room;

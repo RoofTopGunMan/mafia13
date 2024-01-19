@@ -46,6 +46,9 @@ public class User extends BaseEntity{
             gamemoney = 0L;
         }
     }
+    @ManyToOne(fetch = FetchType.EAGER)
+    @ToString.Exclude
+    private Game_room game_Room;
 
     private Long ingame_status;
 
