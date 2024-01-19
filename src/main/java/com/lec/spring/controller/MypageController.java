@@ -37,4 +37,12 @@ public class MypageController {
         return "mypage/view";
     }
 
+
+    @GetMapping("/mypage/inventory")
+    public  void showInventory(){
+
+
+    }
+
+
 }

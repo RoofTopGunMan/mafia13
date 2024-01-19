@@ -1,10 +1,7 @@
 package com.lec.spring.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
@@ -16,8 +13,6 @@ public class Gameavatar {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id; // PK
 
-    @Column(nullable = false)
-    private Long user_id;
 
     @Column()
     private int head;
@@ -27,6 +22,11 @@ public class Gameavatar {
 
     @Column()
     private int outline;
+
+    // Gameavatar:User = 1:1
+    @OneToOne(fetch = FetchType.EAGER)
+    @ToString.Exclude
+    private User user;   // 해당 유저 (FK)
 
 
 }

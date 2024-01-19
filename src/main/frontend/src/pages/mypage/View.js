@@ -2,9 +2,9 @@ import React from 'react';
 
 const View = () => {
     return (
-        <div>
-            
-        </div>
+        <>
+            뷰페이지입니다.
+        </>
     );
 };
 

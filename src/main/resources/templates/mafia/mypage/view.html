@@ -9,7 +9,7 @@
 <body>
 <div th:fragment="content">
 <div th:if="${userProfile != null}" data-username="${userProfile.username}">
-    <form class="showMyPage" th:action="@{/mypage/modify}" method="post">
+
         <span class="label">
             <label class="input" for="username">아이디:</label>
             <input class="answer" type="text" id="username" name="username"
@@ -32,8 +32,6 @@
 <!--                   readonly th:value="${#temporals.format(userProfile.registDate, 'yyyy년 MM월 dd일')}"/>-->
 <!--        </span>-->
 
-
-    </form>
 </div>
 
 <button class="btn-outline-danger" onclick="confirmDeleteAccount()">회원 탈퇴</button>
