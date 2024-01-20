@@ -59,6 +59,11 @@ public class User extends BaseEntity{
     @JsonIgnore
     private List<Authority> authorities = new ArrayList<>();
 
+    // User:Gameavatar = 1:1
+    @OneToOne(fetch = FetchType.EAGER)
+    @ToString.Exclude
+    private Gameavatar gameavatar;   // 게임 아바타
+
 
 
 

@@ -2,9 +2,9 @@ import React from 'react';
 
 const Record = () => {
     return (
-        <div>
-            
-        </div>
+        <>
+            전적페이지입니다.
+        </>
     );
 };
 

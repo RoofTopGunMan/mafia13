@@ -2,6 +2,7 @@ package com.lec.spring.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Data
 @NoArgsConstructor
@@ -14,19 +15,18 @@ public class Gameavatar {
     private  Long id; // PK
 
 
-    @Column()
+    @ColumnDefault(value = "0")
     private int head;
 
-    @Column()
+    @ColumnDefault(value = "0")
     private int cloak;
 
-    @Column()
+    @ColumnDefault(value = "0")
     private int outline;
 
-    // Gameavatar:User = 1:1
-    @OneToOne(fetch = FetchType.EAGER)
-    @ToString.Exclude
-    private User user;   // 해당 유저 (FK)
+
+
+
 
 
 }
