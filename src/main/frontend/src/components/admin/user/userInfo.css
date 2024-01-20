@@ -1,0 +1,48 @@
+.userList {
+    border-radius: 3px;
+    border: none;
+
+    float: right;
+
+    width: 35px;
+    height: 20px;
+
+    font-size: 10px;
+    color: white;
+    background-color: gray;
+}
+
+.userSearch {
+    margin-left: 5px;
+
+    border-radius: 5px;
+    border: 1.5px solid gray;
+
+    width: 150px;
+    height: 25px;
+
+    font-size: 13px;
+}
+
+.usertype {
+    margin-bottom: 5px;
+
+    width: 110px;
+
+    float: right;
+}
+
+.searchButton {
+    margin-left: 3px;
+
+    border-radius: 5px;
+    border: none;
+
+    color: white;
+    background-color: gray;
+
+    width: 45px;
+    height: 25px;
+
+    font-size: 13px;
+}

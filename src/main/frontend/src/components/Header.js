@@ -12,9 +12,9 @@ const Header = () => {
                     <Navbar href="/admin">관리자 페이지</Navbar>
                     <Nav className='me-auto'>
                         <Link className='nav-link' to="/admin">홈</Link>
-                        <Link className='nav-link' to="/admin/notice">공지사항</Link>
                         <Link className='nav-link' to="/admin/userMng">유저관리</Link>
                         <Link className='nav-link' to="/admin/sellMng">상품관리</Link>
+                        <Link className='nav-link' to="/admin/notice">공지사항</Link>
                     </Nav>
                 </Container>
             </Navbar>
