@@ -46,6 +46,9 @@ public class User extends BaseEntity{
             gamemoney = 0L;
         }
     }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "game_room_id")
+    private Game_room room;
 
     private Long ingame_status;
 
