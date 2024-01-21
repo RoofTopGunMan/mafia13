@@ -26,9 +26,9 @@ function App() {
             <Route path='/admin/sellMng' Component={SellMng}></Route>
 
             {/* 로그인 및 회원가입 */}
-            <Route path="/login" Component={LoginPage}/>
-            <Route path="/login/:id" Component={LoginPage}/>
-            <Route path="/register" Component={RegisterPage}/>
+            <Route path="/user/login" Component={LoginPage}/>
+            <Route path="/user/login/:id" Component={LoginPage}/>
+            <Route path="/user/register" Component={RegisterPage}/>
         </Routes>
       </>
       );

@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 
 function Register() {
   const [name, setName] = useState('');
-  const [id, setId] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log('Registration Details:', { name, id, email, password });
+    console.log('Registration Details:', { name, username, email, password });
   };
 
   return (
@@ -28,8 +28,8 @@ function Register() {
           <label>ID:</label>
           <input
             type="text"
-            value={id}
-            onChange={(e) => setId(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             required
           />
         </div>
