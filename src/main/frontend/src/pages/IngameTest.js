@@ -15,7 +15,10 @@ const IngameTest = () => {
     }
 
     function connectRoom(Id,roomSubject) {
-        AxiosUtill.UtilGetAxios('api/room/connect',{userId : Id, roomName : roomSubject}, response => {setIngame(response.data);});
+        AxiosUtill.UtilGetAxios('api/room/connect',{userId : Id, roomName : roomSubject}, response => {
+        setIngame(response.data);
+        console.log(response.data);
+      });
     }
     useEffect(() => {
     AxiosUtill.UtilGetAxios('/api/hello', null, response => setHello(response.data));

@@ -5,10 +5,36 @@ import * as StompJs from '@stomp/stompjs';
 import * as axiosUtill from '../utill/axiosUtill';
 import {createStore} from "redux";
 import { Provider } from 'react';
+import {playerCard} from "../components/game/playerCard";
 import "./css/ingame.css";
 
 const Ingame = ({roomData , myID}) => {       
     const [User, setUser] = useState(null);
+    const [UserList, setUserList] = useState(null);
+    const Users = [
+        {
+            userId : 1,
+            userName : "dd",
+        },
+        {
+            userId : 2,
+            userName : "ss",
+        },
+        {
+            userId : 3,
+            userName : "cc",
+        }
+    ];
+
+    const initiateAPI = () => {
+        axiosUtill.UtilGetAxios("api/getuser",{userId : myID},  response => { 
+            connect(response.data);
+        });
+        axiosUtill.UtilGetAxios("api/getRoomInUser",{roomId : roomData.id}, response => {
+            setUserList(response.data); 
+        });
+
+    }
     const connect = (UserData) => {
         setUser(UserData);
         const client = new StompJs.Client({
@@ -19,9 +45,12 @@ const Ingame = ({roomData , myID}) => {
 
 
             client.subscribe("/sub/" + roomData.id);
-            let jsonBody = JSON.stringify({sender: UserData.name, data: UserData.name + " Send test"});
+            client.subscribe("sub/room/entrance/" + roomData.id, function(currentUserList){
+                setUserList(currentUserList.body);
+            });
+            let jsonBody = JSON.stringify({sender: UserData.name, senderType: 2,data: "", roomId: roomData.id });
             client.publish({
-                    destination: "pub/subTest",
+                    destination: "pub/entrance",
                     body: jsonBody
             });
 
@@ -29,10 +58,7 @@ const Ingame = ({roomData , myID}) => {
         client.activate();
     };
     useEffect(() => {
-        axiosUtill.UtilGetAxios("api/getuser",{userId : myID}, 
-        response => {
-            connect(response.data);
-        });
+        initiateAPI();
     }, []);
     return (
         <>

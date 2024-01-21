@@ -2,8 +2,11 @@ package com.lec.spring.controller;
 
 
 import com.lec.spring.domain.User;
+import com.lec.spring.repository.Game_roomRepository;
 import com.lec.spring.repository.UserRepository;
 import com.lec.spring.service.DevelopService;
+import com.lec.spring.service.GameavatarService;
+import com.lec.spring.service.IngameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +19,17 @@ public class ingameController {
 
     @Autowired
     DevelopService developService;
+
+    @Autowired
+    IngameService ingameService;
     @GetMapping("api/getuser")
     public ResponseEntity getUserData(Long userId) throws Exception {
         return new ResponseEntity(developService.UserFindById(userId), HttpStatus.OK);
+    }
+
+    @GetMapping("api/getRoomInUser")
+    public ResponseEntity getUserList(long roomId) throws Exception {
+        return new ResponseEntity(ingameService.FindByUserListFromRoomId(roomId),HttpStatus.OK);
     }
 
 

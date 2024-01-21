@@ -1,9 +1,13 @@
 package com.lec.spring.service;
 
+import com.lec.spring.DTO.defaultDTO;
 import com.lec.spring.domain.Game_room;
+import com.lec.spring.domain.User;
 import com.lec.spring.repository.Game_roomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class IngameService {
@@ -23,6 +27,10 @@ public class IngameService {
                 build();
         gameRoomRepository.save(newRoom);
         return newRoom;
+    }
+    public List<defaultDTO> FindByUserListFromRoomId(Long roomId) throws Exception{
+        Game_room findRoom = gameRoomRepository.findById(roomId).orElseThrow(() -> new Exception("ROOM ID IS INVALID "));
+        return findRoom.getUserListDTO();
     }
     public Game_room GameRoomFindBySubject(String subject ) {
         Game_room newRoom = gameRoomRepository.findBySubject(subject).orElse(createGameRoom());
