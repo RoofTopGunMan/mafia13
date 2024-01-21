@@ -9,6 +9,8 @@ import AdminPage from './pages/admin/AdminPage';
 import AdminNotice from './pages/admin/AdminNotice';
 import UserMng from './pages/admin/UserMng';
 import SellMng from './pages/admin/SellMng';
+import LoginPage from './pages/user/LoginPage';
+import RegisterPage from './pages/user/RegisterPage';
 
 function App() {
     return (
@@ -22,6 +24,11 @@ function App() {
             <Route path='/admin/notice' Component={AdminNotice}></Route>
             <Route path='/admin/userMng' Component={UserMng}></Route>
             <Route path='/admin/sellMng' Component={SellMng}></Route>
+
+            {/* 로그인 및 회원가입 */}
+            <Route path="/login" Component={LoginPage}/>
+            <Route path="/login/:id" Component={LoginPage}/>
+            <Route path="/register" Component={RegisterPage}/>
         </Routes>
       </>
       );
