@@ -6,6 +6,7 @@ import com.lec.spring.service.IngameService;
 import com.lec.spring.utill.senderClass;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
@@ -35,8 +36,14 @@ public class WebSocketMessageController {
     public void roomEntrance(senderClass sender) throws Exception {
 
         this.sender = sender;
-         List<defaultDTO> userList = ingameService.FindByUserListFromRoomId((long) sender.getRoomId());
-        messagingTemplate.convertAndSend("sub/room/entrance/" + sender.getRoomId(),userList);
+        List<defaultDTO> userList = ingameService.FindByUserListFromRoomId((long) sender.getRoomId());
+        messagingTemplate.convertAndSend("sub/room/entrance/" + sender.getRoomId(), userList);
+    }
+    @MessageMapping("/exit")
+    public void roomExit(senderClass sender) throws Exception {
 
+        this.sender = sender;
+        List<defaultDTO> userList = ingameService.FindByUserListFromRoomId((long) sender.getRoomId());
+        messagingTemplate.convertAndSend("sub/room/entrance/" + sender.getRoomId(),userList);
     }
 }

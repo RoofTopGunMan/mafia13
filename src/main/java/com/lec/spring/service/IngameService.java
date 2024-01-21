@@ -25,7 +25,6 @@ public class IngameService {
                 isLocked(false).
                 state(1).
                 build();
-        gameRoomRepository.save(newRoom);
         return newRoom;
     }
     public List<defaultDTO> FindByUserListFromRoomId(Long roomId) throws Exception{
@@ -33,9 +32,16 @@ public class IngameService {
         return findRoom.getUserListDTO();
     }
     public Game_room GameRoomFindBySubject(String subject ) {
-        Game_room newRoom = gameRoomRepository.findBySubject(subject).orElse(createGameRoom());
-        newRoom.setSubject(subject);
-
+        Game_room newRoom = gameRoomRepository.findBySubject(subject).
+                orElse(
+                Game_room.builder().
+                subject(subject).
+                time(30).
+                max_player(8).
+                isLocked(false).
+                state(1).
+                build()
+        );
         gameRoomRepository.save(newRoom);
         return newRoom;
 

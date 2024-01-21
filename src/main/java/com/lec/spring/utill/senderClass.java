@@ -16,4 +16,5 @@ public class senderClass {
     private String data;
 
     private int roomId;
+    private int userId;
 }
