@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface Game_roomRepository extends JpaRepository<Game_room,Long> {
     Optional<Game_room> findBySubject(String title);
+    Optional<Game_room> findByIdOrderByUpdateAtDesc(Long id);
 }

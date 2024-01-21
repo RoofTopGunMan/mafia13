@@ -1,5 +1,6 @@
 
 import React,  {useEffect, useState} from 'react';
+import { Col, Card ,Button} from 'react-bootstrap';
 
     /* props : playerAccount, updateState
      * 플레이어 비주얼 카드 입니다.
@@ -10,27 +11,27 @@ const PlayerCard = (UserList) => {
     console.log(UserList); 
     return (
         <>
-        
-        {UserList &&            
-         
-         UserList.UserList.map(it => {
-            return (
-                <>
-                    <div class = "card">
-                        <div class = "card-body">
-                            <div class = "card-title">
-                                <div class = "card-text">
-                                    {it.userName}
-                                </div>
-                            </div>  
+            {UserList &&    
+                UserList.UserList.map(it => {
+                    return (
+                    <>
+                    <Col md={3}>
+                        <div class="mb-2">
+                            <Card style={{width: '18rem', height: '12rem'}}>
+                                <Card.Body>
+                                    <Card.Title>{it.id}
+                                        <Card.Text>
+                                            {it.userName}   
+                                        </Card.Text>
+                                    </Card.Title>  
+                                </Card.Body>
+                            </Card>
                         </div>
-                    </div>
-                </>
-            )
-         })
-        }
+                    </Col>
+                    </> 
+            )})}
         </>
-    );
+        )
 }
 
 export default PlayerCard;

@@ -25,9 +25,6 @@ const IngameTest = () => {
         {clientIngame ? (              
         <>
           <Ingame roomData={clientIngame} myID = {UserId} />
-          <div className="App">
-            <Button as="input" type="button" value="Input" onClick={()=>buttonEvent(false)}/>{' '}
-          </div>
         </>
         )
         : (

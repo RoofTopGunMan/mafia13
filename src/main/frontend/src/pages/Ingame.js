@@ -3,7 +3,10 @@
 import React,  {useEffect, useState} from 'react';
 import * as StompJs from '@stomp/stompjs';
 import * as axiosUtill from '../utill/axiosUtill';
-import PlayerCard from "../components/game/playercard";
+import * as webSocketUtill from '../utill/webSocketUtill';
+import { Button } from 'react-bootstrap';
+import PlayScene from "../components/game/Playscene";
+import IngameHeader from "../components/game/ingameHeader";
 import "./css/ingame.css";
 
 const Ingame = ({roomData , myID}) => {       
@@ -45,21 +48,16 @@ const Ingame = ({roomData , myID}) => {
     }, []);
     return (
         <>
+            <IngameHeader roomData={roomData}/>
             <div>
-                인게임 테스트입니다.<br/>
-                방 번호 : {roomData.id}<br/>
-                방 이름 : {roomData.subject}<br/>
-                {User && (
-                    <>
-                    유저 이름 : {User.username}
-                    </>
-                )}
-
                 {UserList && 
                 (
-                    <PlayerCard UserList={UserList}/>
+                    <PlayScene UserList={UserList}/>
                 )}
             </div>
+          <div className="App">
+            <Button as="input" type="button" value="Input" onClick={()=>buttonEvent(false)}/>{' '}
+          </div>
         </>
     );
 }
