@@ -3,12 +3,24 @@
 import React,  {useEffect, useState} from 'react';
 import * as StompJs from '@stomp/stompjs';
 import * as axiosUtill from '../utill/axiosUtill';
+
 // import {createStore} from "redux";
 // import { Provider } from 'react';
+import PlayerCard from "../components/game/playercard";
+
 import "./css/ingame.css";
 
 const Ingame = ({roomData , myID}) => {       
     const [User, setUser] = useState(null);
+    const [UserList, setUserList] = useState(null);
+    const initiateAPI = () => {
+        axiosUtill.UtilGetAxios("api/getuser",{userId : myID},  response => { 
+            connect(response.data);
+        });
+        axiosUtill.UtilGetAxios("api/getRoomInUser",{roomId : roomData.id}, response => {
+        });
+
+    }
     const connect = (UserData) => {
         setUser(UserData);
         const client = new StompJs.Client({
@@ -19,9 +31,13 @@ const Ingame = ({roomData , myID}) => {
 
 
             client.subscribe("/sub/" + roomData.id);
-            let jsonBody = JSON.stringify({sender: UserData.name, data: UserData.name + " Send test"});
+            client.subscribe("sub/room/entrance/" + roomData.id, function(currentUserList){
+                setUserList(JSON.parse(currentUserList.body));
+                console.log(JSON.parse(currentUserList.body));
+            });
+            let jsonBody = JSON.stringify({sender: UserData.name, senderType: 2,data: "", roomId: roomData.id });
             client.publish({
-                    destination: "pub/subTest",
+                    destination: "pub/entrance",
                     body: jsonBody
             });
 
@@ -29,10 +45,7 @@ const Ingame = ({roomData , myID}) => {
         client.activate();
     };
     useEffect(() => {
-        axiosUtill.UtilGetAxios("api/getuser",{userId : myID}, 
-        response => {
-            connect(response.data);
-        });
+        initiateAPI();
     }, []);
     return (
         <>
@@ -40,12 +53,16 @@ const Ingame = ({roomData , myID}) => {
                 인게임 테스트입니다.<br/>
                 방 번호 : {roomData.id}<br/>
                 방 이름 : {roomData.subject}<br/>
-                {User ? (
+                {User && (
                     <>
                     유저 이름 : {User.username}
                     </>
-                ):(<></>)
-                }
+                )}
+
+                {UserList && 
+                (
+                    <PlayerCard UserList={UserList}/>
+                )}
             </div>
         </>
     );

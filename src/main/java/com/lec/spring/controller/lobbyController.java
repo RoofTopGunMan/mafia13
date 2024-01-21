@@ -35,8 +35,9 @@ public class lobbyController {
         if(newRoom.getUserList().isEmpty()){
             newRoom.setOwner_id(connectedUser.getId());
         }
-        newRoom.addUser(connectedUser);
+        connectedUser.setRoom(newRoom);
 
+        userRepository.save(connectedUser);
         roomRepository.save(newRoom);
         return newRoom;
     }

@@ -1,6 +1,9 @@
 package com.lec.spring.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.lec.spring.DTO.IngameUserRequestDTO;
+import com.lec.spring.DTO.defaultDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -49,13 +52,24 @@ public class Game_room extends BaseEntity {
     @ToString.Exclude
     private Game_roomState roomState; //진행중인 게임 방의 인 게임 상태입니다.
 
-    @OneToMany(mappedBy ="room")
+    @OneToMany(mappedBy ="room", fetch = FetchType.EAGER)
     @Builder.Default
+    @JsonIgnore
     private List<User> userList = new ArrayList<>();
 
     public void addUser(User user)
     {
         this.userList.add(user);
+    }
+    public List<defaultDTO> getUserListDTO() {
+        List<defaultDTO> newList;
+        newList = new ArrayList<>();
+        for (User u:
+             userList) {
+            newList.add(new IngameUserRequestDTO().toDTO(u));
+
+        }
+        return newList;
     }
 
 
