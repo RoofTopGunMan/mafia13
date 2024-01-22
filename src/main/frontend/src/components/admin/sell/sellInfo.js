@@ -35,7 +35,7 @@ const sellList = [
 
 const SellInfo = () => {
 
-    // 사이품 값들 받아오기
+    // 상품 값들 받아오기
 
     return (
         <>

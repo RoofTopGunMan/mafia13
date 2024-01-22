@@ -1,5 +1,14 @@
 import React from 'react';
-import { Accordion, Button, Form } from 'react-bootstrap';
+import { Accordion, Badge, Button, Card, CardBody, CardText, Form } from 'react-bootstrap';
+
+const noticeList = [
+    {
+        id: 1,
+        title: '공지1 입니다',
+        content: '공지1 내용입니다.',
+        type: "NOTICE"
+    }
+]
 
 const Notice = () => {
     return (
@@ -10,6 +19,28 @@ const Notice = () => {
                 </h3>
 
                 {/* 공지사항 값들을 받아와 Card로 정렬하기 */}
+                {noticeList.map(n => {
+                    return (
+                        <>
+                            {/* Card로 제목과 종류만 출력 */}
+                            <Card style={ {height: '10rem', width: '17rem'}}>
+                                <Card.Body>
+                                    <Card.Title>{n.title}</Card.Title>
+                                    <CardText>
+                                        {n.content}
+                                    </CardText>
+                                    <CardText>
+                                        {n.type === "NOTICE" ?
+                                            <Badge bg='primary'>Notice</Badge> :
+                                                <Badge bg='Secondary'></Badge>}
+                                    </CardText>
+                                </Card.Body>
+                            </Card>
+
+                            {/* 가능하면 페이징 넣어보기 */}
+                        </>
+                    )
+                })}
 
 
             </div>

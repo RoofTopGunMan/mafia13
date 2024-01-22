@@ -38,7 +38,7 @@ const UserInfo = () => {
     // 유저 정보 받아오기
     const [data, setData] = useState(userData);
 
-    // 유저 전적 정보 받아오시
+    // 유저 전적 정보 받아오기
     const [userRecord, setUserRecord] = useState([]);
     
     // 전적 불러오기(임시)
@@ -55,10 +55,6 @@ const UserInfo = () => {
         <>
             <div className='m-2'>
                 <h3><strong>전체 회원 관리</strong></h3>
-
-                <div>
-                    {/* 유저 상태, 게임머니를 변경하는 기능 추가예정 */}
-                </div>
         
                 {/* 유저 정보는 Table로 출력하기 + Overlay로 전적 출력 */}
                 <Form className='my-5 mx-2'>
@@ -117,6 +113,10 @@ const UserInfo = () => {
                             })}
                         </tbody>
                     </Table>
+                    <div>
+                        {/* 유저 상태, 게임머니를 변경하는 기능 추가예정 */}
+                        
+                    </div>
                 </Form>
             </div>
         </>

@@ -3,8 +3,8 @@
 import React,  {useEffect, useState} from 'react';
 import * as StompJs from '@stomp/stompjs';
 import * as axiosUtill from '../utill/axiosUtill';
-import {createStore} from "redux";
-import { Provider } from 'react';
+// import {createStore} from "redux";
+// import { Provider } from 'react';
 import "./css/ingame.css";
 
 const Ingame = ({roomData , myID}) => {       
