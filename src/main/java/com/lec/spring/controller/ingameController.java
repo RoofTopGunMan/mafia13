@@ -31,6 +31,10 @@ public class ingameController {
     public ResponseEntity getUserList(long roomId) throws Exception {
         return new ResponseEntity(ingameService.FindByUserListFromRoomId(roomId),HttpStatus.OK);
     }
+    @GetMapping("api/Play")
+    public ResponseEntity playGame(Long roomId, Long userId) {
+
+    }
 
 
 }
