@@ -6,7 +6,7 @@ import * as axiosUtill from '../utill/axiosUtill';
 
 // import {createStore} from "redux";
 // import { Provider } from 'react';
-import PlayerCard from "../components/game/playercard";
+import PlayerCard from "../components/game/playerCard";
 
 import "./css/ingame.css";
 
