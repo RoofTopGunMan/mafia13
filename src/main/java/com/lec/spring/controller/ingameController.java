@@ -33,7 +33,7 @@ public class ingameController {
     }
     @GetMapping("api/Play")
     public ResponseEntity playGame(Long roomId, Long userId) {
-
+        return null;
     }
 
 

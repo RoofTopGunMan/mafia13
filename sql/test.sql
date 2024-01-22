@@ -21,6 +21,6 @@ DROP TABLE game_room_job_state;
 DROP TABLE game_room_state;
 DROP TABLE selling;
 DROP TABLE user_authorities;
-DROP TABLE gameavatar ;
+DROP TABLE gameavatar;
 DROP TABLE USER;
 DROP table game_room;

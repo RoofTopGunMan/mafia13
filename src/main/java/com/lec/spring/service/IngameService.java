@@ -28,7 +28,7 @@ public class IngameService {
         return newRoom;
     }
     public List<defaultDTO> FindByUserListFromRoomId(Long roomId) throws Exception{
-        Game_room findRoom = gameRoomRepository.findByIdOrderByUpdateAtDesc(roomId).orElseThrow(() -> new Exception("ROOM ID IS INVALID "));
+        Game_room findRoom = gameRoomRepository.findByIdOrderByUpdatedAtDesc(roomId).orElseThrow(() -> new Exception("ROOM ID IS INVALID "));
         return findRoom.getUserListDTO();
     }
     public Game_room GameRoomFindBySubject(String subject ) {
