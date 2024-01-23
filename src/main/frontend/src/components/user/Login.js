@@ -1,12 +1,36 @@
 import React, { useState } from 'react';
+import { Await } from 'react-router-dom';
 
 function Login() {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
 
-  const submit = (event) => {
+  const submit = async(event) => {
     event.preventDefault();
-    console.log('Id:', id, 'Password:', password);
+    const logInfo = {id, password};
+
+    try {
+      const response = await fetch("http://localhost:3000/login", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(logInfo),
+      });
+
+      if (!response.ok) {
+        throw new Error('로그인 실패. 다시 시도하세요.');
+      }
+
+      const data = await response.json();
+      console.log("Server Response", data);
+
+      // Redirect URL
+  
+    } catch (error) {
+      console.log("알 수 없는 이유로 로그인 실패.", error);
+      // 에러 메세지 출력      
+    }
   };
 
   return (

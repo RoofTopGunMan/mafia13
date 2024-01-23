@@ -1,6 +1,6 @@
 import React from 'react';
-import Login from '../../components/user/Login';
 import { useParams } from 'react-router-dom';
+import Login from '../../components/user/Login';
 
 const LoginPage = () => {
 
@@ -9,7 +9,7 @@ const LoginPage = () => {
 
     return (
         <div>
-            <Login/>
+        <Login/>
         </div>
     );
 };
