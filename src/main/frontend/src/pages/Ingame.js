@@ -6,7 +6,6 @@ import * as axiosUtill from '../utill/axiosUtill';
 // import {createStore} from "redux";
 // import { Provider } from 'react';
 
-import * as axiosUtill from '../utill/axiosUtill';
 import * as webSocketUtill from '../utill/webSocketUtill';
 import { Button } from 'react-bootstrap';
 import PlayScene from "../components/game/Playscene";

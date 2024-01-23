@@ -1,39 +1,46 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Accordion, Badge, Button, Card, CardBody, CardText, Form, FormSelect} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import NoticeCard from './noticeCard';
 
 const Notice = () => {
 
     const navigate = useNavigate();
 
-    const [notice, setNotice] = useState({
-        title: "",
-        content: "",
-        type: "",
-    })
+    const [notice, setNotice] = useState([]);
+
+    useEffect(() => {
+        fetch("http://localhost:8093/admin/notice")
+        .then(response => response.json())
+        .then(data => {
+            setNotice(data);
+        });
+    }, []);
 
     const submitNotice = (e) => {
         e.preventDefault();
 
-        // 값 보내기
-        fetch("http://localhost:8080/admin/notice", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json;charset=utf-8",
-            },
-            body: JSON.stringify(notice),
-        })
-        .then(response => {
-            if(response.status === 201) {
-                return response.json();
-            } else return null;
-        })
-        .then(data => {
-            if(data !== null) {
-                alert("공지가 등록되었습니다.");
-                navigate(`/book/${data.id}`);
-            } else alert("공지 등록에 실패했습니다.");
-        })
+        if(e.notice.type !== "") {
+            // 값 보내기
+            fetch("http://localhost:8093/admin/notice", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json;charset=utf-8",
+                },
+                body: JSON.stringify(notice),
+            })
+            .then(response => {
+                if(response.status === 201) {
+                    return response.json();
+                } else return null;
+            })
+            .then(data => {
+                if(data !== null) {
+                    alert("공지가 등록되었습니다.");
+                    navigate(`/admin/notice/${data.id}`);
+                } else alert("공지 등록에 실패했습니다.");
+            })
+        } else alert("공지 종류를 선택해주세요.");
     }
 
     const changeValue = (e) => {
@@ -54,28 +61,10 @@ const Notice = () => {
                 {notice.map(n => {
                     return (
                         <>
-                            {/* Card로 제목과 종류만 출력 */}
-                            <Card style={ {height: '10rem', width: '17rem'}}>
-                                <Card.Body>
-                                    <Card.Title>{n.title}</Card.Title>
-                                    <CardText>
-                                        {n.content}
-                                    </CardText>
-                                    <CardText>
-                                        {n.type === "NOTICE" ?
-                                            <Badge bg='primary'>Notice</Badge> :
-                                                <Badge bg='Secondary'></Badge>}
-                                        <button className='btn bnt-sm btn-success'>상세</button>
-                                    </CardText>
-                                </Card.Body>
-                            </Card>
-
-                            {/* 가능하면 페이징 넣어보기 */}
+                            <NoticeCard/>
                         </>
                     )
                 })}
-
-
             </div>
             <hr style={{width: '90%', margin: 'auto'}}/>
             <Accordion defaultActiveKey="0">
@@ -93,7 +82,7 @@ const Notice = () => {
                             </Form.Group>
                             <Form.Group>
                                 <FormSelect className='mb-3' onChange={changeValue} name='type'>
-                                    <option>종류 선택</option>
+                                    <option value="">종류 선택</option>
                                     <option value="NOTICE">공지</option>
                                     <option value="ALARM">알림</option>
                                 </FormSelect>
