@@ -3,10 +3,11 @@ import "../css/mypage.css";
 const View = (props) => {
     const user = props.user;
     console.log(user);
+    
+    
+    
     return (
-        <>
-          
-        
+        <> 
             {user.map(user =>
                 
                     
@@ -27,7 +28,7 @@ const View = (props) => {
                             <label className="input">이메일:</label>
                             <div className="answer" >{user.email}</div>
                         </div>
-                    </div> 
+                </div> 
                 
                 
                 

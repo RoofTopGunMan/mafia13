@@ -23,7 +23,7 @@ public class NoticeService {
     }
 
     @Transactional(readOnly = true)
-    public List<Notice> loadNotice() {
+    public List<Notice> findAll() {
         return noticeRepository.findAll();
     }
     @Transactional

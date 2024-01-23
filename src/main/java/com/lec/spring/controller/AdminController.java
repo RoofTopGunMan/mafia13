@@ -1,6 +1,5 @@
 package com.lec.spring.controller;
 
-
 import com.lec.spring.domain.Notice;
 import com.lec.spring.service.ItemService;
 import com.lec.spring.service.NoticeService;
@@ -20,7 +19,7 @@ public class AdminController {
     @GetMapping("/admin")
     @CrossOrigin
     public ResponseEntity<?> home() {
-        return new ResponseEntity<>(noticeService.loadNoticeAtHome(), HttpStatus.OK);
+        return new ResponseEntity<>("ok", HttpStatus.OK);
     }
 
     // 유저관리 페이지
@@ -33,7 +32,7 @@ public class AdminController {
     @GetMapping("/admin/notice")
     @CrossOrigin
     public ResponseEntity<?> notice() {
-        return new ResponseEntity<>(noticeService.loadNotice(), HttpStatus.OK); // 200
+        return new ResponseEntity<>(noticeService.findAll(), HttpStatus.OK); // 200
     }
 
     @PostMapping("/admin/notice")
