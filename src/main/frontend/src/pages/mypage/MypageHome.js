@@ -12,15 +12,15 @@ const MypageHome = () => {
     
     const [Mypage, setMypage] = useState('');
     
-    const [user, setUser] = useState({id: "", username: "", password: "", name: "", email:""});
+    const [user, setUser] = useState([]);
 
-    useEffect(() => {
-        // 다운로드 하여 setBoards 호출
-        let data = [
-            { id: 1, username: "user1", password: "1234", name: "유저1", email: "1234@naver.com" },
-        ];
-
-        setUser([...data]);
+    useEffect(() => { 
+        fetch("http://localhost:8093/mypage")
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                setUser(data)
+             });
     }, []);
         const handleButtonClick = (page) => {
             setMypage(page);
@@ -30,9 +30,9 @@ const MypageHome = () => {
     
         return (
             <>
-                <div class="myPage">
+                <div className="myPage">
                 
-                    <div class="toHome">
+                    <div className="toHome">
                         <Link className='nav-link' to="/"> 로비로 돌아가기</Link>
                     </div>
                 
@@ -64,27 +64,7 @@ const MypageHome = () => {
                                   {Mypage === 'Inventory' && <Inventory />}
                               
                          </div>  
-                               
-        
-                    
-            
              </div>
-
-                    
-                    
-
-                    
-
-
-            
-                
-
-                
-                
-                
-               
-        
-        
             </>
         );
     };

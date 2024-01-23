@@ -1,48 +1,48 @@
 package com.lec.spring.controller;
 
-import com.lec.spring.domain.User;
+import com.lec.spring.domain.Gameavatar;
+import com.lec.spring.service.GameavatarService;
 import com.lec.spring.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
-
-@Controller
-@RequestMapping("/mafia")
+@RequiredArgsConstructor
+@RestController
 public class MypageController {
 
-    @Autowired
     private UserService userService;
 
-
-    @GetMapping("/mypage/home")
-    public String showMyPage(Model model, Principal principal) {
-        String currentUsername = principal.getName();
-        User userProfile = userService.getUserByUsername(currentUsername);
-        model.addAttribute("userProfile", userProfile);
-        model.addAttribute("containerRightPage", "/mypage/view");
-
-        return "mypage/home";
+    private GameavatarService gameavatarService;
+    @GetMapping("/")
+    @CrossOrigin
+    public ResponseEntity<?> home(){
+        return new ResponseEntity<>("ok", HttpStatus.OK);
     }
 
-    @GetMapping("/mypage/view")
-    public String showViewPage(Model model, Principal principal) {
-        String currentUsername = principal.getName();
-        User userProfile = userService.getUserByUsername(currentUsername);
-        model.addAttribute("userProfile", userProfile);
 
-        return "mypage/view";
+    @GetMapping("/mypage")
+    @CrossOrigin
+    public ResponseEntity<?> findUsername(@PathVariable String username){
+        return new ResponseEntity<>(userService.findByUsername(username), HttpStatus.OK);
     }
 
 
     @GetMapping("/mypage/inventory")
-    public  void showInventory(){
-
-
+    @CrossOrigin
+    public ResponseEntity<?> findAll(){
+        return new ResponseEntity<>(gameavatarService.findAll(), HttpStatus.OK);
     }
+
+
+    @PostMapping("/mypage/inventory")
+    @CrossOrigin
+    public ResponseEntity<?> save(@RequestBody Gameavatar gameavatar){
+        return  new ResponseEntity<>(gameavatarService.save(gameavatar), HttpStatus.CREATED);
+    }
+
 
 
 }

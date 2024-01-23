@@ -1,16 +1,11 @@
 package com.lec.spring.controller;
 
 
-import com.lec.spring.domain.User;
-import com.lec.spring.repository.Game_roomRepository;
-import com.lec.spring.repository.UserRepository;
 import com.lec.spring.service.DevelopService;
-import com.lec.spring.service.GameavatarService;
 import com.lec.spring.service.IngameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

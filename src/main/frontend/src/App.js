@@ -11,14 +11,14 @@ import UserMng from './pages/admin/UserMng';
 import SellMng from './pages/admin/SellMng';
 import LoginPage from './pages/user/LoginPage';
 import RegisterPage from './pages/user/RegisterPage';
+import Lobby from './pages/Lobby';
+import Inventory from './pages/mypage/Inventory';
 
 function App() {
     return (
       <>
         <Routes>
             <Route path='/' Component={IngameTest}>인게임테스트</Route>
-            <Route path='/mypage' Component={MypageHome}>마이페이지홈</Route>
-            
             {/* 어드민 페이지  */}
             <Route path='/admin' Component={AdminPage}></Route>
             <Route path='/admin/notice' Component={AdminNotice}></Route>
@@ -29,7 +29,14 @@ function App() {
             <Route path="/user/login" Component={LoginPage}/>
             <Route path="/user/login/:id" Component={LoginPage}/>
             <Route path="/user/register" Component={RegisterPage}/>
-        </Routes>
+            
+            {/* 마이페이지 */}
+          <Route path='/mypage' Component={MypageHome}>마이페이지홈</Route>
+          <Route path='/mypage/inventory' Component={Inventory}></Route>
+          
+          {/* 로비페이지 */}
+          <Route path="/lobby" Component={Lobby}>로비페이지</Route>
+         </Routes>
       </>
       );
 }
