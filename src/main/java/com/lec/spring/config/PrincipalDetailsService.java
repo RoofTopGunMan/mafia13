@@ -9,25 +9,25 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PrincipalDetailsService implements UserDetailsService {
+public class PrincipalDetailsService /*implements UserDetailsService*/ {
 
-    @Autowired
-    public UserService userService;
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        User user = userService.findByUsername(username);
-
-
-        if (user != null) {
-            PrincipalDetails userDetails = new PrincipalDetails(user);
-            userDetails.setUserService(userService);
-            return userDetails;
-        }
-
-        throw new UsernameNotFoundException(username);
-
-    }
+//    @Autowired
+//    public UserService userService;
+//
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//
+//        User user = userService.findByUsername(username);
+//
+//
+//        if (user != null) {
+//            PrincipalDetails userDetails = new PrincipalDetails(user);
+//            userDetails.setUserService(userService);
+//            return userDetails;
+//        }
+//
+//        throw new UsernameNotFoundException(username);
+//
+//    }
 }
 
