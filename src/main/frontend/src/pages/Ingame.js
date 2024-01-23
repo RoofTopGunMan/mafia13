@@ -32,6 +32,9 @@ const Ingame = ({roomData , myID}) => {
             console.log(currentUserList);
             setUserList(JSON.parse(currentUserList.body));
         })
+        
+        let jsonBody = JSON.stringify({sender: UserData.name, senderType: 2,data: "", roomId: roomData.id });
+        webSocketUtill.publishClient(jsonBody,"pub/entrance");
     }
     useEffect(() => {
         initiateAPI();
@@ -42,7 +45,7 @@ const Ingame = ({roomData , myID}) => {
             <div>
                 {UserList && 
                 (
-                    <PlayScene UserList={UserList}/>
+                    <PlayScene UserList={UserList} roomData = {roomData} />
                 )}
             </div>
         </>

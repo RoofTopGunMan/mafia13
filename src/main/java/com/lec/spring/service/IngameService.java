@@ -3,6 +3,7 @@ package com.lec.spring.service;
 import com.lec.spring.DTO.IngameUserRequestDTO;
 import com.lec.spring.DTO.defaultDTO;
 import com.lec.spring.domain.Game_room;
+import com.lec.spring.domain.Game_roomState;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.Game_roomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class IngameService {
     private Game_roomRepository gameRoomRepository;
 
 
+    @Autowired
+    private SchedulerService schedulerService;
+
     public Game_room createGameRoom() {
         Game_room newRoom = Game_room.builder().
                 subject("").
@@ -28,6 +32,11 @@ public class IngameService {
                 state(1).
                 build();
         return newRoom;
+    }
+    public Game_room GameRoomfindByid(Long id) throws Exception {
+        return gameRoomRepository.findById(id).orElseThrow(() -> new Exception("[GAMEROOM] ID IS INVALID "));
+
+
     }
     public List<defaultDTO> FindByUserListFromRoomId(Long roomId) throws Exception{
         Game_room findRoom = gameRoomRepository.findById(roomId).orElseThrow(() -> new Exception("ROOM ID IS INVALID "));
@@ -49,6 +58,23 @@ public class IngameService {
         gameRoomRepository.save(newRoom);
         return newRoom;
 
+    }
+    public boolean gameStart(Long roomId) throws Exception {
+
+        Game_roomState roomState = getGameRoomState(roomId);
+        if(roomState.isActive()) return false; // 이미 진행중인 방입니당.
+
+        roomState.startGame();
+
+        //각 유저들에게 직업 할당
+
+        schedulerService.addSchedule(getGameRoomState(roomId));
+
+        return true;
+    }
+    public Game_roomState getGameRoomState(Long roomId) throws Exception{
+        //방 생성시에 state도 생성되어야함.
+        return GameRoomfindByid(roomId).getRoomState();
     }
 
 }

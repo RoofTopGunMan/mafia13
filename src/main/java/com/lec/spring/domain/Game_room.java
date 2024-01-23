@@ -4,6 +4,7 @@ package com.lec.spring.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lec.spring.DTO.IngameUserRequestDTO;
 import com.lec.spring.DTO.defaultDTO;
+import com.lec.spring.utill.iIngameScheduler;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -78,6 +79,7 @@ public class Game_room extends BaseEntity {
     @OneToMany
     @JoinColumn(name ="game_room_id")
     private List<Game_roomJobState> jobState = new ArrayList<>();
+
     //https://soojong.tistory.com/entry/JPA-ManyToOne-OneToMany-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0
 
 

@@ -7,7 +7,6 @@ import React,  { useState} from 'react';
 
 
 let myClient = null;
-let activateTrigger = false;
 // getMapping 시 해당 함수로 호출하면 됩니다.
 
 export function createClient() {
@@ -16,36 +15,62 @@ export function createClient() {
     });
 
     myClient = client;
+    myClient.onConnect = function() {
+        console.log("active");
+        connectedDelayFunction.forEach(fnc => {
+            console.log("checkFunctions");
+            fnc();
+        })
+        PublishFunctionQueue.forEach(fnc => {
+            console.log("checkPubFunctions");
+            fnc();
+        })
+    }
+
     myClient.activate();
 }
 
 let connectedDelayFunction = [];
+let PublishFunctionQueue = [];
 
 //let jsonBody = JSON.stringify({sender: User.name, senderType: 2,data: "", roomId: roomData.id });
 //webSocketUtill.publishClient(jsonBody,"pub/entrance");
 export function activateIngame(roomId) {
-    myClient.onConnect = function() {
-        connectedDelayFunction.map(fnc =>{
-            fnc();
-        })
-    }
+
     myClient.activate();
 }
 export function subscribeClient(dest, subFunction) {
-    const subscribeFunc = myClient.subscribe(dest, (message) => {
+
+    if(myClient.connected){  
+        myClient.subscribe(dest, (message) => {
         subFunction(message);
     });
-    if(myClient.onConnect){ 
-        subscribeFunc()
     }
     else
-        connectedDelayFunction.push(subscribeFunc);
+        connectedDelayFunction.push(function() {
+                myClient.subscribe(dest, (message) => {
+                subFunction(message);
+            });
+    });
 }
 export function publishClient(JsonBody, dest) {
-    myClient.publish({
-        destination: dest,
-        body: JsonBody
-    });
+    console.log("addPublish");
+    if(myClient.connected){  
+        console.log("Publish-conneted");
+        myClient.publish({
+            destination: dest,
+            body: JsonBody
+        });
+    }
+    else{
+        console.log("Publish-delayed");
+        PublishFunctionQueue.push(function() {            
+            myClient.publish({
+                destination: dest,
+                body: JsonBody
+            });
+        })
+    }
 
 }
 export function publishStart(Client, ) {

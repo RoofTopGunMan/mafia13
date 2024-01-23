@@ -1,5 +1,6 @@
 
 SELECT * FROM game_room;
+SELECT * FROM game_room_state;
 SELECT * FROM user;
 SHOW table;
 

@@ -1,6 +1,8 @@
 package com.lec.spring.controller;
 
 
+import com.lec.spring.domain.Game_room;
+import com.lec.spring.domain.Game_roomState;
 import com.lec.spring.service.DevelopService;
 import com.lec.spring.service.IngameService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +28,7 @@ public class ingameController {
     public ResponseEntity getUserList(long roomId) throws Exception {
         return new ResponseEntity(ingameService.FindByUserListFromRoomId(roomId),HttpStatus.OK);
     }
-    @GetMapping("api/Play")
-    public ResponseEntity playGame(Long roomId, Long userId) {
-        return null;
-    }
+
 
 
 }

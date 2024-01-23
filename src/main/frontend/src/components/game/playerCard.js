@@ -16,7 +16,7 @@ const PlayerCard = ({UserList}) => {
                     return (
                     <>
                     <Col md={3}>
-                        <div class="mb-2">
+                        <div className ="mb-2">
                             <Card style={{width: '18rem', height: '12rem'}}>
                                 <Card.Body>
                                     <Card.Title>{it.id}
