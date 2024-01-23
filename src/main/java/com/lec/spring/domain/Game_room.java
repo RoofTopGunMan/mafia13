@@ -66,7 +66,7 @@ public class Game_room extends BaseEntity {
         newList = new ArrayList<>();
         for (User u:
              userList) {
-            newList.add(new IngameUserRequestDTO().toDTO(u));
+            newList.add(new IngameUserRequestDTO().toDTO(u,u.getId() == owner_id));
 
         }
         return newList;
