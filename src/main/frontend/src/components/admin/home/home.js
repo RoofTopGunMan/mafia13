@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Container, Row, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
 
     // 유저 정보 받아오기
+    const [users, setUsers] = useState([]);
 
     // 공지사항 글들 받아오기
+    const [notices, setNotices] = useState([]);
+
+    useEffect(() => {
+        fetch("http://localhost:8093/admin/notice")
+            .then(responce => responce.json())
+            .then(data => {
+                setNotices(data);
+            })
+    }, []);
 
 
     return (

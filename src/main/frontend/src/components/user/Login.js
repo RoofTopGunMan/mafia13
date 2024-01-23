@@ -1,22 +1,33 @@
 import React, { useState } from 'react';
-import { Await } from 'react-router-dom';
+import { Await, useNavigate } from 'react-router-dom';
 
 function Login() {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
+
+  const navigate = useNavigate();
 
   const submit = async(event) => {
     event.preventDefault();
     const logInfo = {id, password};
 
     try {
-      const response = await fetch("http://localhost:3000/login", {
+      const response = await fetch("http://localhost:8093/login", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(logInfo),
       });
+
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('token', data.token)
+
+        alert("로그인 성공");
+        navigate("/");
+      }
+
 
       if (!response.ok) {
         throw new Error('로그인 실패. 다시 시도하세요.');
