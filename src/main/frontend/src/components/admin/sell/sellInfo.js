@@ -98,9 +98,10 @@ const SellInfo = () => {
                                 <Form.Label>종류</Form.Label>
                                 <Form.Select className='input'>
                                     <option>상품 종류</option>
-                                    <option value="1">테두리</option>
-                                    <option value="2">치장품</option>
-                                    <option value="3">의상</option>
+                                    <option value="OUTLINE">테두리</option>
+                                    <option value="HEAD">머리</option>
+                                    <option value="BODY">몸</option>
+                                    <option value="CLOAK">망토</option>
                                 </Form.Select>
                             </Form.Group>
                         </Form>

@@ -5,8 +5,8 @@ import * as StompJs from '@stomp/stompjs';
 import * as axiosUtill from '../utill/axiosUtill';
 // import {createStore} from "redux";
 // import { Provider } from 'react';
-import PlayerCard from "../components/game/playerCard";
 
+// import PlayerCard from "../components/game/playerCard";
 import * as webSocketUtill from '../utill/webSocketUtill';
 import { Button } from 'react-bootstrap';
 import PlayScene from "../components/game/Playscene";
@@ -60,7 +60,7 @@ const Ingame = ({roomData , myID}) => {
                 )}
             </div>
           <div className="App">
-            <Button as="input" type="button" value="Input" onClick={()=>buttonEvent(false)}/>{' '}
+            {/* <Button as="input" type="button" value="Input" onClick={()=>buttonEvent(false)}/>{' '} */}
           </div>
         </>
     );
