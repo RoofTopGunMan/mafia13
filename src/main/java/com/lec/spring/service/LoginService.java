@@ -3,6 +3,9 @@ package com.lec.spring.service;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +15,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class LoginService {
 
-    private final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    private BCryptPasswordEncoder password = new BCryptPasswordEncoder();
 
 //    public User login(User userLogin){
 //        Optional<User> userInfo = userRepository.findByUsername(userLogin.getUsername());
@@ -30,8 +37,19 @@ public class LoginService {
 //        return user;
 //    }
 
+    public User login(String username, String rawPassword) {
+        User user = userRepository.findByUsername(username);
+        if (user != null && passwordEncoder.matches(rawPassword, user.getPassword())) {
+            return user;
+        }
+        return null;
+    }
+
     @Transactional
     public User register(User user) {
+        String encodedPassword = password.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+
         return userRepository.save(user);
     }
 }

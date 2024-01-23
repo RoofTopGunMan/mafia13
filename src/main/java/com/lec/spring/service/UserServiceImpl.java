@@ -37,15 +37,15 @@ public class UserServiceImpl implements UserService{
     @Override
     public int register(User user) {
 
-        // 회원 정보 저장
-        user.setUsername(user.getUsername().toUpperCase());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-
-        // MEMBER 권한 기본적으로 부여
-        Authority auth = authorityRepository.findByName("MEMBER");
-        user.addAuthority(auth);
-        userRepository.save(user);
+//        // 회원 정보 저장
+//        user.setUsername(user.getUsername().toUpperCase());
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        userRepository.save(user);
+//
+//        // MEMBER 권한 기본적으로 부여
+//        Authority auth = authorityRepository.findByName("MEMBER");
+//        user.addAuthority(auth);
+//        userRepository.save(user);
 
         return 1;
     }

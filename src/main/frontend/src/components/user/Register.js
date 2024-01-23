@@ -6,9 +6,29 @@ function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault();
-    console.log('Registration Details:', { name, username, email, password });
+    const userData = { name, username, email, password };
+
+    try {
+        const response = await fetch("http://localhost:8093/user/register", {
+            method: "POST",
+            headers: {
+                'Content-Type' : 'application/json',
+            },
+            body: JSON.stringify(userData),
+        });
+
+        if(!response.ok) {
+            throw new Error("회원가입 실패")
+        }
+
+        const data = await response.json();
+        console.log("Registration successful", data);
+    } catch (error) {
+        console.error("Registration failed", error);
+    }
+
   };
 
   return (
