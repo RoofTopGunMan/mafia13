@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+
+  const navigate = useNavigate();
 
   const handleSubmit = async(event) => {
     event.preventDefault();
@@ -25,6 +29,9 @@ function Register() {
 
         const data = await response.json();
         console.log("Registration successful", data);
+        alert("회원가입 성공")
+        navigate('/');
+
     } catch (error) {
         console.error("Registration failed", error);
     }

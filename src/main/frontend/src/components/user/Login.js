@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { Await, useNavigate } from 'react-router-dom';
 
 function Login() {
-  const [id, setId] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const navigate = useNavigate();
 
   const submit = async(event) => {
     event.preventDefault();
-    const logInfo = {id, password};
+    const logInfo = {username, password};
 
     try {
-      const response = await fetch("http://localhost:8093/login", {
+      const response = await fetch("http://localhost:8093/user/login", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -31,13 +31,9 @@ function Login() {
 
       if (!response.ok) {
         throw new Error('로그인 실패. 다시 시도하세요.');
-      }
+      }  
 
-      const data = await response.json();
-      console.log("Server Response", data);
-
-      // Redirect URL
-  
+      
     } catch (error) {
       console.log("알 수 없는 이유로 로그인 실패.", error);
       // 에러 메세지 출력      
@@ -51,9 +47,9 @@ function Login() {
         <div>
           <label>Id:</label>
           <input
-            type="id"
-            value={id}
-            onChange={(e) => setId(e.target.value)}
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             required
           />
         </div>
