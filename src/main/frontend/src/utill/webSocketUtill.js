@@ -41,13 +41,16 @@ export function activateIngame(roomId) {
 }
 export function subscribeClient(dest, subFunction) {
 
+    console.log("addSubscribe");
     if(myClient.connected){  
+        console.log("subsc-conneted");
         myClient.subscribe(dest, (message) => {
         subFunction(message);
     });
     }
     else
         connectedDelayFunction.push(function() {
+            console.log("subsc-delayed");
                 myClient.subscribe(dest, (message) => {
                 subFunction(message);
             });

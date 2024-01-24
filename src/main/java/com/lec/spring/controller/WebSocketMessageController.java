@@ -53,7 +53,8 @@ public class WebSocketMessageController {
         if(!ingameService.gameStart(sender.getRoomId())) {
             return;
         }
-        messagingTemplate.convertAndSend("sub/room/Play/" + sender.getRoomId());
+        messagingTemplate.convertAndSend("sub/room/Play/" + sender.getRoomId(),2);
+        messagingTemplate.convertAndSend("sub/" + sender.getRoomId(),3);
         //s
 
     }

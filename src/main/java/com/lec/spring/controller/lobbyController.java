@@ -37,8 +37,8 @@ public class lobbyController {
         }
         connectedUser.setRoom(newRoom);
 
-        userRepository.save(connectedUser);
         roomRepository.save(newRoom);
+        userRepository.save(connectedUser);
         return newRoom;
     }
 
