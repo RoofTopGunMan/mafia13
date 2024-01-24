@@ -7,6 +7,7 @@ import com.lec.spring.DTO.defaultDTO;
 import com.lec.spring.utill.iIngameScheduler;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,8 +50,9 @@ public class Game_room extends BaseEntity {
     //방장 Id입니다. user의 id를 가져옵니다.
     private Long owner_id;
 
-    @OneToOne(mappedBy = "room")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "room", cascade = CascadeType.PERSIST)
     @ToString.Exclude
+    @JsonIgnore
     private Game_roomState roomState; //진행중인 게임 방의 인 게임 상태입니다.
 
     @OneToMany(mappedBy ="room", fetch = FetchType.EAGER)

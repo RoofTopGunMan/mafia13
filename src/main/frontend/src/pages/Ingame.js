@@ -27,9 +27,7 @@ const Ingame = ({roomData , myID}) => {
         setUser(UserData);
 
         webSocketUtill.createClient();
-        webSocketUtill.subscribeClient("/sub/" + roomData.id);
         webSocketUtill.subscribeClient("sub/room/entrance/" + roomData.id, function(currentUserList){                        
-            console.log(currentUserList);
             setUserList(JSON.parse(currentUserList.body));
         })
         

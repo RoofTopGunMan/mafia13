@@ -2,21 +2,18 @@ package com.lec.spring.domain;
 
 import com.lec.spring.utill.iIngameScheduler;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 
 /* 게임방 진행 시 해당 방의 상태 값을 가져오는 테이블입니다.
  * 해당 DB에 데이터가 변경됨에 따라 1:1로 연결 된 게임방의 현재 상태를 수정합니다.
  */
-@Data
 @NoArgsConstructor
 @Entity
+@Getter
+@Setter
 @ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
-public class Game_roomState extends BaseEntity implements iIngameScheduler {
+public class Game_roomState implements iIngameScheduler {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

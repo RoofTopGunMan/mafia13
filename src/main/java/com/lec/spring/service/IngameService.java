@@ -6,6 +6,7 @@ import com.lec.spring.domain.Game_room;
 import com.lec.spring.domain.Game_roomState;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.Game_roomRepository;
+import com.lec.spring.repository.Game_roomStateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,8 @@ public class IngameService {
     @Autowired
     private Game_roomRepository gameRoomRepository;
 
+    @Autowired
+    private Game_roomStateRepository game_roomStateRepository;
 
     @Autowired
     private SchedulerService schedulerService;
@@ -47,8 +50,6 @@ public class IngameService {
     public Game_room GameRoomFindBySubject(String subject) {
         Game_room newRoom = gameRoomRepository.findBySubject(subject).orElse(createRoom(subject));
 
-        gameRoomRepository.save(newRoom);
-
         return newRoom;
 
     }
@@ -63,6 +64,7 @@ public class IngameService {
                 build();
 
         Game_roomState newState = new Game_roomState().initData();
+        newState.setRoom(newRoom);
         newRoom.setRoomState(newState);
         return newRoom;
     }
