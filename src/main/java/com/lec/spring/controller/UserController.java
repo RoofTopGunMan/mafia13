@@ -15,15 +15,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @RestController
 @RequestMapping("/user")
-//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
     @Autowired
     private UserService userService;
-
     @Autowired
     private LoginService loginService;
-
     @Autowired
     private TokenService tokenService;
 

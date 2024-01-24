@@ -30,7 +30,7 @@ function Register() {
         const data = await response.json();
         console.log("Registration successful", data);
         alert("회원가입 성공")
-        navigate('/');
+        navigate('/user/login');
 
     } catch (error) {
         console.error("Registration failed", error);

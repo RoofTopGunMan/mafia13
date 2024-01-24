@@ -25,14 +25,12 @@ public class User extends BaseEntity{
     private String username; //회원 아이디
 
     @Column(nullable = false)
-    @JsonIgnore
     private String password; // 회원 비밀번호
 
     @Column(nullable = false)
     private String name; // 회원 이름
 
     @Column(nullable = false, unique = true)
-    @JsonIgnore
     private String email; // 이메일
 
 

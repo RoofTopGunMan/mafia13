@@ -9,7 +9,7 @@ function Login() {
 
   const submit = async(event) => {
     event.preventDefault();
-    const logInfo = {username, password};
+    const logInfo = { username, password };
 
     try {
       const response = await fetch("http://localhost:8093/user/login", {
@@ -20,20 +20,17 @@ function Login() {
         body: JSON.stringify(logInfo),
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem('token', data.token)
-
-        alert("로그인 성공");
-        navigate("/");
-      }
-
-
       if (!response.ok) {
         throw new Error('로그인 실패. 다시 시도하세요.');
       }  
 
-      
+      const data = await response.json();
+      localStorage.setItem('token', data.token)
+
+      alert("로그인 성공");
+      navigate("/");  
+
+
     } catch (error) {
       console.log("알 수 없는 이유로 로그인 실패.", error);
       // 에러 메세지 출력      

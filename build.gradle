@@ -40,11 +40,18 @@ dependencies {
 
 
 
+
 	////////////웹소켓
 	implementation'org.springframework.boot:spring-boot-starter-websocket'
 	implementation'org.webjars:sockjs-client:1.1.2'
 	implementation'org.webjars:stomp-websocket:2.3.3-1'
 	implementation'org.webjars:webjars-locator:0.30'
+	// https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
+	implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+	// https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-core
+	implementation group: 'com.sun.xml.bind', name: 'jaxb-core', version: '2.3.0.1'
+	// https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-impl
+	implementation group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.3.1'
 
 }
 
