@@ -15,6 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @RestController
 @RequestMapping("/user")
+//@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
     @Autowired
@@ -23,6 +24,7 @@ public class UserController {
     @Autowired
     private LoginService loginService;
 
+    @Autowired
     private TokenService tokenService;
 
     @GetMapping("/login")
@@ -52,15 +54,6 @@ public class UserController {
     }
 
 
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/user/**").allowedOrigins("http://localhost:3000");
-            }
-        };
-    }
 
 
 
