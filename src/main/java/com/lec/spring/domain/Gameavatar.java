@@ -25,7 +25,10 @@ public class Gameavatar {
     private int outline;
 
 
-
+    // User:Gameavatar = 1:1
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name ="user_id")
+    private User user;   // 유저 아바타
 
 
 

@@ -19,4 +19,7 @@ public class ItemService {
         return itemRepository.findAll();
     }
 
+    @Transactional
+    public List<Item> findByuserId(Long userId){return itemRepository.findByUserId(userId);}
+
 }

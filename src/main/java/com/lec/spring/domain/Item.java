@@ -1,15 +1,14 @@
 package com.lec.spring.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @Entity
 public class Item extends BaseEntity{
     @Id
@@ -30,6 +29,18 @@ public class Item extends BaseEntity{
 
     @Column
     private  String img; // 상품 이미지
+
+
+    // Item:User = N:1
+    @ManyToOne(fetch = FetchType.EAGER)
+    @ToString.Exclude
+    @JoinColumn(name ="user_id")
+    private User user;   // 해당 유저 인벤토리 (FK)
+
+
+
+
+
 
 
 }

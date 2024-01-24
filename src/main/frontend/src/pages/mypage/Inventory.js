@@ -5,9 +5,9 @@ const Inventory = () => {
   
   const [user, setUser] = useState({
     gameavatar: {
-      head: null,
-      outline: null,
-      cloak: null,
+      head: "",
+      outline: "",
+      cloak: "",
     },
   });
 
@@ -27,18 +27,18 @@ const Inventory = () => {
     { id: 1, name: "Headgear 1", type: "head" },
     { id: 2, name: "Headgear 2", type: "head" },
     { id: 3, name: "Headgear 3", type: "head" },
-    { id: 1, name: "outline 1", type: "outline" },
-    { id: 1, name: "outline 2", type: "outline" },
-    { id: 1, name: "outline 3", type: "outline" },
-    { id: 1, name: "Cloak 1", type: "cloak" },
-    { id: 1, name: "Cloak 2", type: "cloak" },
-    { id: 1, name: "Cloak 3", type: "cloak" },
+    { id: 4, name: "outline 1", type: "outline" },
+    { id: 5, name: "outline 2", type: "outline" },
+    { id: 6, name: "outline 3", type: "outline" },
+    { id: 7, name: "Cloak 1", type: "cloak" },
+    { id: 8, name: "Cloak 2", type: "cloak" },
+    { id: 9, name: "Cloak 3", type: "cloak" },
     // ... 다양한 아이템 정보 추가
   ]);
 
 
   //   useEffect(() => { 
-//     fetch("http://localhost:8093/mypage/item")
+//     fetch("http://localhost:8093/mypage/item/{id}")
 //         .then(response => response.json())
 //         .then(data => {
 //             console.log(data);
