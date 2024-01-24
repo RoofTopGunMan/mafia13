@@ -64,6 +64,16 @@ public class Game_roomState extends BaseEntity implements iIngameScheduler {
     private Game_room room;
 
 
+    public Game_roomState initData(){
+        roundCount = 0;
+        roundStateProgress = 0;
+        isActive = false;
+        currentPlayerCount = 0;
+        livedPlayerCount = 0;
+        voteUserCount = 0;
+
+        return this;
+    }
     public Game_roomState startGame(){
         isActive = true; // 게임 시작
 
