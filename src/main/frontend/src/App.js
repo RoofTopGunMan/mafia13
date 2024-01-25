@@ -36,8 +36,9 @@ function App() {
             <Route path="/user/register" Component={RegisterPage}/>
             
             {/* 마이페이지 */}
-          <Route path='/mypage' Component={MypageHome}>마이페이지홈</Route>
-          <Route path='/mypage/inventory' Component={Inventory}></Route>
+          <Route path='/mypage' Component={MypageHome}></Route>{/* 마이페이지 홈 */}
+          <Route path='/mypage/:id' Component={MypageHome}></Route>
+          <Route path='/mypage/inventory' Component={Inventory}></Route> {/*마이페이지 인벤토리 */}
           
           {/* 로비페이지 */}
           <Route path="/lobby" Component={Lobby}>로비페이지</Route>

@@ -5,6 +5,7 @@ import com.lec.spring.service.GameavatarService;
 import com.lec.spring.service.ItemService;
 import com.lec.spring.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,13 +13,13 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RestController
 public class MypageController {
-
+    @Autowired
     private UserService userService;
-
+    @Autowired
     private GameavatarService gameavatarService;
 
     private ItemService itemService;
-    @GetMapping("/")
+    @GetMapping("/mypage")
     @CrossOrigin
     public ResponseEntity<?> home(){
         return new ResponseEntity<>("ok", HttpStatus.OK);
@@ -27,9 +28,10 @@ public class MypageController {
 
     @GetMapping("/mypage/{id}")
     @CrossOrigin
-    public ResponseEntity<?>  findById(@PathVariable Long id){
-        return new ResponseEntity<>(userService. findById(id), HttpStatus.OK);
+    public ResponseEntity<?>  getUserById(@PathVariable Long id){
+        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
     }
+
 
 
     @GetMapping("/mypage/inventory")
