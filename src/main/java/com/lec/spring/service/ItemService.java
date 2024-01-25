@@ -19,7 +19,8 @@ public class ItemService {
         return itemRepository.findAll();
     }
 
+   // 해당 유저에 관한 아이템 항목
     @Transactional
-    public List<Item> findByuserId(Long userId){return itemRepository.findByUserId(userId);}
+    public List<Item> getByuserId(Long userId){return itemRepository.getByUserId(userId);}
 
 }

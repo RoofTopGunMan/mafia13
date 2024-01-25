@@ -1,58 +1,44 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
-const Inventory = () => {
+
+const Inventory = (props) => {
+
+  const { userId } = useSelector((store) => store);
   
-  
-  const [user, setUser] = useState({
-    gameavatar: {
-      head: "",
-      outline: "",
-      cloak: "",
-    },
-  });
-
-//   useEffect(() => { 
-//     fetch("http://localhost:8093/mypage/inventory")
-//         .then(response => response.json())
-//         .then(data => {
-//             console.log(data);
-//             setGameavatar(data)
-//          });
-// }, []);
-
-
-
-
   const [inventory, setInventory] = useState([
-    { id: 1, name: "Headgear 1", type: "head" },
-    { id: 2, name: "Headgear 2", type: "head" },
-    { id: 3, name: "Headgear 3", type: "head" },
-    { id: 4, name: "outline 1", type: "outline" },
-    { id: 5, name: "outline 2", type: "outline" },
-    { id: 6, name: "outline 3", type: "outline" },
-    { id: 7, name: "Cloak 1", type: "cloak" },
-    { id: 8, name: "Cloak 2", type: "cloak" },
-    { id: 9, name: "Cloak 3", type: "cloak" },
-    // ... 다양한 아이템 정보 추가
   ]);
 
 
-  //   useEffect(() => { 
-//     fetch("http://localhost:8093/mypage/item/{id}")
-//         .then(response => response.json())
-//         .then(data => {
-//             console.log(data);
-//             setInventory(data)
-//          });
+    useEffect(() => { 
+    fetch("http://localhost:8093/mypage/inventory/item/"+ userId )
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            setInventory(data)
+         });
+}, []);
+
+
+  const [gameavatar, setGameavatar] = useState({
+    cloak: "",
+    head: "",
+    outline: "",
+    
+  });
+
+//   useEffect(() => {
+//     fetch("http://localhost:8080/mypage/inventory/gameavatar/10") 
+//     .then(response => response.json())
+//     .then(data => {
+//         setGameavatar(data);
+//     })
 // }, []);
-
-
- 
 
 
   // 아이템 장착 함수
   const equipItem = (item) => {
-    setUser((prevUser) => ({
+    setGameavatar((prevUser) => ({
       ...prevUser,
       gameavatar: {
         ...prevUser.gameavatar,
@@ -65,10 +51,10 @@ const Inventory = () => {
 
   // 아이템 제거 함수
   const unequipItem = (itemType) => {
-    setUser((prevUser) => ({
-      ...prevUser,
+    setGameavatar((gameavatar) => ({
+      ...gameavatar,
       gameavatar: {
-        ...prevUser.gameavatar,
+        ...gameavatar,
         [itemType]: null,
       },
     }));
@@ -91,20 +77,20 @@ const Inventory = () => {
       {/* 유저 아바타 표시 */}
       <h2>유저 아바타</h2>
       <div>
-        머리: {user.gameavatar.head ? user.gameavatar.head.name : '없음'}{' '}
-        {user.gameavatar.head && (
+        머리: {gameavatar.head ? gameavatar.head.name : '없음'}{' '}
+        {gameavatar.head && (
           <button onClick={() => unequipItem('head')}>해제</button>
         )}
       </div>
       <div>
-        몸: {user.gameavatar.outline ? user.gameavatar.outline.name : '없음'}{' '}
-        {user.gameavatar.outline && (
+        몸: {gameavatar.outline ? gameavatar.outline.name : '없음'}{' '}
+        {gameavatar.outline && (
           <button onClick={() => unequipItem('outline')}>해제</button>
         )}
       </div>
       <div>
-        망토: {user.gameavatar.cloak ? user.gameavatar.cloak.name : '없음'}{' '}
-        {user.gameavatar.cloak && (
+        망토: {gameavatar.cloak ? gameavatar.cloak.name : '없음'}{' '}
+        {gameavatar.cloak && (
           <button onClick={() => unequipItem('cloak')}>해제</button>
         )}
       </div>
