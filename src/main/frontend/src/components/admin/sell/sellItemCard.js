@@ -30,7 +30,7 @@ const SellItemCard = (props) => {
         <div>
             <Card className='sellCard'>
                 {/* 데이터에서 이미지 받아와야함 */}
-                <Card.Img variant='top' src=""/>
+                <Card.Img variant='top' src={attachment}/>
                 <Card.Body>
                     <Card.Title>{name}</Card.Title>
                     <Card.Text>{price} GM</Card.Text>
@@ -47,6 +47,7 @@ const SellItemCard = (props) => {
                     </Badge>
                     {/* Link의 경로 설정해야함 */}
                     <Button className='sellButton' onClick={() => navigate("/admin/sellMng/" + id)}>상세</Button>
+
                     <Button className='sellButton' variant='danger' onClick={deleteItem}>삭제</Button>
                 </Card.Body>
             </Card>

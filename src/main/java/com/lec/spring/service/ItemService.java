@@ -39,7 +39,8 @@ public class ItemService {
         itemEntity.setType(item.getType()); // 아이템 부위(테투리, 머리, 옷, 망토)
         itemEntity.setPrice(item.getPrice()); // 아이템 가격
         itemEntity.setStatus(item.getStatus()); // 아이템 종류 (상점 / 인게임)
-        itemEntity.setAttachment(item.getAttachment()); // 아이템 이미지
+        itemEntity.setImg(item.getImg());
+        itemEntity.setImgPath(item.getImgPath());
 
         return itemEntity;
     }

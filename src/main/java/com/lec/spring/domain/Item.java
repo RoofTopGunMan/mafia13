@@ -2,6 +2,8 @@ package com.lec.spring.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @NoArgsConstructor
@@ -26,6 +28,13 @@ public class Item extends BaseEntity{
 
     @Column
     private  String status; // 아이템종류 상점 / 인게임
+
+    @Column
+    private String img;    // 아이템 이미지
+
+    @Column
+    @Value("${spring.servlet.multipart.location}")
+    private String imgPath; // 이미지 저장 경로
 
 
     // Item:Attachment = 1:1

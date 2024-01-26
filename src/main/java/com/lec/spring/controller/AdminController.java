@@ -2,14 +2,14 @@ package com.lec.spring.controller;
 
 import com.lec.spring.domain.Item;
 import com.lec.spring.domain.Notice;
+import com.lec.spring.domain.User;
 import com.lec.spring.service.ItemService;
 import com.lec.spring.service.NoticeService;
+import com.lec.spring.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,6 +17,7 @@ public class AdminController{
 
     private final NoticeService noticeService;
     private final ItemService itemService;
+    private final UserService userService;
 
     // 홈 페이지
     @GetMapping("/admin")
@@ -26,6 +27,17 @@ public class AdminController{
     }
 
     // 유저관리 페이지
+    @GetMapping("/admin/userMng")
+    @CrossOrigin
+    public ResponseEntity<?> userMng(){
+        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+    }
+
+    @PostMapping("/admin/userMng")
+    @CrossOrigin
+    public ResponseEntity<?> updateUserInfo(@RequestBody User user) {
+        return new ResponseEntity<>(userService.updateUserInfo(user), HttpStatus.OK);
+    }
 
 
     // 상품관리 페이지
@@ -38,7 +50,7 @@ public class AdminController{
     @PostMapping("/admin/sellMng")
     @CrossOrigin
     public ResponseEntity<?> saveItem(@RequestBody Item item) {
-        return new ResponseEntity<>(itemService.saveItem(item), HttpStatus.CREATED);
+        return new ResponseEntity<>(itemService.saveItem(item), HttpStatus.CREATED); // 201
     }
 
     @GetMapping("/admin/sellMng/{id}")
@@ -91,6 +103,5 @@ public class AdminController{
         return new ResponseEntity<>(noticeService.deleteNotice(id), HttpStatus.OK);
     }
 
-    // 이미지 업로드
 
 }

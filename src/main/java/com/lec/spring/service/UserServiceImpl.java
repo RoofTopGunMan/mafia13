@@ -72,9 +72,21 @@ public class UserServiceImpl implements UserService{
     }
 
 
+    // 관리자페이지 - 유저 불러오기, 유저 상태, 게임머니 변경
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
 
+    @Override
+    public User updateUserInfo(User user) {
+        User userEntity = userRepository.findById(user.getId()).orElseThrow(() -> new IllegalArgumentException("id를 확인해주세요"));
 
+        userEntity.setAuthorities(user.getAuthorities());   // 유저 권한 변경
+        userEntity.setGamemoney(user.getGamemoney());   // 유저 게임머니 변경
 
+        return userEntity;
+    }
 
 
 }

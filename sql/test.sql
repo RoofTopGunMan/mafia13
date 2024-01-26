@@ -3,7 +3,9 @@ SELECT * FROM game_room;
 SELECT * FROM game_room_state;
 SELECT * FROM user;
 SELECT * FROM atattment;
+SELECT * FROM notice;
 SELECT * FROM item;
+SELECT * FROM USER;
 
 SHOW table;
 
