@@ -1,6 +1,7 @@
 package com.lec.spring.service;
 
 import com.lec.spring.domain.Gameavatar;
+import com.lec.spring.domain.Item;
 import com.lec.spring.repository.GameavatarRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class GameavatarService {
     public List<Gameavatar> findAll(){ return gameavatarRepository.findAll();}
 
 
+    @Transactional
+    public List<Gameavatar> getByuserId(Long userId){return gameavatarRepository.getByUserId(userId);}
 
 
 

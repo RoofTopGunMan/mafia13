@@ -37,11 +37,14 @@ function App() {
             <Route path="/user/register" Component={RegisterPage}/>
             
             {/* 마이페이지 */}
-            <Route path='/mypage' Component={MypageHome}>마이페이지홈</Route>
-            <Route path='/mypage/inventory' Component={Inventory}></Route>
-            
-            {/* 로비페이지 */}
-            <Route path="/lobby" Component={Lobby}>로비페이지</Route>
+          <Route path='/mypage' Component={MypageHome}></Route>{/* 마이페이지 홈 */}
+          <Route path='/mypage/:id' Component={MypageHome}></Route>
+          <Route path='/mypage/inventory' Component={Inventory}></Route> {/*마이페이지 인벤토리 */}
+          <Route path='/mypage/inventory/item/:id' Component={Inventory}></Route> {/*인벤토리 아이템 */}
+          <Route path='/mypage/inventory/gameavatar/:id' Component={Inventory}></Route> {/*게임 아바타 */}
+  
+          {/* 로비페이지 */}
+          <Route path="/lobby" Component={Lobby}>로비페이지</Route>
          </Routes>
       </>
       );

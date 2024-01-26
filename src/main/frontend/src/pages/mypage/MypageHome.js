@@ -1,21 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import View from './View';
-import { Link, Route, Routes } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import Modify from './Modify';
 import Record from './Record';
 import Inventory from './Inventory';
 import Button from 'react-bootstrap/Button';
 import "../css/mypage.css";
+import { UseSelector, useSelector } from 'react-redux';
 
 const MypageHome = () => {
-    
-    
+
+    const { userId } = useSelector((state) => state);
+
+
     const [Mypage, setMypage] = useState('');
     
     const [user, setUser] = useState([]);
 
     useEffect(() => { 
-        fetch("http://localhost:8093/mypage")
+        fetch("http://localhost:8093/mypage/" + userId  )
             .then(response => response.json())
             .then(data => {
                 console.log(data);
@@ -30,10 +33,11 @@ const MypageHome = () => {
     
         return (
             <>
+               
                 <div className="myPage">
-                
+
                     <div className="toHome">
-                        <Link className='nav-link' to="/"> 로비로 돌아가기</Link>
+                        <Link className='nav-link' to="/lobby"> 로비로 돌아가기</Link>
                     </div>
                 
                     <h1>마이페이지</h1>

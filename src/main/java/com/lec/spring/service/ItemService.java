@@ -52,8 +52,6 @@ public class ItemService {
 
     // 마이페이지
     @Transactional
-    public List<Item> findByUserId(Long userId) {
-        return itemRepository.findByUserId(userId);
-    }
+    public List<Item> getByuserId(Long userId){return itemRepository.getByUserId(userId);}
 
 }

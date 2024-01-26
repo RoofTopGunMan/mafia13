@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Await, useNavigate } from 'react-router-dom';
 
 function Login() {
@@ -6,8 +7,9 @@ function Login() {
   const [password, setPassword] = useState('');
 
   const navigate = useNavigate();
-
-  const submit = async(event) => {
+  const dispatch = useDispatch();
+  
+  const submit = async (event) => {
     event.preventDefault();
     const logInfo = { username, password };
 
@@ -20,6 +22,7 @@ function Login() {
         body: JSON.stringify(logInfo),
       });
 
+      
       if (!response.ok) {
         throw new Error('로그인 실패. 다시 시도하세요.');
       }  
@@ -27,9 +30,12 @@ function Login() {
       const data = await response.json();
       localStorage.setItem('token', data.token)
 
+       // Flux 패턴을 사용하여 데이터를 전달
+      dispatch({ type: "LOGIN_SUCCESS", userId: data.user.id });
+
       alert("로그인 성공");
       navigate("/");  
-
+    
 
     } catch (error) {
       console.log("알 수 없는 이유로 로그인 실패.", error);
