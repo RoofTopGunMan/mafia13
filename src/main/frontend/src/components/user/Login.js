@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Await, useNavigate } from 'react-router-dom';
+import "../../pages/css/user.css"
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -38,29 +39,32 @@ function Login() {
   };
 
   return (
-    <div>
-      <form onSubmit={submit}>
-        <h2>Login</h2>
-        <div>
-          <label>Id:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
+    <div id='loginWrap'>
+
+      <div id='formBorder'>
+
+        <form onSubmit={submit} name="frm">
+
+          <br></br>
+
+          <h2 id="login">Mafia13</h2>
+
+          <div>
+            <label class="logInfo" id='id'>  아이디  : </label>
+            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
+          </div>
+
+          <div>
+            <label class="logInfo" id='password'>비밀번호 : </label>
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+          </div>
+
+          <button type="submit" id='loginBtn'> 로그인 </button>
+
+        </form>
+
+      </div>
+
     </div>
   );
 }
