@@ -50,8 +50,6 @@ const NoticeSave = () => {
                     <Accordion.Header>공지 등록</Accordion.Header>
                     <Accordion.Body>
                         <Form onSubmit={submitNotice}>
-
-                            
                             <Form.Group className='mb-3'>
                                 <Form.Label>제목</Form.Label>
                                 <Form.Control type='text' placeholder='공지 제목 입력란' onChange={changeValue} name='title'/>
@@ -62,8 +60,8 @@ const NoticeSave = () => {
                             </Form.Group>
                             <Form.Group>
                                 <Form.Select className='mb-3' onChange={changeValue} name='type'>
-                                    <option name='type' value="NOTICE">공지</option>
                                     <option name='type' value="ALARM">알림</option>
+                                    <option name='type' value="NOTICE">공지</option>
                                 </Form.Select>
                             </Form.Group>
                             {/* 버튼 누르면 입력된 값이 DB에 추가되도록 하기 */}

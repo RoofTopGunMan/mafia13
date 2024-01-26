@@ -21,5 +21,9 @@ public interface UserService {
     User getUserById(Long id);
 
 
+    // 관리자 페이지 - 모든 유저 불러오기, 유저 상태, 게임머니 변경
+    List<User> findAll();
+
+    User updateUserInfo(User user);
 
 }

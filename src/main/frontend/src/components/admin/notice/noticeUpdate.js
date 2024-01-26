@@ -68,8 +68,8 @@ const NoticeUpdate = () => {
                 </Form.Group>
                 <Form.Group>
                     <Form.Select className='m-3' style={{width: '150px'}} onChange={changeValue} name='type'>
-                        <option name='type' selected={notice.type === "NOTICE"} value="NOTICE">공지</option>
                         <option name='type' selected={notice.type === "ALARM"} value="ALARM">알림</option>
+                        <option name='type' selected={notice.type === "NOTICE"} value="NOTICE">공지</option>
                     </Form.Select>
                 </Form.Group>
                 {/* 버튼 누르면 입력된 값이 DB에 추가되도록 하기 */}

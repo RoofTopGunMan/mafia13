@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import ImageUploading from 'react-images-uploading';
 import { Accordion, Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+
+import axios from "axios";
 
 import './sellInfo.css'
 
@@ -9,28 +10,45 @@ const SellSaveItem = () => {
 
     const navigate = useNavigate();
 
+    // 이미지 저장용
+    const [img, setImg] = useState("");
+
     const [item, setItem] = useState({
         name: "",
         type: "",
         price: "",
         state: "",
-        attachment: [],
     });
 
-    // 이미지 저장용
-    const [img, setImg] = useState([]);
-
+    const uploadImg = (e) => {
+        if (e.target.files[0]) {
+            console.log(e.target.files[0]);
+            setImg(e.target.files[0]);
+        }
+    }
 
     const submitItem = (e) => {
         e.preventDefault();
 
+        // 이미지(file) + item 정보(JSON) 합치기
+        const data = new FormData();
+
+        const json = JSON.stringify(item);  // item의 JSON 정보
+        const blob = new Blob([json], {
+            type: "application/json",
+        });
+
+        data.append("item", blob);
+        data.append("img", img);
+
+        console.log(data);
         // 값 보내기
         fetch("http://localhost:8093/admin/sellMng", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json;charset=utf-8",
+                "Content-Type": "multipart/form-data",
             },
-            body: JSON.stringify(item),
+            body: data,
         })
         .then(response => {
             if(response.status === 201) {
@@ -43,7 +61,6 @@ const SellSaveItem = () => {
                 window.location.replace("/admin/sellMng");
             } else alert("아이템을 등록하지 못했습니다.");
         })
-
     }
 
     const changeValue = (e) => {
@@ -51,13 +68,6 @@ const SellSaveItem = () => {
             ...item,
             [e.target.name]: e.target.value,
         })
-    }
-
-    // 이미지용 onChange
-    const onChange = (imageList, addUpdateIndex) => {
-        // 확인용
-        console.log(imageList, addUpdateIndex);
-        setImg(imageList);
     }
 
     return (
@@ -68,36 +78,7 @@ const SellSaveItem = () => {
                     <Accordion.Body>
                         <Form onSubmit={submitItem}>
                             <Form.Group className='mb-3'>
-                                <ImageUploading multiple value={img} onChange={onChange} dataURLKey='data_url' name='attachment'>
-                                {({
-                                    imageList,
-                                    onImageUpload,
-                                    onImageUpdate,
-                                    onImageRemove,
-                                    isDragging,
-                                    dragProps,
-                                }) => (
-                                    <div>
-                                      <button className='btn btn-secondary mb-2'
-                                        style={isDragging ? { color: 'navy' } : undefined}
-                                        onClick={onImageUpload}
-                                        {...dragProps}
-                                      >
-                                        Click or Drop here your Img
-                                      </button>
-                                      &nbsp;
-                                      {imageList.map((image, index) => (
-                                        <div key={index} className="image-item">
-                                          <img src={image['data_url']} alt="" width="100" />
-                                          <div className="image-item__btn-wrapper">
-                                            <Button size='sm' onClick={() => onImageUpdate(index)}>O</Button>
-                                            <Button variant='danger' size='sm' onClick={() => onImageRemove(index)}>X</Button>
-                                          </div>
-                                        </div>
-                                      ))}
-                                    </div>
-                                    )}
-                                </ImageUploading>
+                                <Form.Control className='input' type='file' size='sm' onChange={uploadImg}></Form.Control>
                                 <Form.Label>상품 이름</Form.Label>
                                 <Form.Control className='input' type='text' placeholder='상품 이름 입력란' onChange={changeValue} name='name'/>
                                 <Form.Label>가격</Form.Label>
