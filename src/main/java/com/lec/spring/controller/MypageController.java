@@ -18,6 +18,7 @@ public class MypageController {
     @Autowired
     private GameavatarService gameavatarService;
 
+    @Autowired
     private ItemService itemService;
     @GetMapping("/mypage")
     @CrossOrigin
@@ -47,14 +48,19 @@ public class MypageController {
         return  new ResponseEntity<>(gameavatarService.save(gameavatar), HttpStatus.CREATED);
     }
 
-    @GetMapping("/mypage/inventory/{id}")
+    // 유저 인벤토리 아이템 항목
+    @GetMapping("/mypage/inventory/item/{userId}")
     @CrossOrigin
-    public ResponseEntity<?>  findByuserId(@PathVariable Long userId){
-        return new ResponseEntity<>(itemService.findByuserId(userId), HttpStatus.OK);
+    public ResponseEntity<?>  getByItemuserId(@PathVariable Long userId){
+        return new ResponseEntity<>(itemService.getByuserId(userId), HttpStatus.OK);
     }
 
-
-
+    // 유저 게임 아바타
+    @GetMapping("/mypage/inventory/gameavatar/{userId}")
+    @CrossOrigin
+    public ResponseEntity<?>  getByAvataruserId(@PathVariable Long userId){
+        return new ResponseEntity<>(gameavatarService.getByuserId(userId), HttpStatus.OK);
+    }
 
 
 

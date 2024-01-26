@@ -23,5 +23,5 @@ public class Notice extends BaseEntity {
     private String content;
 
     @Column
-    private String state;
+    private String type;
 }

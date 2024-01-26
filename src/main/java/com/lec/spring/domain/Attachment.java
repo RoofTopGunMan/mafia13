@@ -17,12 +17,13 @@ public class Attachment extends BaseEntity{
     private  Long id; // PK
 
     @Column(nullable = false)
-    private  Long user_id;
+    private  Long item_id;
 
     @Column(nullable = false)
-    private  String sourcename;
+    private  String filename;   // 이미지 이름
 
     @Column(nullable = false)
-    private String filename;
+    private  String filepath;   // 이미지 저장 경로
+
 
 }

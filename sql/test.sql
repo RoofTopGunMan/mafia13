@@ -2,6 +2,9 @@
 SELECT * FROM game_room;
 SELECT * FROM game_room_state;
 SELECT * FROM user;
+SELECT * FROM atattment;
+SELECT * FROM item;
+
 SHOW table;
 
 INSERT INTO user (id, email, gamemoney,name, password, username) VALUES

@@ -1,0 +1,19 @@
+.noticeCard {
+    margin: 10px 5px;
+    width: 20rem;
+    height: 9rem;
+
+    float: left;
+
+    text-align: center;
+}
+
+.noticeForm {
+    margin: 20px;
+
+    border: 1.5px solid #999;
+    border-radius: 10px;
+    background-color: #999;
+
+    width: 450px;
+}

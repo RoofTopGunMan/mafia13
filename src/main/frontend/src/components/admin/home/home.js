@@ -10,14 +10,6 @@ const Home = () => {
     // 공지사항 글들 받아오기
     const [notices, setNotices] = useState([]);
 
-    useEffect(() => {
-        fetch("http://localhost:8093/admin/notice")
-            .then(responce => responce.json())
-            .then(data => {
-                setNotices(data);
-            })
-    }, []);
-
 
     return (
         <>

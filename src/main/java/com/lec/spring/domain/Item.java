@@ -25,10 +25,13 @@ public class Item extends BaseEntity{
     private  int price; // 아이템 가격
 
     @Column
-    private  String status; // 아이템상태
+    private  String status; // 아이템종류 상점 / 인게임
 
-    @Column
-    private  String img; // 상품 이미지
+
+    // Item:Attachment = 1:1
+    @OneToOne
+    @JoinColumn(name = "item_id")
+    private  Attachment attachment;  // 아이템 이미지
 
 
     // Item:User = N:1

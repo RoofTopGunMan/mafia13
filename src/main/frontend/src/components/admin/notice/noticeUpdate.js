@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form, FormSelect } from 'react-bootstrap';
+import { Badge, Button, Form, FormSelect } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
+
+import "./notice.css"
 
 const NoticeUpdate = () => {
 
@@ -25,7 +27,7 @@ const NoticeUpdate = () => {
         setNotice({
             ...notice,
             [e.target.name]: e.target.value,
-        })
+        });
     }
 
     const submitNotice = (e) => {
@@ -53,27 +55,28 @@ const NoticeUpdate = () => {
     }
 
     return (
-        <div>
-            <Form onSubmit={submitNotice}>
-                <Form.Group className='mb-3'>
+        <>
+            <h2 className='mt-2 mx-2'><strong>공지 수정 페이지</strong></h2>
+            <Form className='noticeForm' onSubmit={submitNotice}>
+                <Form.Group className='m-3'>
                     <Form.Label>제목</Form.Label>
-                    <Form.Control type='text' placeholder='상품 이름 입력란' onChange={changeValue} name='title' value={notice.title}/>
+                    <Form.Control type='text' placeholder='공지 제목 입력란' onChange={changeValue} name='title' value={notice.title}/>
                 </Form.Group>
-                <Form.Group className='mb-3'>
+                <Form.Group className='m-3'>
                     <Form.Label>내용</Form.Label>
-                    <Form.Control as="textarea" rows={6} onChange={changeValue} name='content' value={notice.content}/>
+                    <Form.Control as="textarea" rows={6} placeholder='공지 내용' onChange={changeValue} name='content' value={notice.content}/>
                 </Form.Group>
                 <Form.Group>
-                    <FormSelect className='mb-3' onChange={changeValue} name='type' value={notice.type}>
-                        <option>종류 선택</option>
-                        <option value="NOTICE">공지</option>
-                        <option value="ALARM">알림</option>
-                    </FormSelect>
+                    <Form.Select className='m-3' style={{width: '150px'}} onChange={changeValue} name='type'>
+                        <option name='type' selected={notice.type === "NOTICE"} value="NOTICE">공지</option>
+                        <option name='type' selected={notice.type === "ALARM"} value="ALARM">알림</option>
+                    </Form.Select>
                 </Form.Group>
+                {/* 버튼 누르면 입력된 값이 DB에 추가되도록 하기 */}
+                <Button className='m-3' variant='secondary' size="sm" type='submit'>수정하기</Button>
+                <Button variant='secondary' size="sm" onClick={() => navigate(-1)}>돌아가기</Button>
             </Form>
-            {/* 버튼 누르면 입력된 값이 DB에 추가되도록 하기 */}
-            <Button variant='secondary' size="sm" type='submit'>등록하기</Button>
-        </div>
+        </>
     );
 };
 
