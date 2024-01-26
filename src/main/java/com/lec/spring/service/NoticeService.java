@@ -38,16 +38,21 @@ public class NoticeService {
         // 공지 수정
         noticeEntity.setTitle(notice.getTitle());
         noticeEntity.setContent(notice.getContent());
-        noticeEntity.setState(notice.getState());
+        noticeEntity.setType(notice.getType());
         noticeEntity.getUpdatedAt();
 
         return noticeEntity;
     }
 
+    @Transactional(readOnly = true)
+    public Notice findById(Long id) {
+        return noticeRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("id를 확인해주세요."));
+    }
+
     @Transactional
     public String deleteNotice(Long id) {
         noticeRepository.deleteById(id);
-
         return "ok";
     }
 }

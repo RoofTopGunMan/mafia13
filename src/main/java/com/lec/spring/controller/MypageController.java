@@ -18,6 +18,7 @@ public class MypageController {
     private GameavatarService gameavatarService;
 
     private ItemService itemService;
+
     @GetMapping("/")
     @CrossOrigin
     public ResponseEntity<?> home(){
@@ -47,8 +48,8 @@ public class MypageController {
 
     @GetMapping("/mypage/inventory/{id}")
     @CrossOrigin
-    public ResponseEntity<?>  findByuserId(@PathVariable Long userId){
-        return new ResponseEntity<>(itemService.findByuserId(userId), HttpStatus.OK);
+    public ResponseEntity<?> findByUserId(@PathVariable Long id){
+        return new ResponseEntity<>(itemService.findByUserId(id), HttpStatus.OK);
     }
 
 
