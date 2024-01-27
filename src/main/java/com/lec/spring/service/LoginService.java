@@ -21,21 +21,10 @@ public class LoginService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-//    public User login(User userLogin){
-//        Optional<User> userInfo = userRepository.findByUsername(userLogin.getUsername());
-//
-//        if (!userInfo.isPresent()) {
-//            throw new RuntimeException("존재하지 않는 아이디입니다.");
-//        }
-//
-//        User user = userInfo.get();
-//
-//        if (!userInfo.getPassword().equals(user.getPassword())) {
-//            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
-//        }
-//
-//        return user;
-//    }
+
+    public boolean isUsernameAvailable(String username) {
+        return !userRepository.existsByUsername(username);
+    }
 
 
     @Transactional

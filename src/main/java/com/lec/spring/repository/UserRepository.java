@@ -10,7 +10,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByUsername(String username);
 
-//    Optional<User> findByUsername(String username);
+    boolean existsByUsername(String username);
 
     // 최근에 가입한 유저 5명만 출력
     List<User> findTop5ByOrderByIdDesc();
