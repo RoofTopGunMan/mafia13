@@ -16,8 +16,7 @@ public interface UserService {
     List<Authority> selectAuthById(Long id);
 
 
-    // 마이페이지 - 프로필 보기, 프로필 수정, 판매물품
-    User getUserByUsername(String username);
+    // 마이페이지 - 프로필 보기, 프로필 수정,
     User getUserById(Long id);
 
 
