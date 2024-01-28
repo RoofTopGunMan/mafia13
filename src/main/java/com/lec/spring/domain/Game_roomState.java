@@ -3,6 +3,9 @@ package com.lec.spring.domain;
 import com.lec.spring.utill.iIngameScheduler;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
+
+import java.util.Arrays;
 
 
 /* 게임방 진행 시 해당 방의 상태 값을 가져오는 테이블입니다.
@@ -22,10 +25,12 @@ public class Game_roomState implements iIngameScheduler {
     private int roundCount;
 
     /* 현재 라운드의 상태가 어떤 상황인지 저장합니다.
-     * 0 : 시작 전, 1 : 낮, 2 : 투표, 3 : 밤, 4 : 구간대기, 5 : 게임종료 시간입니다.
+     * 0 : 시작 전, 1 : 낮, 2: 낮 대기, 3 : 투표, 4: 투표 대기, 5: 밤, 6: 밤 대기, 7 : 게임종료 시간입니다.
      */
     private int roundStateProgress;
 
+    @Transient
+    private final String[] STATENAME = new String[] {"start","day","dayEnd","vote","voteEnd","night","nightEnd","gameOver"};
 
     /* 게임 방이 현재 진행중인지 여부입니다.
      * 해당 컬럼의 값이 false -> true로 변경 될 경우 내부의 모든 속성들이 초기화 되어야 합니다.
@@ -86,38 +91,17 @@ public class Game_roomState implements iIngameScheduler {
 
 
     @Override
-    public void SchedulerUpdate() {
+    public void SchedulerUpdate(SimpMessageSendingOperations msgOp) {
+        msgOp.convertAndSend("sub/room/tick/" + room.getId(), currentDelayCount);
         currentDelayCount--;
-
         if(currentDelayCount <= 0) {
-            currentDelayCount = isWaitTimer ? currentDelayCount : STATICDELAYCOUNT;
+            currentDelayCount = isWaitTimer ? room.getTime() : STATICDELAYCOUNT;
+            isWaitTimer = !isWaitTimer;
+            roundStateProgress++;
+            if(roundStateProgress > 6)
+                roundStateProgress = 1;
 
-            switch (roundStateProgress){
-                case 0: // 현재 상태가 게임 시작 전 일경우
-                {
-                    
-                }
-                break;
-
-                case 1: // 낮
-                {
-
-                }
-                break;
-
-                case 2: // 투표
-                {
-
-                }
-                break;
-
-                case 3: // 밤
-                {
-
-                }
-                break;
-            }
-
+            msgOp.convertAndSend("sub/room/roundState" + room.getId(), STATENAME[roundStateProgress]);
 
         }
 

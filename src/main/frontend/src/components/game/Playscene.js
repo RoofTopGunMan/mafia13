@@ -20,6 +20,12 @@ export default function PlayScene({UserList,roomData }) {
     webSocketUtill.subscribeClient("sub/" + roomData.id,function(a){
         console.log("subTEST");
     });
+    webSocketUtill.subscribeClient("sub/room/tick/" + roomData.id,function(a){
+        console.log(a.body);
+    });
+    webSocketUtill.subscribeClient("sub/room/roundState/" + roomData.id,function(a){
+        console.log(a.body);
+    });
     console.log("sub/room/Play/" + roomData.id);
 
 }, []);

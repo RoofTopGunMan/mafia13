@@ -42,7 +42,7 @@ export function activateIngame(roomId) {
 export function subscribeClient(dest, subFunction) {
 
     console.log("addSubscribe");
-    if(myClient.connected){  
+    if(myClient && myClient.connected){  
         console.log("subsc-conneted");
         myClient.subscribe(dest, (message) => {
         subFunction(message);
@@ -58,7 +58,7 @@ export function subscribeClient(dest, subFunction) {
 }
 export function publishClient(JsonBody, dest) {
     console.log("addPublish");
-    if(myClient.connected){  
+    if(myClient && myClient.connected){  
         console.log("Publish-conneted");
         myClient.publish({
             destination: dest,
