@@ -95,13 +95,16 @@ public class Game_roomState implements iIngameScheduler {
         msgOp.convertAndSend("sub/room/tick/" + room.getId(), currentDelayCount);
         currentDelayCount--;
         if(currentDelayCount <= 0) {
-            currentDelayCount = isWaitTimer ? room.getTime() : STATICDELAYCOUNT;
+            currentDelayCount = isWaitTimer ? STATICDELAYCOUNT :  room.getTime() ;
             isWaitTimer = !isWaitTimer;
             roundStateProgress++;
             if(roundStateProgress > 6)
                 roundStateProgress = 1;
 
-            msgOp.convertAndSend("sub/room/roundState" + room.getId(), STATENAME[roundStateProgress]);
+            msgOp.convertAndSend("sub/room/roundState/" + room.getId(), STATENAME[roundStateProgress]);
+            boolean isVote = roundStateProgress == 3 || roundStateProgress == 5;
+
+            msgOp.convertAndSend("sub/room/isVoteState/" + room.getId(), isVote);
 
         }
 

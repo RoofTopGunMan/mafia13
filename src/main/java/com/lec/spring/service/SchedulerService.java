@@ -17,7 +17,7 @@ public class SchedulerService {
         this.msgOp = messagingTemplate;
     }
 
-    @Scheduled(fixedDelay = 1000) // 1sec
+    @Scheduled(fixedDelay = 100) // 1sec
     public void runTest()
     {
         runningIngame.iterator().forEachRemaining(Scheduler -> {
@@ -26,7 +26,7 @@ public class SchedulerService {
         //게임시간 관리용 틱
     }
     public void addSchedule(iIngameScheduler scheduler){
-        runningIngame.add(scheduler);
+        System.out.println("게임 방 실행 : " + runningIngame.add(scheduler));
     }
     public void removeSchedule(iIngameScheduler scheduler) {
         runningIngame.remove(scheduler);
