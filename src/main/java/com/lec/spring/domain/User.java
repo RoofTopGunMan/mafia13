@@ -2,6 +2,7 @@ package com.lec.spring.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -49,10 +50,18 @@ public class User extends BaseEntity{
     @JoinColumn(name = "game_room_id")
     private Game_room room;
 
+    @Column(nullable = false)
+    @ColumnDefault(value = "0")
     private Long ingame_status;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ToString.Exclude
+    @JsonIgnore
+    private Game_jobData ingame_Job;
 
     @ColumnDefault(value = "0")
     private  int status; // 유저 상태
+
 
 
 

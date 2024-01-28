@@ -21,10 +21,18 @@ export default function PlayScene({UserList,roomData }) {
     let jsonBody = JSON.stringify({sender: "roomMaster", senderType: 2, data: "", roomId: roomData.id });
     webSocketUtill.publishClient(jsonBody,"pub/Play");
   }
+  function buttonGameEnd(value) {
+    
+    let jsonBody = JSON.stringify({sender: "roomMaster", senderType: 2, data: "", roomId: roomData.id });
+    webSocketUtill.publishClient(jsonBody,"pub/End");
+  }
 
   useEffect(() => {
     webSocketUtill.subscribeClient("sub/room/Play/" + roomData.id, function(sender){                
       setPlayGame("게임 시작함");
+    })
+    webSocketUtill.subscribeClient("sub/room/End/" + roomData.id, function(sender){                
+      setPlayGame("게임 종료");
     })
     webSocketUtill.subscribeClient("sub/" + roomData.id,function(a){
         console.log("subTEST");
@@ -55,6 +63,9 @@ export default function PlayScene({UserList,roomData }) {
             )})}
             </Row>
             <Button as="input" type="button" value="게임 시작" onClick={()=>buttonEvent(true)}/> 
+            <br/>
+            <br/>
+            <Button as="input" type="button" value="게임 종료" onClick={()=>buttonGameEnd(true)}/> 
             {playGame &&(
               <>
                 <h6 className>{playGame}</h6>

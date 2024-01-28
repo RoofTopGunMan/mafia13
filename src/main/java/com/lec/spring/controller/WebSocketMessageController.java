@@ -58,6 +58,18 @@ public class WebSocketMessageController {
         //s
 
     }
+    @MessageMapping("/End")
+    public void endGame(senderClass sender) throws Exception {
+        //플레이어들에게 게임 시작 발행
+
+        this.sender = sender;
+        if(!ingameService.gameEnd(sender.getRoomId())) {
+            return;
+        }
+        messagingTemplate.convertAndSend("sub/room/End/" + sender.getRoomId(),2);
+        //s
+
+    }
     @MessageMapping("/exit")
     public void roomExit(senderClass sender) throws Exception {
 

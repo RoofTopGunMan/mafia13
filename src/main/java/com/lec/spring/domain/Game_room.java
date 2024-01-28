@@ -78,8 +78,8 @@ public class Game_room extends BaseEntity {
 
     // 게임 방 내 직업의 수 입니다.
     // job_data에 있는 모든 컬럼을 추가 하며, 방장의 설정 값에 따라 (0 - 현재 플레이어의 절반)의 숫자를 설정합니다.
-    @OneToMany
-    @JoinColumn(name ="game_room_id")
+    @OneToMany(mappedBy ="room", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private List<Game_roomJobState> jobState = new ArrayList<>();
 
     //https://soojong.tistory.com/entry/JPA-ManyToOne-OneToMany-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0
