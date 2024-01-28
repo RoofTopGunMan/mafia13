@@ -1,42 +1,73 @@
-#loginWrap {
+#loginWrap, #RegWrap {
     background-color: black;
-    height: 1000px;
-}
-
-#formBorder {
-    border: white;
+    height: 808px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 form[name="frm"] {
     margin: auto;
     color: white;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
     height: 500px;
     
 }
 
-#login {
+#login, #Register {
     text-align: center;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    margin: 30px 0 30px 0;
 }
 
-.logInfo {
-    margin-left: 570px;
-    margin-top: 10px;
-}
-
-#loginBtn {
-    margin-top: 30px;
-    margin-left: 680px;
-    border: 1px solid red;
-    border-radius: 5px;
+#loginBtn, #regBtn {
+    display: block; 
+    margin: 20px auto; 
+    height: 50px;
+    width: 200px;
     background-color: red;
-    font-size: large;
-    font-weight: bold;
-    width: 160px;
-    height: 40px;
+    border: 1px solid red;
+    border-radius: 7px;
+    font-weight: bolder;
+    font-size: x-large;
 }
 
 
+input[type="text"], input[type="password"], input[type="email"] {
+    width: 300px;  
+    height: 40px;  
+    padding: 5px;  
+    font-size: 16px; 
+    margin: 5px 0 15px 0; 
+}
 
+#moveTo {
+    text-align: center;
+}
+
+.moveTo {
+    text-decoration: none;
+    color: red;
+}
+
+#mafia13 {
+    color: red;
+}
+
+.regInfo {
+    font-size: 15px;
+    margin-left: 30px;
+}
+
+.dupId {
+    font-size: 13px;
+    margin-left: 33px;
+}
+
+#fail {
+    color: red;
+}
+
+#ok {
+    color: limegreen;
+}

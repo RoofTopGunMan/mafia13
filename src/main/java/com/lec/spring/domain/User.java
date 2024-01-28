@@ -4,6 +4,7 @@ package com.lec.spring.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,6 +51,11 @@ public class User extends BaseEntity{
 
     private Long ingame_status;
 
+    @ColumnDefault(value = "0")
+    private  int status; // 유저 상태
+
+
+
     // User : Authority / N:M 관계
     @ManyToMany(fetch = FetchType.EAGER)
     @ToString.Exclude
@@ -57,10 +63,6 @@ public class User extends BaseEntity{
     @JsonIgnore
     private List<Authority> authorities = new ArrayList<>();
 
-    // User:Gameavatar = 1:1
-    @OneToOne(fetch = FetchType.EAGER)
-    @ToString.Exclude
-    private Gameavatar gameavatar;   // 게임 아바타
 
 
 

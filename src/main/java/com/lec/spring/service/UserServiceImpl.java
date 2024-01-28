@@ -62,11 +62,6 @@ public class UserServiceImpl implements UserService{
 
     // 마이페이지 - 프로필 보기, 프로필 수정
     @Override
-    public User getUserByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
-
-    @Override
     public User getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
