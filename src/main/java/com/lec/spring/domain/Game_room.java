@@ -55,7 +55,7 @@ public class Game_room extends BaseEntity {
     @JsonIgnore
     private Game_roomState roomState; //진행중인 게임 방의 인 게임 상태입니다.
 
-    @OneToMany(mappedBy ="room", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy ="room", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @Builder.Default
     @JsonIgnore
     private List<User> userList = new ArrayList<>();

@@ -6,6 +6,7 @@ import com.lec.spring.domain.*;
 import com.lec.spring.repository.Game_JobDataRepository;
 import com.lec.spring.repository.Game_roomRepository;
 import com.lec.spring.repository.Game_roomStateRepository;
+import com.lec.spring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,8 @@ public class IngameService {
 
     @Autowired
     private Game_roomRepository gameRoomRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private Game_roomStateRepository game_roomStateRepository;
@@ -101,27 +104,33 @@ public class IngameService {
 
         List<User> userList = room.getUserList();
 
+        List<Game_jobData> jobData = jobRepository.findAll();
         int index = 0;
-        for(int i = 0 ; i <userList.size();i++){
-            userList.get(i).setIngame_Job(jobRepository.findByName("시민")); // 시민으로 초기화
-        }
-        for (Game_roomJobState jobState: // 직업 가짓 수 만큼 루프
-              room.getJobState()) {
-            if(jobState.getJobData().getName() != "시민") { // 시민제외
-                int currentJobCount =jobState.getJobCount(); // 설정에 등록된 직업갯수 가져오기
-                while(currentJobCount > 0)
-                {
-                    userList.get(index).setIngame_Job(jobState.getJobData()); // 0번 유저부터 해당 직업 설정
-                    index++;
-                    currentJobCount--;
-                }
-            }
-        }
-        Collections.swap(userList,0,userList.size()); // 유저 직업 스왑
+        List<String> jobNameList = new ArrayList<>();
 
-        room.setUserList(userList); // 직업 분배
+        for (Game_roomJobState jobState: // 해당 방의 직업 수 만큼 루프
+                room.getJobState()) {
+            if (jobState.getJobData().getName() == "시민") continue; // 시민은 예외
+            for(int i = 0 ; i < jobState.getJobCount();i++)
+                jobNameList.add(jobState.getJobData().getName()); // 추가
+        }
+        for(int i = jobNameList.size();i < userList.size();i++) // 남아있는 TO는 시민 행
+        {
+            jobNameList.add("시민");
+        }
+        Collections.shuffle(jobNameList); // 유저 직업 스왑
+
+        for (String jobState: // 직업 가짓 수 만큼 루프
+                jobNameList) {
+            User user = userList.get(index);
+            user.setIngame_Job(jobRepository.findByName(jobState)); // 랜덤으로 설정된 직업들을 유저데이터에 삽입
+            userList.set(index,user);
+            index++;
+        }
+        userRepository.saveAll(userList);
 
         game_roomStateRepository.save(roomState);
+        gameRoomRepository.save(room);
 
         //각 유저들에게 직업 할당
         schedulerService.addSchedule(roomId, getGameRoomState(roomId));
