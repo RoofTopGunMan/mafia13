@@ -98,14 +98,6 @@ function Register() {
         </div>
 
 
-        <div>
-          <span className='regInfo'> 닉네임 </span> <br></br>
-          <label htmlFor="regId2">
-            <StyledIcon icon={faUserSecret} />
-          </label>
-          <input type="text" value={name} onChange={(e) => setName(e.target.value)} 
-            name='regId2' required />
-        </div>
 
         <div>
           <span className='regInfo'> 비밀번호 </span> <br></br>
@@ -123,6 +115,15 @@ function Register() {
           </label>
           <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} 
             name='regId4' required />
+
+        <div>
+          <span className='regInfo'> 닉네임 </span> <br></br>
+          <label htmlFor="regId2">
+            <StyledIcon icon={faUserSecret} />
+          </label>
+          <input type="text" value={name} onChange={(e) => setName(e.target.value)} 
+            name='regId2' required />
+        </div>
         </div>
 
         <button type="submit" id='regBtn'>가입하기</button>
