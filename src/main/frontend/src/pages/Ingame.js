@@ -30,8 +30,7 @@ const Ingame = ({roomData , myID}) => {
         webSocketUtill.subscribeClient("sub/room/entrance/" + roomData.id, function(currentUserList){                        
             setUserList(JSON.parse(currentUserList.body));
         })
-        
-        let jsonBody = JSON.stringify({sender: UserData.name, senderType: 2,data: "", roomId: roomData.id });
+        let jsonBody = JSON.stringify({sender: UserData.name, senderType: 2,data: "", roomId: roomData.id, userId: myID });
         webSocketUtill.publishClient(jsonBody,"pub/entrance");
     }
     useEffect(() => {
@@ -43,7 +42,7 @@ const Ingame = ({roomData , myID}) => {
             <div>
                 {UserList && 
                 (
-                    <PlayScene UserList={UserList} roomData = {roomData} />
+                    <PlayScene myId = {myID} UserList={UserList} roomData = {roomData} />
                 )}
             </div>
         </>

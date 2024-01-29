@@ -25,6 +25,8 @@ public class IngameUserRequestDTO implements defaultDTO<User>,Comparable<IngameU
 
     private boolean isRoomMaster;
 
+    private String job;
+
     @Override
     public User toEntity() {
         return User.builder().
@@ -43,6 +45,7 @@ public class IngameUserRequestDTO implements defaultDTO<User>,Comparable<IngameU
                 .userName(user.getUsername())
                 .id(user.getId())
                 .updatedAt(user.getUpdatedAt())
+                .job(user.getIngame_Job().getName())
                 .build();
     }
 

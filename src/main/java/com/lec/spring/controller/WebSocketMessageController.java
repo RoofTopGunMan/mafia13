@@ -42,7 +42,8 @@ public class WebSocketMessageController {
     public void roomEntrance(senderClass sender) throws Exception {
 
         this.sender = sender;
-        List<defaultDTO> userList = ingameService.FindByUserListFromRoomId((long) sender.getRoomId());
+        List<defaultDTO> userList = ingameService.FindByUserListFromRoomId( sender.getRoomId());
+        messagingTemplate.convertAndSend("sub/room/userId/" + sender.getUserId(), sender.getUserId());
         messagingTemplate.convertAndSend("sub/room/entrance/" + sender.getRoomId(), userList);
     }
     @MessageMapping("/Play")
@@ -53,6 +54,14 @@ public class WebSocketMessageController {
         if(!ingameService.gameStart(sender.getRoomId())) {
             return;
         }
+        List<defaultDTO> userList = ingameService.FindByUserListFromRoomId( sender.getRoomId()); // 유저들에게 각 직업 할당
+        for(defaultDTO userDTO : userList) {
+            IngameUserRequestDTO ingameDTO = (IngameUserRequestDTO) userDTO;
+            messagingTemplate.convertAndSend("sub/room/userInfo/" + ingameDTO.getId(),userDTO);
+
+        }
+
+
         messagingTemplate.convertAndSend("sub/room/Play/" + sender.getRoomId(),2);
         messagingTemplate.convertAndSend("sub/" + sender.getRoomId(),3);
         //s
