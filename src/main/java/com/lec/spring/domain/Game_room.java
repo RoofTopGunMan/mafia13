@@ -55,7 +55,7 @@ public class Game_room extends BaseEntity {
     @JsonIgnore
     private Game_roomState roomState; //진행중인 게임 방의 인 게임 상태입니다.
 
-    @OneToMany(mappedBy ="room", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy ="room",  cascade = CascadeType.PERSIST)
     @Builder.Default
     @JsonIgnore
     private List<User> userList = new ArrayList<>();
@@ -78,7 +78,7 @@ public class Game_room extends BaseEntity {
 
     // 게임 방 내 직업의 수 입니다.
     // job_data에 있는 모든 컬럼을 추가 하며, 방장의 설정 값에 따라 (0 - 현재 플레이어의 절반)의 숫자를 설정합니다.
-    @OneToMany(mappedBy ="room", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy ="room", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JsonIgnore
     private List<Game_roomJobState> jobState = new ArrayList<>();
 

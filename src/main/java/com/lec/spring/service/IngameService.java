@@ -9,6 +9,7 @@ import com.lec.spring.repository.Game_roomStateRepository;
 import com.lec.spring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,6 +17,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
 public class IngameService {
 
 
@@ -33,6 +35,7 @@ public class IngameService {
     @Autowired
     private Game_JobDataRepository jobRepository;
 
+    @Transactional
     public Game_room createGameRoom() {
         Game_room newRoom = Game_room.builder().
                 subject("").
@@ -56,14 +59,37 @@ public class IngameService {
         newRoom.setJobState(jobState);
         return newRoom;
     }
-    public Game_room GameRoomfindByid(Long id) throws Exception {
-        return gameRoomRepository.findById(id).orElseThrow(() -> new Exception("[GAMEROOM] ID IS INVALID "));
+    @Transactional
+    public Game_room connectRoom(Long userId,String roomName){
 
+        User connectedUser = userRepository.findById(userId).orElseThrow();
 
+        Game_room connectRoom = GameRoomFindBySubject(roomName);
+
+        if(connectRoom.getUserList().isEmpty()){
+            connectRoom.setOwner_id(connectedUser.getId());
+        }
+
+        connectedUser.setRoom(connectRoom);
+
+        gameRoomRepository.save(connectRoom);
+        userRepository.save(connectedUser);
+
+        return connectRoom;
     }
-    public List<defaultDTO> FindByUserListFromRoomId(Long roomId) throws Exception{
+
+
+    @Transactional
+    public List<defaultDTO> getUserList(Long roomId) throws Exception{
+
+
+        System.out.println(" == 1");
         Game_room findRoom = gameRoomRepository.findById(roomId).orElseThrow(() -> new Exception("ROOM ID IS INVALID "));
+
+        System.out.println(" == 2");
+
         List<defaultDTO> userList = findRoom.getUserListDTO();
+        System.out.println(" == 3");
         userList.sort(Comparator.comparing(o -> ((IngameUserRequestDTO) o)));
         return userList;
     }
@@ -90,6 +116,7 @@ public class IngameService {
         return true;
 
     }
+    @Transactional
     public boolean gameStart(Long roomId) throws Exception {
 
         Game_roomState roomState = getGameRoomState(roomId);
@@ -137,9 +164,10 @@ public class IngameService {
 
         return true;
     }
+    @Transactional
     public Game_roomState getGameRoomState(Long roomId) throws Exception{
+        return gameRoomRepository.findById(roomId).orElseThrow(() -> new Exception("[GAMEROOM] ID IS INVALID ")).getRoomState();
         //방 생성시에 state도 생성되어야함.
-        return GameRoomfindByid(roomId).getRoomState();
     }
 
     public Game_room GameRoomFindBySubject(String subject) {

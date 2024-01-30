@@ -2,21 +2,15 @@ package com.lec.spring.controller;
 
 import com.lec.spring.DTO.IngameUserRequestDTO;
 import com.lec.spring.DTO.defaultDTO;
-import com.lec.spring.domain.Game_room;
-import com.lec.spring.domain.Game_roomState;
 import com.lec.spring.service.IngameService;
 import com.lec.spring.service.SchedulerService;
 import com.lec.spring.utill.senderClass;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 
-import java.io.Console;
 import java.util.List;
 
 
@@ -38,12 +32,13 @@ public class WebSocketMessageController {
         System.out.println(sender);
     }
 
+    //방 진입
     @MessageMapping("/entrance")
     public void roomEntrance(senderClass sender) throws Exception {
 
         this.sender = sender;
-        List<defaultDTO> userList = ingameService.FindByUserListFromRoomId( sender.getRoomId());
-        messagingTemplate.convertAndSend("sub/room/userId/" + sender.getUserId(), sender.getUserId());
+        List<defaultDTO> userList = ingameService.getUserList( sender.getRoomId()); // 현재 방에 접속한 유저 리스트 받아오기
+        messagingTemplate.convertAndSend("sub/room/userId/" + sender.getUserId(), sender.getUserId()); // 현재 유저
         messagingTemplate.convertAndSend("sub/room/entrance/" + sender.getRoomId(), userList);
     }
     @MessageMapping("/Play")
@@ -54,7 +49,7 @@ public class WebSocketMessageController {
         if(!ingameService.gameStart(sender.getRoomId())) {
             return;
         }
-        List<defaultDTO> userList = ingameService.FindByUserListFromRoomId( sender.getRoomId()); // 유저들에게 각 직업 할당
+        List<defaultDTO> userList = ingameService.getUserList( sender.getRoomId()); // 유저들에게 각 직업 할당
         for(defaultDTO userDTO : userList) {
             IngameUserRequestDTO ingameDTO = (IngameUserRequestDTO) userDTO;
             messagingTemplate.convertAndSend("sub/room/userInfo/" + ingameDTO.getId(),userDTO);
@@ -83,7 +78,7 @@ public class WebSocketMessageController {
     public void roomExit(senderClass sender) throws Exception {
 
         this.sender = sender;
-        List<defaultDTO> userList = ingameService.FindByUserListFromRoomId((long) sender.getRoomId());
+        List<defaultDTO> userList = ingameService.getUserList((long) sender.getRoomId());
         messagingTemplate.convertAndSend("sub/room/entrance/" + sender.getRoomId(),userList);
     }
 }

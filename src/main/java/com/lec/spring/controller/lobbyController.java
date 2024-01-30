@@ -6,6 +6,7 @@ import com.lec.spring.repository.Game_roomRepository;
 import com.lec.spring.repository.UserRepository;
 import com.lec.spring.service.DevelopService;
 import com.lec.spring.service.IngameService;
+import com.lec.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,24 +23,11 @@ public class lobbyController {
     @Autowired
     private IngameService ingameService;
     @Autowired
-    private DevelopService developService;
-    @Autowired
     private UserRepository userRepository;
     @GetMapping("api/room/connect")
     public Game_room connectedRoom(long userId, String roomName) throws Exception {
         //방 입장
-
-        User connectedUser = developService.UserFindById(userId);
-        Game_room newRoom = ingameService.GameRoomFindBySubject(roomName);
-
-        if(newRoom.getUserList().isEmpty()){
-            newRoom.setOwner_id(connectedUser.getId());
-        }
-        connectedUser.setRoom(newRoom);
-
-        roomRepository.save(newRoom);
-        userRepository.save(connectedUser);
-        return newRoom;
+        return ingameService.connectRoom(userId,roomName);
     }
 
 

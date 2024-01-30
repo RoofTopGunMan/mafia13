@@ -46,8 +46,9 @@ public class User extends BaseEntity{
             gamemoney = 0L;
         }
     }
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "game_room_id")
+    @JsonIgnore
     private Game_room room;
 
     @Column(nullable = false)
