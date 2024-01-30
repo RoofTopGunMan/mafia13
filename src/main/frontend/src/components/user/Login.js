@@ -39,7 +39,7 @@ function Login() {
       dispatch({ type: "LOGIN_SUCCESS", userId: data.user.id });
 
       alert("로그인 성공");
-      navigate("/");  
+      navigate("/lobby");  
     
 
     } catch (error) {

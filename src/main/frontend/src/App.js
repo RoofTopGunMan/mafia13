@@ -21,7 +21,10 @@ function App() {
     return (
       <>
         <Routes>
-            <Route path='/' Component={IngameTest}>인게임테스트</Route>
+
+            {/* 인게임 페이지  */}
+            <Route path='/ingame' Component={IngameTest}>인게임테스트</Route>
+
 
             {/* 어드민 페이지  */}
             <Route path='/admin' Component={AdminPage}></Route> {/* 관리자 홈 */}
@@ -32,6 +35,7 @@ function App() {
             <Route path='/admin/sellMng' Component={SellMng}></Route> {/* 관리자 상품관리 */}
 
             {/* 로그인 및 회원가입 */}
+            <Route path="/" Component={LoginPage}/>
             <Route path="/user/login" Component={LoginPage}/>
             <Route path="/user/login/:id" Component={LoginPage}/>
             <Route path="/user/register" Component={RegisterPage}/>

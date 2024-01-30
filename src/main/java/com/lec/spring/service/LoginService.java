@@ -1,8 +1,10 @@
 package com.lec.spring.service;
 
 import com.lec.spring.config.AuthenticationException;
+import com.lec.spring.domain.Game_jobData;
 import com.lec.spring.domain.Gameavatar;
 import com.lec.spring.domain.User;
+import com.lec.spring.repository.Game_JobDataRepository;
 import com.lec.spring.repository.GameavatarRepository;
 import com.lec.spring.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +32,8 @@ public class LoginService {
     @Autowired
     private GameavatarRepository gameavatarRepository;
 
+    @Autowired
+    private Game_JobDataRepository gameJobDataRepository;
 //    public User login(User userLogin){
 //        Optional<User> userInfo = userRepository.findByUsername(userLogin.getUsername());
 //
@@ -68,12 +72,16 @@ public class LoginService {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
 
+        user.setIngame_Job(gameJobDataRepository.findByName("시민"));
+
         // 게임 아바타 생성 및 초기값 설정
         Gameavatar gameAvatar = new Gameavatar();
         gameAvatar.setHead(0);
         gameAvatar.setOutline(0);
         gameAvatar.setCloak(0);
         gameAvatar.setUser(userRepository.save(user));
+
+
 
         // 게임 아바타 저장
         gameavatarRepository.save(gameAvatar);
