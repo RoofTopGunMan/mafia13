@@ -176,4 +176,11 @@ public class IngameService {
         return newRoom;
 
     }
+
+    // 게임룸 가져오기
+    @Transactional(readOnly = true)
+    public List<Game_room> findAll() {
+        return gameRoomRepository.findAll();
+    }
+
 }

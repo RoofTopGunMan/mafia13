@@ -48,7 +48,9 @@ function App() {
             <Route path='/mypage/inventory/gameavatar/:id' Component={Inventory}></Route> {/*게임 아바타 */}
     
             {/* 로비페이지 */}
-            <Route path="/lobby" Component={Lobby}>로비페이지</Route>
+          <Route path="/lobby" Component={Lobby}>로비페이지</Route>
+          <Route path="/mypage" component={MypageHome} />
+          <Route path="/login" component={LoginPage} />
          </Routes>
       </>
       );
