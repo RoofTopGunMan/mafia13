@@ -103,6 +103,7 @@ public class IngameService {
         newRoom.setRoomState(newState);
         return newRoom;
     }
+    @Transactional
     public boolean gameEnd(Long roomId) throws Exception{
         Game_roomState roomState = getGameRoomState(roomId);
         Game_room room = gameRoomRepository.findById(roomId).orElse(null);
@@ -120,7 +121,7 @@ public class IngameService {
     public boolean gameStart(Long roomId) throws Exception {
 
         Game_roomState roomState = getGameRoomState(roomId);
-        Game_room room = gameRoomRepository.findById(roomId).orElse(null);
+        Game_room room = gameRoomRepository.findById(roomId).orElseGet(null);
         if(room == null) return false; // 방 없는데요
         
         if(room.getUserList().size() < 4) // 유저수 미만
