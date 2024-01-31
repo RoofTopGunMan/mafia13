@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface Game_roomRepository extends JpaRepository<Game_room,Long> {
-    Optional<Game_room> findBySubject(String title);
+    Game_room findBySubject(String title);
     Optional<Game_room> findByIdOrderByUpdatedAtDesc(Long id);
 
 

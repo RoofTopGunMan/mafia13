@@ -33,7 +33,9 @@ public class lobbyController {
     @GetMapping("api/room/connect")
     public Game_room connectedRoom(long userId, String roomName) throws Exception {
         //방 입장
-        return ingameService.connectRoom(userId,roomName);
+
+        Game_room resultRoom = ingameService.connectRoom(userId,roomName);
+        return resultRoom;
     }
 
     // 로비에 방 가져오기

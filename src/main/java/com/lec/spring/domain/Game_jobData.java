@@ -21,4 +21,6 @@ public class Game_jobData {
 
     private String name;
 
+    private boolean nightVote;
+
 }

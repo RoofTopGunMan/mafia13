@@ -20,7 +20,7 @@ const PlayerCard = ({player, enableVoteBtn}) => {
         console.log(enableVoteBtn);
         setVoteBtn(enableVoteBtn);
 
-    },[]);
+    });
     return (
         <>
             <Col md={3}>

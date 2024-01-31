@@ -21,11 +21,13 @@ INSERT INTO user (id, email, gamemoney,name, password, username, ingame_job_id) 
 (7,"aa7@naver.com",0,"7번",2,"7번",1),
 (8,"aa8@naver.com",0,"8번",2,"8번",1)
 ;
-INSERT INTO game_job_data (id, name) VALUES
-(1, "시민"),
-(2,"마피아"),
-(3,"경찰"),
-(4,"의사");
+INSERT INTO game_job_data (id, name, night_vote) VALUES
+(1, "시민",false),
+(2,"마피아",true),
+(3,"경찰",true),
+(4,"의사",true);
+UPDATE game_job_data SET night_vote = true
+UPDATE game_job_data SET night_vote = FALSE WHERE id = 1
 
 DELETE FROM user;
 DELETE FROM user;

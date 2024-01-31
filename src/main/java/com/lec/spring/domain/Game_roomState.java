@@ -83,7 +83,7 @@ public class Game_roomState implements iIngameScheduler {
         livedPlayerCount = currentPlayerCount;
         roundStateProgress = 0;
         roundCount = 0;
-        isWaitTimer = true;
+        isWaitTimer = false;
         voteUserCount = 0;
         currentDelayCount = 8; // 게임 시작 전 고정 딜레이 시간 값입니다.
         return this;
@@ -102,9 +102,16 @@ public class Game_roomState implements iIngameScheduler {
                 roundStateProgress = 1;
 
             msgOp.convertAndSend("sub/room/roundState/" + room.getId(), STATENAME[roundStateProgress]);
-            boolean isVote = roundStateProgress == 3 || roundStateProgress == 5;
 
-            msgOp.convertAndSend("sub/room/isVoteState/" + room.getId(), isVote);
+
+            room.getUserList().forEach((user) -> {
+
+                boolean isVote = roundStateProgress == 3 ||
+                        (user.getIngame_Job().isNightVote() && roundStateProgress == 5); // 투표시간, 밤 행동 가능한데 밤시간
+                //투표 여부
+                msgOp.convertAndSend("sub/room/isVoteState/" + user.getId(), isVote);
+
+            });
 
         }
 

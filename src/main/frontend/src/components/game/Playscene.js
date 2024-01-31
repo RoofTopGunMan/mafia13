@@ -45,8 +45,10 @@ export default function PlayScene({UserList,roomData,  myId }) {
         console.log(msg.body);                 
         setCurrentState(msg.body);    
     })
-    webSocketUtill.subscribeClient("sub/room/isVoteState/" + roomData.id, function(msg){     
+    webSocketUtill.subscribeClient("sub/room/isVoteState/" + myId, function(msg){     
         setEnableVoteBtn(msg.body === "true");
+        console.log("VOTE");
+        console.log(msg.body === "true");
     })
     webSocketUtill.subscribeClient("sub/room/userInfo/" + myId, function(msg){     
       setUserInfo(JSON.parse(msg.body));
