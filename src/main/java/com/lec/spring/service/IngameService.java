@@ -62,6 +62,7 @@ public class IngameService {
     @Transactional
     public Game_room connectRoom(Long userId,String roomName){
 
+        System.out.println("CONNECTROOM_START========\n\n\n===========");
         User connectedUser = userRepository.findById(userId).orElseThrow();
 
         Game_room connectRoom = GameRoomFindBySubject(roomName);
@@ -69,12 +70,14 @@ public class IngameService {
         if(connectRoom.getUserList().isEmpty()){
             connectRoom.setOwner_id(connectedUser.getId());
         }
+        List<User> userList = connectRoom.getUserList();
 
         connectedUser.setRoom(connectRoom);
 
         gameRoomRepository.save(connectRoom);
         userRepository.save(connectedUser);
 
+        System.out.println("CONNECTROOM_END========\n\n\n===========");
         return connectRoom;
     }
 
@@ -83,13 +86,10 @@ public class IngameService {
     public List<defaultDTO> getUserList(Long roomId) throws Exception{
 
 
-        System.out.println(" == 1");
         Game_room findRoom = gameRoomRepository.findById(roomId).orElseThrow(() -> new Exception("ROOM ID IS INVALID "));
 
-        System.out.println(" == 2");
 
         List<defaultDTO> userList = findRoom.getUserListDTO();
-        System.out.println(" == 3");
         userList.sort(Comparator.comparing(o -> ((IngameUserRequestDTO) o)));
         return userList;
     }
@@ -171,7 +171,10 @@ public class IngameService {
     }
 
     public Game_room GameRoomFindBySubject(String subject) {
-        Game_room newRoom = gameRoomRepository.findBySubject(subject).orElse(createRoom(subject));
+        Game_room newRoom = gameRoomRepository.findBySubject(subject);
+
+        if(newRoom == null)
+            newRoom =createRoom(subject);
 
         return newRoom;
 
