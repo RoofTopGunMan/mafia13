@@ -10,11 +10,17 @@ public class senderClass {
     // 0 = 입장
     // 1 = 퇴장
     // 2 = 채팅
-
+    // 3 = 투표
     private int senderType;
 
+    //데이터 ?
     private String data;
 
+    //방 아이디
     private Long roomId;
+    
+    //보내는 아이디
     private int userId;
+
+    
 }

@@ -3,10 +3,8 @@ package com.lec.spring.service;
 import com.lec.spring.DTO.IngameUserRequestDTO;
 import com.lec.spring.DTO.defaultDTO;
 import com.lec.spring.domain.*;
-import com.lec.spring.repository.Game_JobDataRepository;
-import com.lec.spring.repository.Game_roomRepository;
-import com.lec.spring.repository.Game_roomStateRepository;
-import com.lec.spring.repository.UserRepository;
+import com.lec.spring.repository.*;
+import com.lec.spring.utill.senderClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,15 +23,15 @@ public class IngameService {
     private Game_roomRepository gameRoomRepository;
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private Game_roomStateRepository game_roomStateRepository;
-
+    @Autowired
+    private Game_JobDataRepository jobRepository;
+    @Autowired
+    private Game_voteRepository game_voteRepository;
     @Autowired
     private SchedulerService schedulerService;
 
-    @Autowired
-    private Game_JobDataRepository jobRepository;
 
     @Transactional
     public Game_room createGameRoom() {
@@ -98,9 +96,7 @@ public class IngameService {
         Game_room newRoom = createGameRoom();
         newRoom.setSubject(subject);
 
-        Game_roomState newState = new Game_roomState().initData();
-        newState.setRoom(newRoom);
-        newRoom.setRoomState(newState);
+        //newRoom.setRoomState(newState);
         return newRoom;
     }
     @Transactional
@@ -118,16 +114,51 @@ public class IngameService {
 
     }
     @Transactional
-    public boolean gameStart(Long roomId) throws Exception {
+    public boolean votePlayer(senderClass sender) {
 
-        Game_roomState roomState = getGameRoomState(roomId);
+        User voter =  userRepository.findById(Long.parseLong(sender.getSender())).orElseThrow();
+        User elector = userRepository.findById(Long.parseLong(sender.getData())).orElseThrow();
+        Game_roomState currentState = game_roomStateRepository.findTop1ByRoomOrderByIdDesc(gameRoomRepository.findById(sender.getRoomId()).orElseThrow());
+
+        List<Game_vote> VoterLog = game_voteRepository.findByGameRoomState(currentState);
+
+        for(int i = 0 ; i < VoterLog.size();i++) {
+            Game_vote vote = VoterLog.get(i);
+            if(vote.getVoter() == voter && // 보낸 사람이 일치하는지
+                    vote.getRoundCount() == currentState.getRoundCount() && //라운드가 일치 하는지
+                    vote.getRoundState() == currentState.getRoundStateProgress()) {// 라운드의 상태가 일치 하는지 
+                // 모두 일치한다면 해당 투표는 무효표입니다. (다중투표)
+                return false;
+            }
+        }
+
+        
+        //새 투표지 생성
+        Game_vote newVote = Game_vote.builder().
+                voter(voter).
+                elector(elector).
+                gameRoomState(currentState).
+                roundCount(currentState.getRoundCount()).
+                roundState(currentState.getRoundStateProgress()).
+                build();
+        game_voteRepository.save(newVote);
+        return false;
+    }
+    @Transactional
+    public boolean gameStart(Long roomId) throws Exception {
         Game_room room = gameRoomRepository.findById(roomId).orElseGet(null);
+        Game_roomState currentState = game_roomStateRepository.findTop1ByRoomOrderByIdDesc(room);
         if(room == null) return false; // 방 없는데요
         
         if(room.getUserList().size() < 4) // 유저수 미만
                 return false;
-        if(roomState.isActive()) return false; // 이미 진행중인 방입니당.
-        
+        if(currentState != null && currentState.isActive()) return false; // 이미 진행중인 방입니당.
+
+        Game_roomState roomState = SetupSchedulerFunction(new Game_roomState().initData());
+
+
+        roomState.setRoom(room);
+
         roomState.startGame();
 
         List<User> userList = room.getUserList();
@@ -167,7 +198,8 @@ public class IngameService {
     }
     @Transactional
     public Game_roomState getGameRoomState(Long roomId) throws Exception{
-        return gameRoomRepository.findById(roomId).orElseThrow(() -> new Exception("[GAMEROOM] ID IS INVALID ")).getRoomState();
+
+        return game_roomStateRepository.findTop1ByRoomOrderByIdDesc(gameRoomRepository.findById(roomId).orElseThrow());
         //방 생성시에 state도 생성되어야함.
     }
 
@@ -186,5 +218,33 @@ public class IngameService {
     public List<Game_room> findAll() {
         return gameRoomRepository.findAll();
     }
+    public Game_roomState SetupSchedulerFunction(Game_roomState state) {
+        state.setBiScheduler((msg, repo) -> {
+            Game_room room = state.getRoom();
+            msg.convertAndSend("sub/room/tick/" + room.getId(), state.getCurrentDelayCount());
+            state.DecreaseCurrentDelayCount();
+            if(state.DecreaseCurrentDelayCount()) {
+                
+                
+                // 투표 결과를 여기에 세팅하세요
 
+
+                state.IncreaseRoundState();
+
+                msg.convertAndSend("sub/room/roundState/" + room.getId(), state.getCurrentStateString());
+
+                room.getUserList().forEach((user) -> {
+
+                    boolean isVote = state.getRoundStateProgress() == 3 ||
+                            (user.getIngame_Job().isNightVote() && state.getRoundStateProgress() == 5); // 투표시간, 밤 행동 가능한데 밤시간
+                    
+                    //투표 여부
+                    msg.convertAndSend("sub/room/isVoteState/" + user.getId(), isVote);
+                });
+                repo.save(this);
+            }
+
+        });
+        return state;
+    }
 }

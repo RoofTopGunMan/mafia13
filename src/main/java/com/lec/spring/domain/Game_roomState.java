@@ -3,9 +3,11 @@ package com.lec.spring.domain;
 import com.lec.spring.utill.iIngameScheduler;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 
 import java.util.Arrays;
+import java.util.function.BiConsumer;
 
 
 /* 게임방 진행 시 해당 방의 상태 값을 가져오는 테이블입니다.
@@ -57,12 +59,14 @@ public class Game_roomState implements iIngameScheduler {
     @Transient
     private boolean isWaitTimer;
 
-    final int STATICDELAYCOUNT = 3;
-    final int STATICSTARTCOUNT = 8;
+    @Transient
+    BiConsumer<SimpMessageSendingOperations,JpaRepository> biScheduler = null;
 
-    // 게임 방과 1:1 관계입니다.
+
+    // 게임 방과 N:1 관계입니다.
+    // 게임 실행시 새로 생성되어 저장됩니다.
     // 실제 게임 진행시엔 해당 테이블만 변경됩니다.
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     private Game_room room;
 
 
@@ -85,35 +89,38 @@ public class Game_roomState implements iIngameScheduler {
         roundCount = 0;
         isWaitTimer = false;
         voteUserCount = 0;
-        currentDelayCount = 8; // 게임 시작 전 고정 딜레이 시간 값입니다.
+        currentDelayCount = STATICSTARTCOUNT; // 게임 시작 전 고정 딜레이 시간 값입니다.
         return this;
+    }
+    final int STATICDELAYCOUNT = 3;
+    final int STATICSTARTCOUNT = 8;
+
+    public boolean DecreaseCurrentDelayCount(){
+
+        currentDelayCount--;
+        if(currentDelayCount <= 0) {
+            currentDelayCount = isWaitTimer() ? STATICDELAYCOUNT : room.getTime();
+            isWaitTimer = !isWaitTimer;
+            return true;
+        }
+        return false;
+    }
+    public void IncreaseRoundState() {
+        roundStateProgress++;
+        if (roundStateProgress > 6) {
+            roundStateProgress = 1;
+            roundCount++;
+        }
+    }
+    public String getCurrentStateString(){
+        return STATENAME[roundStateProgress];
     }
 
 
     @Override
-    public void SchedulerUpdate(SimpMessageSendingOperations msgOp) {
-        msgOp.convertAndSend("sub/room/tick/" + room.getId(), currentDelayCount);
-        currentDelayCount--;
-        if(currentDelayCount <= 0) {
-            currentDelayCount = isWaitTimer ? STATICDELAYCOUNT :  room.getTime() ;
-            isWaitTimer = !isWaitTimer;
-            roundStateProgress++;
-            if(roundStateProgress > 6)
-                roundStateProgress = 1;
-
-            msgOp.convertAndSend("sub/room/roundState/" + room.getId(), STATENAME[roundStateProgress]);
-
-
-            room.getUserList().forEach((user) -> {
-
-                boolean isVote = roundStateProgress == 3 ||
-                        (user.getIngame_Job().isNightVote() && roundStateProgress == 5); // 투표시간, 밤 행동 가능한데 밤시간
-                //투표 여부
-                msgOp.convertAndSend("sub/room/isVoteState/" + user.getId(), isVote);
-
-            });
-
-        }
-
+    public void SchedulerUpdate(SimpMessageSendingOperations msgOp, JpaRepository repository) {
+        if (biScheduler != null)
+            biScheduler.accept(msgOp, repository);
     }
+
 }

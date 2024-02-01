@@ -51,9 +51,9 @@ public class Game_room extends BaseEntity {
     private Long owner_id;
 
     @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "room", cascade = CascadeType.PERSIST)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "room", cascade = CascadeType.PERSIST)
     @ToString.Exclude
-    private Game_roomState roomState; //진행중인 게임 방의 인 게임 상태입니다.
+    private List<Game_roomState> roomState; //진행중인 게임 방의 인 게임 상태입니다.
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy ="room",  cascade = CascadeType.PERSIST)

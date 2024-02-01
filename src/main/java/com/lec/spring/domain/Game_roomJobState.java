@@ -33,4 +33,5 @@ public class Game_roomJobState extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "game_room_id")
     private Game_room room;
+
 }

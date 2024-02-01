@@ -55,7 +55,7 @@ public class User extends BaseEntity{
     @ColumnDefault(value = "0")
     private Long ingame_status;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ingame_Job_id",referencedColumnName = "id")
     @ToString.Exclude
     @JsonIgnore

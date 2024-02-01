@@ -9,6 +9,7 @@ export default function PlayScene({UserList,roomData,  myId }) {
   const [playGame, setPlayGame] = useState(null);
   const [currentStateTimer, setCurrentTimer] = useState(null);
   const [enableVoteBtn, setEnableVoteBtn] = useState(false);
+  const [selfVote, setSelfVote] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
   const [CurrentState,  setCurrentState] = useState("시작 전")
   function votePlayer(value) {
@@ -46,9 +47,10 @@ export default function PlayScene({UserList,roomData,  myId }) {
         setCurrentState(msg.body);    
     })
     webSocketUtill.subscribeClient("sub/room/isVoteState/" + myId, function(msg){     
-        setEnableVoteBtn(msg.body === "true");
         console.log("VOTE");
+        console.log(msg.body);
         console.log(msg.body === "true");
+        setEnableVoteBtn(msg.body === "true");
     })
     webSocketUtill.subscribeClient("sub/room/userInfo/" + myId, function(msg){     
       setUserInfo(JSON.parse(msg.body));
@@ -64,7 +66,7 @@ export default function PlayScene({UserList,roomData,  myId }) {
                 UserList.map(it => {
                     return (
                     <>
-                    <PlayerCard player={it} enableVoteBtn = {enableVoteBtn} onClick={()=>votePlayer()}/> 
+                    <PlayerCard myId = {myId} roomId = {roomData.id} player={it} enableVoteBtn = {enableVoteBtn} onClick={()=>votePlayer()}/> 
                     </> 
             )})}
             </Row>

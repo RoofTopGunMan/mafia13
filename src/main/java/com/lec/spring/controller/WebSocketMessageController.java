@@ -3,7 +3,6 @@ package com.lec.spring.controller;
 import com.lec.spring.DTO.IngameUserRequestDTO;
 import com.lec.spring.DTO.defaultDTO;
 import com.lec.spring.service.IngameService;
-import com.lec.spring.service.SchedulerService;
 import com.lec.spring.utill.senderClass;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,18 +16,14 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class WebSocketMessageController {
-    private senderClass sender;
 
     @Autowired
     private IngameService ingameService;
     private final SimpMessageSendingOperations messagingTemplate;
-    @Autowired
-    private SchedulerService schedulerService;
 
     @MessageMapping("/subTest")
     public void chatTest(senderClass sender)
     {
-        this.sender = sender;
         System.out.println(sender);
     }
 
@@ -36,7 +31,6 @@ public class WebSocketMessageController {
     @MessageMapping("/entrance")
     public void roomEntrance(senderClass sender) throws Exception {
 
-        this.sender = sender;
         List<defaultDTO> userList = ingameService.getUserList( sender.getRoomId()); // 현재 방에 접속한 유저 리스트 받아오기
         messagingTemplate.convertAndSend("sub/room/userId/" + sender.getUserId(), sender.getUserId()); // 현재 유저
         messagingTemplate.convertAndSend("sub/room/entrance/" + sender.getRoomId(), userList);
@@ -45,7 +39,6 @@ public class WebSocketMessageController {
     public void playGame(senderClass sender) throws Exception {
         //플레이어들에게 게임 시작 발행
 
-        this.sender = sender;
         if(!ingameService.gameStart(sender.getRoomId())) {
             return;
         }
@@ -66,7 +59,6 @@ public class WebSocketMessageController {
     public void endGame(senderClass sender) throws Exception {
         //플레이어들에게 게임 시작 발행
 
-        this.sender = sender;
         if(!ingameService.gameEnd(sender.getRoomId())) {
             return;
         }
@@ -74,10 +66,16 @@ public class WebSocketMessageController {
         //s
 
     }
+    @MessageMapping("/Vote")
+    public void votePlayer(senderClass sender) {
+        System.out.println("VOTE PLAYER");
+
+        ingameService.votePlayer(sender);
+
+    }
     @MessageMapping("/exit")
     public void roomExit(senderClass sender) throws Exception {
 
-        this.sender = sender;
         List<defaultDTO> userList = ingameService.getUserList((long) sender.getRoomId());
         messagingTemplate.convertAndSend("sub/room/entrance/" + sender.getRoomId(),userList);
     }
