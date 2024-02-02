@@ -51,6 +51,7 @@ public class User extends BaseEntity{
     @JsonIgnore
     private Game_room room;
 
+    // 0 생존, 1 사망, 2 관전?
     @Column(nullable = false)
     @ColumnDefault(value = "0")
     private Long ingame_status;

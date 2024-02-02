@@ -13,12 +13,19 @@ import java.util.function.BiConsumer;
 /* 게임방 진행 시 해당 방의 상태 값을 가져오는 테이블입니다.
  * 해당 DB에 데이터가 변경됨에 따라 1:1로 연결 된 게임방의 현재 상태를 수정합니다.
  */
-@NoArgsConstructor
+
 @Entity
-@Getter
-@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 @ToString(callSuper = true)
-public class Game_roomState implements iIngameScheduler {
+@Builder
+@EqualsAndHashCode(callSuper = true)
+public class Game_roomState extends BaseEntity implements iIngameScheduler {
+    public enum VOTETYPE {
+        NONE, VOTE, NIGHT
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -104,6 +111,13 @@ public class Game_roomState implements iIngameScheduler {
             return true;
         }
         return false;
+    }
+    public VOTETYPE RequiredVotes() {
+        if(roundStateProgress == 4)
+            return VOTETYPE.VOTE;
+        if(roundStateProgress == 6)
+            return VOTETYPE.NIGHT;
+        return VOTETYPE.NONE;
     }
     public void IncreaseRoundState() {
         roundStateProgress++;

@@ -5,14 +5,12 @@ import com.lec.spring.DTO.defaultDTO;
 import com.lec.spring.domain.*;
 import com.lec.spring.repository.*;
 import com.lec.spring.utill.senderClass;
+import io.jsonwebtoken.impl.DefaultHeader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -222,9 +220,28 @@ public class IngameService {
         state.setBiScheduler((msg, repo) -> {
             Game_room room = state.getRoom();
             msg.convertAndSend("sub/room/tick/" + room.getId(), state.getCurrentDelayCount());
-            state.DecreaseCurrentDelayCount();
             if(state.DecreaseCurrentDelayCount()) {
-                
+
+                //이번에 투표된 모든 투표들 가져오기 (STATE, ROUNDCOUNT, ROUNDSTATE)
+                List<Game_vote> voteList = game_voteRepository.findByGameRoomStateAndRoundCountAndRoundState(state, state.getRoundCount(),state.getRoundStateProgress() - 1);
+
+                // 개표
+                switch (state.RequiredVotes()){
+                    case VOTE -> {
+                        Map<User, Integer > voteCount = new HashMap<User, Integer>() ;
+                        for (Game_vote v : voteList) {
+                            int count = voteCount.containsKey(v.getElector()) ? (voteCount.get(v.getElector()) + 1) : 1;
+                            voteCount.put(v.getElector(),count);
+                        }
+                        User elect = (User) voteCount.entrySet().stream().max(Comparator.comparingInt(Map.Entry::getValue)).orElseThrow();
+                        elect.setIngame_status(1L);
+                        userRepository.save(elect);
+
+                    }
+                    case NIGHT -> {
+
+                    }
+                }                
                 
                 // 투표 결과를 여기에 세팅하세요
 
@@ -241,7 +258,7 @@ public class IngameService {
                     //투표 여부
                     msg.convertAndSend("sub/room/isVoteState/" + user.getId(), isVote);
                 });
-                repo.save(this);
+                repo.save(state);
             }
 
         });
