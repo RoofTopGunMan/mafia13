@@ -6,11 +6,13 @@ import com.lec.spring.domain.*;
 import com.lec.spring.repository.*;
 import com.lec.spring.utill.senderClass;
 import io.jsonwebtoken.impl.DefaultHeader;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 @Service
 @Transactional(readOnly = true)
@@ -180,6 +182,7 @@ public class IngameService {
         for (String jobState: // 직업 가짓 수 만큼 루프
                 jobNameList) {
             User user = userList.get(index);
+            user.setIngame_status(0L);
             user.setIngame_Job(jobRepository.findByName(jobState)); // 랜덤으로 설정된 직업들을 유저데이터에 삽입
             userList.set(index,user);
             index++;
@@ -211,39 +214,53 @@ public class IngameService {
 
     }
 
+    public void acceptUserList(Long roomId, Consumer<IngameUserRequestDTO> iConsumer) throws Exception {
+        List<defaultDTO> userList = getUserList(roomId); // 유저들에게 각 직업 할당
+        for(defaultDTO userDTO : userList) {
+            iConsumer.accept((IngameUserRequestDTO) userDTO);
+        }
+    }
+
     // 게임룸 가져오기
     @Transactional(readOnly = true)
     public List<Game_room> findAll() {
         return gameRoomRepository.findAll();
     }
+    @Transactional
     public Game_roomState SetupSchedulerFunction(Game_roomState state) {
         state.setBiScheduler((msg, repo) -> {
-            Game_room room = state.getRoom();
-            msg.convertAndSend("sub/room/tick/" + room.getId(), state.getCurrentDelayCount());
+            msg.convertAndSend("sub/room/tick/" + state.getRoom().getId(), state.getCurrentDelayCount());
             if(state.DecreaseCurrentDelayCount()) {
+
+                Game_room room = gameRoomRepository.findById(state.getRoom().getId()).orElseThrow();
 
                 //이번에 투표된 모든 투표들 가져오기 (STATE, ROUNDCOUNT, ROUNDSTATE)
                 List<Game_vote> voteList = game_voteRepository.findByGameRoomStateAndRoundCountAndRoundState(state, state.getRoundCount(),state.getRoundStateProgress() - 1);
 
                 // 개표
-                switch (state.RequiredVotes()){
-                    case VOTE -> {
-                        Map<User, Integer > voteCount = new HashMap<User, Integer>() ;
-                        for (Game_vote v : voteList) {
-                            int count = voteCount.containsKey(v.getElector()) ? (voteCount.get(v.getElector()) + 1) : 1;
-                            voteCount.put(v.getElector(),count);
+                if(voteList.size() > 0)
+                {
+                    switch (state.RequiredVotes()){
+                        case VOTE -> {
+                            Map<User, Integer > voteCount = new HashMap<User, Integer>() ;
+                            for (Game_vote v : voteList) {
+                                Hibernate.initialize(v.getElector());
+                                int count = voteCount.containsKey(v.getElector()) ? (voteCount.get(v.getElector()) + 1) : 1;
+                                voteCount.put(v.getElector(),count);
+                            }
+                            User elect = voteCount.entrySet().stream().max(Comparator.comparingInt(Map.Entry::getValue)).get().getKey();
+                            elect.setIngame_status(1L);
+
+                            msg.convertAndSend("sub/room/dead/" + elect.getId(), true);
+                            userRepository.save(elect);
+
                         }
-                        User elect = (User) voteCount.entrySet().stream().max(Comparator.comparingInt(Map.Entry::getValue)).orElseThrow();
-                        elect.setIngame_status(1L);
-                        userRepository.save(elect);
+                        case NIGHT -> {
 
+                        }
                     }
-                    case NIGHT -> {
+                }
 
-                    }
-                }                
-                
-                // 투표 결과를 여기에 세팅하세요
 
 
                 state.IncreaseRoundState();
@@ -252,8 +269,9 @@ public class IngameService {
 
                 room.getUserList().forEach((user) -> {
 
-                    boolean isVote = state.getRoundStateProgress() == 3 ||
-                            (user.getIngame_Job().isNightVote() && state.getRoundStateProgress() == 5); // 투표시간, 밤 행동 가능한데 밤시간
+                    boolean isVote = (state.getRoundStateProgress() == 3 || // 투표시간
+                            (user.getIngame_Job().isNightVote() && state.getRoundStateProgress() == 5)) && //  밤 행동 가능한데 밤시간
+                            user.getIngame_status() == 0; //사망 여부
                     
                     //투표 여부
                     msg.convertAndSend("sub/room/isVoteState/" + user.getId(), isVote);

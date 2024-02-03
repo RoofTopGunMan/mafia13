@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
 @Service
+@Transactional(readOnly = true)
 public class SchedulerService {
 
     Map<Long,iIngameScheduler> runningIngame;
@@ -25,6 +27,7 @@ public class SchedulerService {
     }
 
     @Scheduled(fixedDelay = 100) // 1sec
+    @Transactional
     public void runTest()
     {
         runningIngame.forEach((key, value)->{

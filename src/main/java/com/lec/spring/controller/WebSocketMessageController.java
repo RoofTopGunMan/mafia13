@@ -42,12 +42,7 @@ public class WebSocketMessageController {
         if(!ingameService.gameStart(sender.getRoomId())) {
             return;
         }
-        List<defaultDTO> userList = ingameService.getUserList( sender.getRoomId()); // 유저들에게 각 직업 할당
-        for(defaultDTO userDTO : userList) {
-            IngameUserRequestDTO ingameDTO = (IngameUserRequestDTO) userDTO;
-            messagingTemplate.convertAndSend("sub/room/userInfo/" + ingameDTO.getId(),userDTO);
-
-        }
+        ingameService.acceptUserList(sender.getRoomId(),(dto)->  messagingTemplate.convertAndSend("sub/room/userInfo/" + dto.getId(),dto));
 
 
         messagingTemplate.convertAndSend("sub/room/Play/" + sender.getRoomId(),2);
@@ -62,6 +57,8 @@ public class WebSocketMessageController {
         if(!ingameService.gameEnd(sender.getRoomId())) {
             return;
         }
+        ingameService.acceptUserList(sender.getRoomId(),(dto)->  messagingTemplate.convertAndSend("sub/room/dead/" + dto.getId(),false));
+
         messagingTemplate.convertAndSend("sub/room/End/" + sender.getRoomId(),2);
         //s
 

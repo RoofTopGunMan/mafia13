@@ -21,7 +21,7 @@ public class Game_vote extends BaseEntity {
     @JsonIgnore
     private User voter;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnore
     private User elector;
 

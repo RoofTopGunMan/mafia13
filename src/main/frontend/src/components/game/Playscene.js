@@ -35,26 +35,23 @@ export default function PlayScene({UserList,roomData,  myId }) {
     })
     webSocketUtill.subscribeClient("sub/room/End/" + roomData.id, function(sender){                
       setPlayGame("게임 종료");
+      setEnableVoteBtn(false);
     })
     webSocketUtill.subscribeClient("sub/" + roomData.id,function(a){
-        console.log("subTEST");
     });
     webSocketUtill.subscribeClient("sub/room/tick/" + roomData.id,function(a){
       setCurrentTimer(a.body);
     });
     webSocketUtill.subscribeClient("sub/room/roundState/" + roomData.id, function(msg){  
-        console.log(msg.body);                 
         setCurrentState(msg.body);    
     })
     webSocketUtill.subscribeClient("sub/room/isVoteState/" + myId, function(msg){     
-        console.log("VOTE");
-        console.log(msg.body);
-        console.log(msg.body === "true");
         setEnableVoteBtn(msg.body === "true");
     })
     webSocketUtill.subscribeClient("sub/room/userInfo/" + myId, function(msg){     
       setUserInfo(JSON.parse(msg.body));
-    })            
+    }) 
+               
     console.log("sub/room/Play/" + roomData.id);
 
 }, []);

@@ -1,6 +1,6 @@
 
 import React,  {useEffect, useState} from 'react';
-import { Col, Card ,Button} from 'react-bootstrap';
+import { Col, Card ,Button, CardText} from 'react-bootstrap';
 import * as webSocketUtill from '../../utill/webSocketUtill';
 
     /* props : playerAccount, updateState
@@ -11,6 +11,8 @@ import * as webSocketUtill from '../../utill/webSocketUtill';
 const PlayerCard = ({player, roomId, enableVoteBtn, myId}) => {
     const [VoteBtn, setVoteBtn] = useState(false);
     const [initFlag,setInitFlag] = useState(false);
+    const [isDead,setDead] = useState(false);
+
     function votePlayer(value) {
       
     
@@ -19,14 +21,14 @@ const PlayerCard = ({player, roomId, enableVoteBtn, myId}) => {
       // let jsonBody = JSON.stringify({sender: "roomMaster", senderType: 2, data: "", roomId: roomData.id });
       // webSocketUtill.publishClient(jsonBody,"pub/Play");
     }
+    useEffect(()=>{            
+        webSocketUtill.subscribeClient("sub/room/dead/" + player.id, function(msg) {                 
+            setDead("true"=== msg.body);
+        });
+    },[]);
     useEffect(() => {
-        console.log(enableVoteBtn);
         setVoteBtn(enableVoteBtn);
-        if(!initFlag)
-        {
-            setInitFlag(true);
-        }
-    });
+    },[enableVoteBtn,isDead]);
     return (
         <>
             <Col md={3}>
@@ -36,15 +38,25 @@ const PlayerCard = ({player, roomId, enableVoteBtn, myId}) => {
                             <Card.Title>{player.id}
                                 <Card.Text>
                                     {player.userName}   
-                                </Card.Text>
-                                    {VoteBtn && (
-                                        <Button as="input" type='button' value= "투표" onClick={()=>votePlayer(player.id)}/> 
+                                    {isDead ? 
+                                    (<>
+                                        <CardText>
+                                            -사망-
+                                        </CardText>
+                                    </>) 
+                                    : (
+                                    <>
+                                        {VoteBtn && (
+                                            <Button as="input" type='button' value= "투표" onClick={()=>votePlayer(player.id)}/> 
+                                        )}
+                                    </>
                                     )}
                                     {player.roomMaster && (
                                         <Card.Text> 방장
                                                             
                                         </Card.Text>    
-                                    )}   
+                                    )}
+                                </Card.Text>   
                             </Card.Title>  
                         </Card.Body>
                     </Card>
