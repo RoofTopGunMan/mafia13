@@ -38,7 +38,10 @@ const Ingame = ({roomData , myID}) => {
     }, []);
     return (
         <>
-            <IngameHeader roomData={roomData}/>
+        {User &&
+        (
+            <IngameHeader roomData={roomData} myName={User.name}/>
+        )}
             <div>
                 {UserList && 
                 (

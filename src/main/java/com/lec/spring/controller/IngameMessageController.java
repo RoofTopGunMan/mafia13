@@ -1,6 +1,5 @@
 package com.lec.spring.controller;
 
-import com.lec.spring.DTO.IngameUserRequestDTO;
 import com.lec.spring.DTO.defaultDTO;
 import com.lec.spring.service.IngameService;
 import com.lec.spring.utill.senderClass;
@@ -15,7 +14,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class WebSocketMessageController {
+public class IngameMessageController {
 
     @Autowired
     private IngameService ingameService;
@@ -43,23 +42,22 @@ public class WebSocketMessageController {
             return;
         }
         ingameService.acceptUserList(sender.getRoomId(),(dto)->  messagingTemplate.convertAndSend("sub/room/userInfo/" + dto.getId(),dto));
+        ingameService.acceptUserList(sender.getRoomId(),(dto)->  messagingTemplate.convertAndSend("sub/room/dead/" + dto.getId(),false));
 
 
-        messagingTemplate.convertAndSend("sub/room/Play/" + sender.getRoomId(),2);
-        messagingTemplate.convertAndSend("sub/" + sender.getRoomId(),3);
+        messagingTemplate.convertAndSend("sub/room/Play/" + sender.getRoomId(),true);
         //s
 
     }
     @MessageMapping("/End")
     public void endGame(senderClass sender) throws Exception {
-        //플레이어들에게 게임 시작 발행
+        //플레이어들에게 게임 종료 발행
 
         if(!ingameService.gameEnd(sender.getRoomId())) {
             return;
         }
-        ingameService.acceptUserList(sender.getRoomId(),(dto)->  messagingTemplate.convertAndSend("sub/room/dead/" + dto.getId(),false));
 
-        messagingTemplate.convertAndSend("sub/room/End/" + sender.getRoomId(),2);
+        messagingTemplate.convertAndSend("sub/room/End/" + sender.getRoomId(),true);
         //s
 
     }

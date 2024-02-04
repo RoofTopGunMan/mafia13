@@ -3,6 +3,7 @@ package com.lec.spring.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.boot.autoconfigure.batch.BatchProperties;
 
 @Entity
 @NoArgsConstructor
@@ -34,6 +35,5 @@ public class Game_vote extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     Game_roomState gameRoomState;
-
 }
 
