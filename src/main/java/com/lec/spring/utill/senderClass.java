@@ -16,11 +16,12 @@ public class senderClass {
     //데이터 ?
     private String data;
 
-    //방 아이디
+    // 방 아이디
+    // -1인경우 로비
     private Long roomId;
     
     //보내는 아이디
-    private int userId;
+    private Long userId;
 
     
 }

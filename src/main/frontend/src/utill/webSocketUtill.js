@@ -10,6 +10,7 @@ let myClient = null;
 // getMapping 시 해당 함수로 호출하면 됩니다.
 
 export function createClient() {
+    if(myClient !== null)return;
     const client = new StompJs.Client({
         brokerURL: 'ws://localhost:8093/ws'
     });

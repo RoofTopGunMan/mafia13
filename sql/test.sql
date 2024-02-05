@@ -9,6 +9,7 @@ SELECT * FROM notice;
 SELECT * FROM item;
 SELECT * FROM USER;
 SELECT * FROM game_vote;
+SELECT * FROM chat_message ;
 
 SHOW table;
 
