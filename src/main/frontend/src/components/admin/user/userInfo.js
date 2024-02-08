@@ -7,6 +7,14 @@ import UserTable from './userTable';
 
 const UserInfo = () => {
 
+    // 선택된 유저들
+    const [users, setUsers] = useState([]);
+
+    const SelectUser = (e) => {
+
+    }
+
+
     // 유저 검색 기능
 
     // 유저 정렬 기능
@@ -49,6 +57,7 @@ const UserInfo = () => {
                         </select>
                         {/* onClick 만들기 */}
                         <Button className='searchButton' variant='secondary' size='sm' type='submit'>반영</Button>
+                        <Button className='searchButton' variant='danger' size='sm' onClick={""}>탈퇴</Button>
                     </Form>
                 </div>
             </div>
@@ -57,3 +66,7 @@ const UserInfo = () => {
 };
 
 export default UserInfo;
+
+function SelectUser() {
+    return 
+}

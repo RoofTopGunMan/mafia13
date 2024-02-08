@@ -1,7 +1,7 @@
 {
 	"folders": {},
 	"connections": {
-		"mysql8-18d0c57da70-ab43d807563b73": {
+		"mysql8-18d1c78ed10-4f6dfd087d2ab493": {
 			"provider": "mysql",
 			"driver": "mysql8",
 			"name": "mafiadb",
@@ -31,4 +31,11 @@
 			"description": "Regular development database",
 			"auto-commit": true,
 			"confirm-execute": false,
-			"confirm-data
+			"confirm-data-change": false,
+			"smart-commit": false,
+			"smart-commit-recover": false,
+			"auto-close-transactions": true,
+			"close-transactions-period": 1800
+		}
+	}
+}
