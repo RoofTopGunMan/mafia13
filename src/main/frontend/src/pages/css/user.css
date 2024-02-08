@@ -1,0 +1,73 @@
+#loginWrap, #RegWrap {
+    background-color: black;
+    height: 808px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form[name="frm"] {
+    margin: auto;
+    color: white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
+    height: 500px;
+    
+}
+
+#login, #Register {
+    text-align: center;
+    margin: 30px 0 30px 0;
+}
+
+#loginBtn, #regBtn {
+    display: block; 
+    margin: 20px auto; 
+    height: 50px;
+    width: 200px;
+    background-color: red;
+    border: 1px solid red;
+    border-radius: 7px;
+    font-weight: bolder;
+    font-size: x-large;
+}
+
+
+input[type="text"], input[type="password"], input[type="email"] {
+    width: 300px;  
+    height: 40px;  
+    padding: 5px;  
+    font-size: 16px; 
+    margin: 5px 0 15px 0; 
+}
+
+#moveTo {
+    text-align: center;
+}
+
+.moveTo {
+    text-decoration: none;
+    color: red;
+}
+
+#mafia13 {
+    color: red;
+}
+
+.regInfo {
+    font-size: 15px;
+    margin-left: 30px;
+}
+
+.dupId {
+    font-size: 13px;
+    margin-left: 33px;
+}
+
+#fail {
+    color: red;
+}
+
+#ok {
+    color: limegreen;
+}

@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Await, useNavigate } from 'react-router-dom';
+import { Await, Link, useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faLock } from '@fortawesome/free-solid-svg-icons';
+import styled from 'styled-components';
+import "../../pages/css/user.css"
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -34,39 +39,58 @@ function Login() {
       dispatch({ type: "LOGIN_SUCCESS", userId: data.user.id });
 
       alert("로그인 성공");
-      navigate("/");  
+      navigate("/lobby");  
     
 
     } catch (error) {
-      console.log("알 수 없는 이유로 로그인 실패.", error);
-      // 에러 메세지 출력      
+      console.log("존재하지 않는 계정.", error);
+      alert("존재하지 않는 ID 입니다.")    
     }
   };
 
+  const StyledIcon = styled(FontAwesomeIcon)`
+    color: red;
+    font-size: 24px;
+    margin-right: 10px;
+  `;
+
+
+
+
   return (
-    <div>
-      <form onSubmit={submit}>
-        <h2>Login</h2>
-        <div>
-          <label>Id:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
+    <div id='loginWrap'>
+
+        <form onSubmit={submit} name="frm">
+
+          <br></br>
+
+          <h2 id="login"> Mafia13</h2>
+
+          <div>
+            <label htmlFor="inputId1">   
+              <StyledIcon icon={faUser} /> 
+            </label>
+            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder='ID' 
+              id="inputId1" name="inputName1" required />
+          </div>
+
+          <div>
+            <label htmlFor="inputId2">   
+              <StyledIcon icon={faLock} />
+            </label> 
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder='PASSWORD'
+              id="inputId2" name="inputName2" required />
+          </div>
+
+          <button type="submit" id='loginBtn'> 로그인 </button>
+          
+          <div id="moveTo"> 계정이 없다면 ? 
+            <Link to="/user/register" className='moveTo'>  회원가입 </Link> 
+          </div>
+
+        </form>
+
+
     </div>
   );
 }

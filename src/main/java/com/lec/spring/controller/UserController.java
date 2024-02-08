@@ -19,8 +19,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class UserController {
 
     @Autowired
-    private UserService userService;
-    @Autowired
     private LoginService loginService;
     @Autowired
     private TokenService tokenService;
@@ -42,10 +40,14 @@ public class UserController {
         return ResponseEntity.ok(new LoginResponse(token, authenticatedUser));
     }
 
-
     @GetMapping("/register")
-    @CrossOrigin
-    public void register(){}
+    public boolean checkUsernameAvailability(@RequestParam String username) {
+        return loginService.isUsernameAvailable(username);
+    }
+
+
+//    @GetMapping("/register")
+//    public void register(){}
 
 
     @PostMapping("/register")

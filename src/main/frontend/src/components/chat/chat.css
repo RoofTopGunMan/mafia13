@@ -1,0 +1,23 @@
+
+.chatInput{
+    padding-right: 0%;
+    border-color: black;
+    padding: 0%;
+}
+.chatRow{
+    padding-right: 0;
+
+}
+.chatCol{
+    padding: 0%;
+}
+.chatInput::after{
+    box-sizing: content-box;
+}
+.chatText{
+    margin: 2px;
+}
+.chatBtn{
+    width: 64px;
+
+}

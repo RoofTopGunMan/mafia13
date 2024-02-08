@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class MypageController {
     @Autowired
     private UserService userService;
@@ -55,13 +56,19 @@ public class MypageController {
         return new ResponseEntity<>(itemService.getByuserId(userId), HttpStatus.OK);
     }
 
-    // 유저 게임 아바타
+//     유저 게임 아바타
     @GetMapping("/mypage/inventory/gameavatar/{userId}")
     @CrossOrigin
-    public ResponseEntity<?>  getByAvataruserId(@PathVariable Long userId){
+    public ResponseEntity<?>  getByAavataruserId(@PathVariable Long userId){
         return new ResponseEntity<>(gameavatarService.getByuserId(userId), HttpStatus.OK);
     }
 
+
+    @PutMapping("/mypage/inventory/gameavatar")
+    @CrossOrigin
+    public ResponseEntity<?> updategameavatar(@RequestBody Gameavatar gameavatar){
+        return new ResponseEntity<>(gameavatarService.updategameavatar(gameavatar), HttpStatus.OK);
+    }
 
 
 }

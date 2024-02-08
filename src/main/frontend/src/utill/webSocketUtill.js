@@ -10,6 +10,7 @@ let myClient = null;
 // getMapping 시 해당 함수로 호출하면 됩니다.
 
 export function createClient() {
+    if(myClient !== null)return;
     const client = new StompJs.Client({
         brokerURL: 'ws://localhost:8093/ws'
     });
@@ -42,7 +43,7 @@ export function activateIngame(roomId) {
 export function subscribeClient(dest, subFunction) {
 
     console.log("addSubscribe");
-    if(myClient.connected){  
+    if(myClient && myClient.connected){  
         console.log("subsc-conneted");
         myClient.subscribe(dest, (message) => {
         subFunction(message);
@@ -58,7 +59,7 @@ export function subscribeClient(dest, subFunction) {
 }
 export function publishClient(JsonBody, dest) {
     console.log("addPublish");
-    if(myClient.connected){  
+    if(myClient && myClient.connected){  
         console.log("Publish-conneted");
         myClient.publish({
             destination: dest,

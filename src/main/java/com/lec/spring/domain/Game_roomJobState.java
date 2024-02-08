@@ -2,10 +2,7 @@ package com.lec.spring.domain;
 
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 
 /* 게임방과 직업을 연결해줄 테이블입니다.
@@ -13,7 +10,9 @@ import lombok.ToString;
  */
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
+@Builder
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class Game_roomJobState extends BaseEntity {
@@ -30,5 +29,9 @@ public class Game_roomJobState extends BaseEntity {
     @JoinColumn(name = "Game_jobData_id")
     private Game_jobData jobData;
 
+
+    @ManyToOne
+    @JoinColumn(name = "game_room_id")
+    private Game_room room;
 
 }

@@ -2,8 +2,10 @@ package com.lec.spring.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,11 +46,27 @@ public class User extends BaseEntity{
             gamemoney = 0L;
         }
     }
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "game_room_id")
+    @JsonIgnore
     private Game_room room;
 
+    // 0 생존, 1 사망, 2 관전?
+    @Column(nullable = false)
+    @ColumnDefault(value = "0")
     private Long ingame_status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ingame_Job_id",referencedColumnName = "id")
+    @ToString.Exclude
+    @JsonIgnore
+    private Game_jobData ingame_Job;
+
+    @ColumnDefault(value = "0")
+    private  int status; // 유저 상태
+
+
+
 
     // User : Authority / N:M 관계
     @ManyToMany(fetch = FetchType.EAGER)
@@ -57,10 +75,6 @@ public class User extends BaseEntity{
     @JsonIgnore
     private List<Authority> authorities = new ArrayList<>();
 
-    // User:Gameavatar = 1:1
-    @OneToOne(fetch = FetchType.EAGER)
-    @ToString.Exclude
-    private Gameavatar gameavatar;   // 게임 아바타
 
 
 

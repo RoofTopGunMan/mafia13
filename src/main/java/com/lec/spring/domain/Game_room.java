@@ -50,14 +50,14 @@ public class Game_room extends BaseEntity {
     //방장 Id입니다. user의 id를 가져옵니다.
     private Long owner_id;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "room", cascade = CascadeType.PERSIST)
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "room", cascade = CascadeType.PERSIST)
     @ToString.Exclude
-    @JsonIgnore
-    private Game_roomState roomState; //진행중인 게임 방의 인 게임 상태입니다.
+    private List<Game_roomState> roomState; //진행중인 게임 방의 인 게임 상태입니다.
 
-    @OneToMany(mappedBy ="room", fetch = FetchType.EAGER)
-    @Builder.Default
     @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy ="room",  cascade = CascadeType.PERSIST)
+    @Builder.Default
     private List<User> userList = new ArrayList<>();
 
     public void addUser(User user)
@@ -78,8 +78,8 @@ public class Game_room extends BaseEntity {
 
     // 게임 방 내 직업의 수 입니다.
     // job_data에 있는 모든 컬럼을 추가 하며, 방장의 설정 값에 따라 (0 - 현재 플레이어의 절반)의 숫자를 설정합니다.
-    @OneToMany
-    @JoinColumn(name ="game_room_id")
+    @JsonIgnore
+    @OneToMany(mappedBy ="room", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Game_roomJobState> jobState = new ArrayList<>();
 
     //https://soojong.tistory.com/entry/JPA-ManyToOne-OneToMany-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0

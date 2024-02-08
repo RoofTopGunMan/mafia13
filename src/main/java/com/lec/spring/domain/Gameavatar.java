@@ -2,6 +2,7 @@ package com.lec.spring.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.ColumnDefault;
 
 @Data
@@ -15,20 +16,21 @@ public class Gameavatar {
     private  Long id; // PK
 
 
-    @ColumnDefault(value = "0")
+    @Column()
     private int head;
 
-    @ColumnDefault(value = "0")
+    @Column()
     private int cloak;
 
-    @ColumnDefault(value = "0")
+    @Column()
     private int outline;
 
 
     // User:Gameavatar = 1:1
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name ="user_id")
-    private User user;   // 유저 아바타
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private User user;   // 게임 아바타
 
 
 
