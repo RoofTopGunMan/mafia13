@@ -24,28 +24,24 @@ const Inventory = () => {
 
 
 
-  useEffect(() => { 
-    fetch(`http://localhost:8093/mypage/inventory/gameavatar/`+ userId)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        setGameavatar(data);
-      });
-  }, []);
+    useEffect(() => { 
+      fetch("http://localhost:8093/mypage/inventory/gameavatar/"+ userId)
+        .then(response => response.json())
+        .then(data => {
+          setGameavatar(data);
+          console.log(data);
+        });
+    }, []);
+
+  
 
   const equipItem = (item)  => {
-    setGameavatar((prevGameavatar) => ({
-      ...prevGameavatar,
+    setGameavatar((gameavatar) => ({
+      ...gameavatar,
       [item.type]: item.id,
     }));
   };
 
-  const unequipItem = (itemType) => {
-    setGameavatar((prevGameavatar) => ({
-      ...prevGameavatar,
-      [itemType]: 0,
-    }));
-  };
 
 const changeValue = (e) => {
   setGameavatar({
@@ -57,7 +53,7 @@ const changeValue = (e) => {
   const saveGameavatar = (e) => {
     e.preventDefault();
     
-    console.log(e.target.value);
+ 
     
     // put request
     fetch("http://localhost:8093/mypage/inventory/gameavatar", {
@@ -67,7 +63,7 @@ const changeValue = (e) => {
         },
         body: JSON.stringify(gameavatar),
     }).then(response => {
-      console.log(e.target.value);
+      
       console.log('response', response);
         if (response.status === 200) {
             return response.json();
@@ -100,7 +96,7 @@ const changeValue = (e) => {
 
       {/* 유저 아바타 표시 */}
       <h2>유저 아바타</h2>
-      {gameavatarsArray.map((gameavatar) => (
+     
       <Form onSubmit={saveGameavatar}>
         <Form.Label>머리</Form.Label>
           <Form.Control className='input' type="number" onChange={changeValue} name="head" value={gameavatar.head} />
@@ -110,7 +106,7 @@ const changeValue = (e) => {
           <Form.Control className='input' type="number"  onChange={changeValue} name="cloak" value={gameavatar.cloak} />
         <Button variant="primary" type="submit">장착하기</Button>  
       </Form>
-     ))}
+     
     </>
   );
 };
