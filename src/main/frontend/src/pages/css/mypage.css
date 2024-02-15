@@ -1,8 +1,7 @@
 .myPage {
-    max-width: 1200px;
-    margin: 20px auto;
-    background-color: #fff;
-    padding: 20px;
+    height: 808px;
+    background-color: black;
+    padding: 60px;
 }
 
 .toHome {
@@ -14,26 +13,27 @@
 .toHome a {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: red;
+    color: black;
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s;
 }
 
 .toHome a:hover {
-    background-color: #0056b3;
+    background-color: #dc3545;
 }
 
 /* 제목 */
 h1 {
     text-align: center;
+    color: red;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
 }
 
 
 /* 컨테이너 */
 .container-full {
-   
     margin: 20px;
 }
 
@@ -43,7 +43,8 @@ h1 {
 
 .container-right {
     flex: 0 0 75%;
-    background-color: #ffffff;
+    background-color: black;
+    color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -60,19 +61,19 @@ h1 {
     margin-bottom: 10px;
     width: 100%;
     padding: 10px 15px;
-    border: 1px solid #007bff;
-    color: #343a40;
+    border: 1px solid red;
+    color: #fff;
     background-color: transparent;
     background-image: none;
-    border-color: #343a40;
+    border-color: red;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
 .mypageBtn button.btn-outline-dark:hover {
-   color: #fff;
-   background-color: #343a40;
+   color: black;
+   background-color: red;
    border-color: #343a40;
 }
 

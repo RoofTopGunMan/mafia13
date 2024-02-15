@@ -8,7 +8,7 @@ import * as StompJs from '@stomp/stompjs';
 import * as axiosUtill from '../utill/axiosUtill';
 import * as webSocketUtill from '../utill/webSocketUtill';
 import { Button } from 'react-bootstrap';
-import PlayScene from "../components/game/playScene";
+import PlayScene from "../components/game/Playscene";
 import IngameHeader from "../components/game/ingameHeader";
 import "./css/ingame.css";
 

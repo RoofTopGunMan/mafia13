@@ -1,26 +1,77 @@
-.row1 {
-    margin-bottom: 10px;
-    padding: 10px 15px;
-    border: 2px solid #007bff;
-    color: #343a40;
-    background-color: transparent;
-    border-color: #343a40;
-    font-size: 50px;
-    text-align: center;
-    
+#lobbyWrap {
+    background-color: black;
+    background-size: cover;
+    height: 100vh;
+    margin: 0;
+    overflow-x: auto;
+    overflow-y: auto;
+    width: 100%;
 }
+
+#container {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 10px;
+}
+
+#headerWrap {
+    width: 100%;
+}
+
+.row1 {
+    border-radius: 15px;
+    outline: 1px solid black;
+    padding: 10px 15px;
+    color: black;
+    background-color: white;
+    border-color: #343a40;
+    font-size: 40px;
+    text-align: center;
+}
+
+.lobbyImg {
+    width: 60px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    background-color: white;
+}
+
+#lobbyChat {
+    width: 32%;
+    min-height: 450px;
+    outline: 1px solid white;
+    color: white;
+    float: left;  
+    margin-top: 5px;
+    margin-left: 15px;
+    border-radius: 5px;
+}
+
+
+.mafiaLogo {
+    width: 31%;
+    height: 450px;
+    margin-top: 10px;
+    margin-left: 20px;
+    float: left;
+    border-radius: 50px;
+    border: 1px solid black;
+}
+
+
+
 .nte {
-    border:  solid ;
+    border: solid ;
     margin-bottom: 30px; 
     border-radius: 12px;
 }
 
 .room-container {
-    display: flex;
+  display: flex;
   flex-wrap: wrap; 
 }
 
-.room{
+.room {
     margin-bottom: 30px;
     border:  solid ;
     border-radius: 30px;
@@ -32,25 +83,45 @@
 }
 
 .gameroom {
-    font-size: 15px;
+    font-size: 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 100px;
+    
 }
 
 .gameroom a {
     display: inline-block;
-    padding: 10px 20px;
-    background-color: #ccc;
-    color: #fff;
+    width: 200px;
+    height: 55px;
+    text-align: center;
+    padding: 13px 10px;
+    color: black;
+    font-weight: bolder;
+    background-color: red;
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s;
+    
 }
 
 .gameroom a:hover {
-    background-color: #007bff;
+    background-color:crimson ;
 }
 
-.ntc{
-    margin: auto;
+.ntc {
+    width: 32%;   
+    float: right;
+    
+}
+
+.ntc .accordion-header, .ntc .accordion-button {
+    background-color: black;
+    color: white; 
+    border-radius: 5px;
+    border: 1px solid black;
 }
 
 .into{
