@@ -19,6 +19,7 @@ public interface UserService {
     // 마이페이지 - 프로필 보기, 프로필 수정,
     User getUserById(Long id);
 
+    User updateUser(User user);
 
     // 관리자 페이지 - 모든 유저 불러오기, 유저 상태, 게임머니 변경
     List<User> findAll();

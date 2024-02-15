@@ -15,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3001")
 public class UserController {
 
     @Autowired
@@ -24,9 +24,11 @@ public class UserController {
     private TokenService tokenService;
 
     @GetMapping("/login")
+    @CrossOrigin
     public void login(){}
 
     @PostMapping("/login")
+    @CrossOrigin
     public ResponseEntity<?> login(@RequestBody User loginUser) {
         User authenticatedUser = loginService.login(loginUser.getUsername(), loginUser.getPassword());
 
@@ -49,6 +51,7 @@ public class UserController {
 
 
     @PostMapping("/register")
+    @CrossOrigin
     public ResponseEntity<?> registerUser(@RequestBody User user) {
         User savedUser = loginService.register(user);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);

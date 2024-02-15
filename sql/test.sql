@@ -9,6 +9,7 @@ SELECT * FROM notice;
 SELECT * FROM item;
 SELECT * FROM USER;
 SELECT * FROM game_vote;
+SELECT * FROM chat_message ;
 
 SHOW table;
 
@@ -22,11 +23,11 @@ INSERT INTO user (id, email, gamemoney,name, password, username, ingame_job_id) 
 (7,"aa7@naver.com",0,"7번",2,"7번",1),
 (8,"aa8@naver.com",0,"8번",2,"8번",1)
 ;
-INSERT INTO game_job_data (id, name, night_vote, self_vote) VALUES
-(1, "시민",FALSE,false),
-(2,"마피아",TRUE,false),
-(3,"경찰",TRUE,false),
-(4,"의사",TRUE,true);
+INSERT INTO game_job_data (id, name, night_vote, self_vote,effect_type) VALUES
+(1, "시민",FALSE,FALSE,"NONE"),
+(2,"마피아",TRUE,FALSE,"KILL"),
+(3,"경찰",TRUE,FALSE,"SEARCH"),
+(4,"의사",TRUE,TRUE,"HEAL");
 UPDATE game_job_data SET selfvote = FALSE ;
 UPDATE game_job_data SET night_vote = FALSE WHERE id = 1;
 UPDATE USER SET game_room_id = NULL ;

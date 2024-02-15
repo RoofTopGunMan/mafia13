@@ -1,5 +1,6 @@
 import React from 'react';
 import "../css/mypage.css";
+import { Button } from 'react-bootstrap';
 
 const View = (props) => {
     const user = props.user;

@@ -244,18 +244,46 @@ public class IngameService {
                         case VOTE -> {
                             Map<User, Integer > voteCount = new HashMap<User, Integer>() ;
                             for (Game_vote v : voteList) {
-                                Hibernate.initialize(v.getElector());
                                 int count = voteCount.containsKey(v.getElector()) ? (voteCount.get(v.getElector()) + 1) : 1;
                                 voteCount.put(v.getElector(),count);
                             }
-                            User elect = voteCount.entrySet().stream().max(Comparator.comparingInt(Map.Entry::getValue)).get().getKey();
-                            elect.setIngame_status(1L);
 
-                            msg.convertAndSend("sub/room/dead/" + elect.getId(), true);
-                            userRepository.save(elect);
+                            List<User> keySet = new ArrayList<>(voteCount.keySet());
+                            keySet.sort(Comparator.comparing(voteCount::get).reversed());
+                            User elect = keySet.get(0);
 
+                            boolean voteInvalid = false;
+
+                            if(keySet.size() > 1) {
+                                voteInvalid = voteCount.get(keySet.get(0)) == voteCount.get(keySet.get(1));
+                            }
+                            if(!voteInvalid) {
+                                elect.setIngame_status(1L);
+                                msg.convertAndSend("sub/room/dead/" + elect.getId(), true);
+                                userRepository.save(elect);
+                            }
                         }
                         case NIGHT -> {
+                            Map<User, List<Game_vote>> effects = new HashMap<>();
+                            for (Game_vote v : voteList) {
+                                if(!effects.containsKey(v.getElector())){
+                                    effects.put(v.getElector(),new ArrayList<>());
+                                }//.getVoter().getIngame_Job().getEffectType()
+                                effects.get(v.getElector()).add(v);
+                            } // 직업 능력 저장
+                            effects.forEach((key, value)-> {
+                                Map<String,User> checked = new HashMap<>();
+                                value.forEach((v)-> checked.put(v.getVoter().getIngame_Job().getEffectType(),v.getVoter()));
+
+                                if(checked.containsKey("KILL") &&
+                                        !checked.containsKey("HEAL")) {
+                                    msg.convertAndSend("sub/room/dead/" + key.getId(), true);
+
+                                }
+                                if(checked.containsKey("SEARCH")){
+                                    msg.convertAndSend("sub/room/search/" + checked.get("SEARCH").getId(),new IngameUserRequestDTO().toDTO(key));
+                                }
+                            });
 
                         }
                     }
