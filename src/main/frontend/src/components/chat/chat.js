@@ -58,12 +58,12 @@ export default function ChatRoom({SubDesc,  userName, userId, chatId}) {
     }
     return (
         <>
-            <Container >
+            <Container id='chatContainer'>
                 <Row className='chatRow'>
                     <Scrollbars  
                     ref = {scrollRef}
                     className='chatMain'
-                    style={{ width: 1800, height: 350 }}>
+                    style={{ width: 390, height: 350 }}>
                     {arrChat &&
                         arrChat.map(it => {
                             return(
@@ -78,7 +78,7 @@ export default function ChatRoom({SubDesc,  userName, userId, chatId}) {
 
                 <Row className='chatRow' >
                     <Col className="chatCol">
-                        <Form.Control  className = "chatInput" value={chatContent} onChange={updateText} as="textarea" style={{ height: '80px' }} />  
+                        <Form.Control  className = "chatInput" value={chatContent} onChange={updateText} as="textarea" style={{ height: '50px', width: '100%' }} />  
                     </Col>
                         <Button variant="dark" className = "chatBtn" as="input" type="button" value="입력" onClick={()=>publishMyChat() }/>{' '}
 

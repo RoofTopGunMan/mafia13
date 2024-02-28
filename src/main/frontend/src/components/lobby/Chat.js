@@ -20,11 +20,10 @@ const Chat = () => {
     
     return (
         <>
-       
-            
-
-            <h2>로비 채팅</h2>
-            <ChatRoom userName={user.name} userId={user.id} chatId={-1} SubDesc={"sub/lobby/chat"} id='lobbyChat'/>
+            <div id='lobby-h2'>
+                <h2>로비 채팅</h2>
+                <ChatRoom userName={user.name} userId={user.id} chatId={-1} SubDesc={"sub/lobby/chat"} id='lobbyChat'/>
+            </div>
         </>
     );
 };

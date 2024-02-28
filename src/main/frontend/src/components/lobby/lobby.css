@@ -3,7 +3,7 @@
     background-size: cover;
     height: 100vh;
     margin: 0;
-    overflow-x: auto;
+    overflow-x: hidden;
     overflow-y: auto;
     width: 100%;
 }
@@ -48,13 +48,20 @@
 }
 
 
+.chatAndImageWrapper {
+    display: flex;           
+    align-items: start;      
+    justify-content: start;  
+    gap: 20px;   
+    width: 100%;    
+    left: 0;     
+}
+
 .mafiaLogo {
-    width: 31%;
-    height: 450px;
-    margin-top: 10px;
-    margin-left: 20px;
-    float: left;
-    border-radius: 50px;
+    width: 28%;
+    height: 100%;
+    margin: 20px 10px 0 20px;
+    border-radius: 250px;
     border: 1px solid black;
 }
 

@@ -29,19 +29,26 @@ const IngameTest = () => {
         )
         : (
         <>
+        <div id='ingameContainer'>
+
           <div>
             입장 방 제목 :  
             <input value={roomName} onChange = {(e)=>{ setRoomName(e.target.value);}}/>
           </div>
+
           <div className="App">
             <input value={UserId} onChange = {(e)=>{ setName(e.target.value);}}/>            
             <Button as="input" type="button" value="connect" onClick={()=>connectRoom(UserId, roomName)}/>{' '}
-
           </div>
+
           <div className="App">
             <Button as="input" type="button" value="Input" onClick={()=>buttonEvent(true)}/>{' '}
           </div>
+
+        </div>
+
         </>
+
         )}
       </>
     );

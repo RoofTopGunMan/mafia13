@@ -1,12 +1,18 @@
+#chatContainer {
+    /* width: 32%;
+    margin: 0px 0px 0px 20px; */
+}
 
 .chatInput{
-    padding-right: 0%;
+    /* padding-right: 0%;
     border-color: black;
     padding: 0%;
+    float: left; */
 }
 .chatRow{
-    padding-right: 0;
-
+    /* padding-right: 0;
+    margin: 0px 0px;
+    width: 32%; */
 }
 .chatCol{
     padding: 0%;
@@ -19,5 +25,11 @@
 }
 .chatBtn{
     width: 64px;
+}
 
+#lobby-h2 {
+    width: 32%;
+    margin-left: 20px;
+    margin-top: 10px;
+    color: white;
 }

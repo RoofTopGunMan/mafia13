@@ -34,17 +34,17 @@ const Lobby = () => {
     return (
         <>
         <div id='lobbyWrap'>
-
-
             
             <Header />   
-            <Notice/>
             <Gamerooms />
-            <img src={mafiaLogo} alt='Mafia13 Logo' className='mafiaLogo'/>
+            <div className="chatAndImageWrapper">
+                <Chat />
+                <img src={mafiaLogo} alt='Mafia13 Logo' className='mafiaLogo'/>
+                <Notice/>
+            </div>
             <div className="gameroom">
                         <Link className='nav-link' to="/Ingame">방 생성하기</Link>
             </div>
-            <Chat/>
 
         </div>
         </>
